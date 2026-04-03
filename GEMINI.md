@@ -1,0 +1,16 @@
+# Workspace Rules
+
+- **Responsive Design First**: 모든 UI 컴포넌트와 페이지는 모바일, 태블릿, 데스크톱을 모두 지원하는 반응형으로 구현합니다.
+- **Mobile-First Approach**: Tailwind CSS의 모바일 퍼스트(Mobile-first) 중단점(sm, md, lg, xl 등)을 적극 활용하여 작은 화면부터 큰 화면 순으로 스타일을 정의합니다.
+- **Layout Integrity**: 화면 크기에 관계없이 레이아웃이 깨지지 않도록 유연한 그리드와 Flexbox를 사용합니다.
+- **Routing**: React Router v7을 사용하며, 코드 내에서 `react-router-dom` 대신 `react-router` 패키지에서 모든 라우팅 관련 기능을 임포트합니다.
+- **UI Consistency (Heart Icon)**: 모든 상품 이미지의 하트 아이콘은 홈 섹션의 스타일로 통일합니다. 배경 원형 없이 하트 이미지만 사용하며, `ICONS.heart`와 `brightness-0 invert` 클래스를 적용합니다.
+- **Interactive Reviews**: 모든 리뷰 카드/컴포넌트는 클릭 시 해당 상세 페이지(또는 관련 페이지)로 이동할 수 있도록 `Link` 컴포넌트로 구현합니다.
+- **Header Design (Detail/Listing Pages)**: 상세 페이지 및 리스팅 페이지(신상, 베스트 50 등)의 헤더는 현재의 확대된 스타일을 유지합니다.
+    - 로고 크기: 기본 `text-4xl md:text-5xl`, 스크롤 시 `text-2xl md:text-3xl`.
+    - 텍스트 크기: 내비게이션 메뉴 및 로그인/회원가입 문구는 가독성을 위해 `17~18px`의 굵은 폰트를 유지합니다.
+    - Active State: 현재 활성화된 카테고리(예: 베스트 50) 아래에는 레드 포인트 도트(`bg-[#dc2626]`)를 표시하여 위치를 인지시킵니다.
+    - **Sticky Navigation**: 스크롤 시에도 카테고리 내비게이션이 사라지지 않고 유지되어야 합니다.
+    - **Scroll Reset**: 페이지 이동 시 스크롤 위치가 항상 최상단(0, 0)으로 초기화되도록 `ScrollToTop` 컴포넌트를 사용합니다.
+    - **Precision Edits**: 파일 수정 시 전체를 교체하는 대신 `replace` 툴을 사용하여 정밀한 부분 수정을 우선합니다.
+- **Strict Compliance**: 사용자가 요청한 사항만 정확히 수행하며, 불필요한 추가 작업이나 설명은 지양합니다.
