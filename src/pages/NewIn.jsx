@@ -86,7 +86,6 @@ export default function NewIn() {
     let id = 1;
     Object.keys(categoryData).forEach(catName => {
       const data = categoryData[catName];
-      // 각 카테고리당 24개 상품 생성 (3페이지 분량)
       for (let i = 1; i <= 24; i++) {
         const nameIdx = (i - 1) % data.names.length;
         const imgIdx = (i - 1) % data.images.length;
@@ -100,6 +99,8 @@ export default function NewIn() {
           originalPrice: `${basePrice.toLocaleString()}원`,
           discountPrice: `${discPrice.toLocaleString()}원`,
           discountRate: '5%',
+          isNew: i % 10 !== 0, // Most are NEW
+          isBest: i % 10 === 0, // Some are BEST only
           image: `${data.images[imgIdx]}?q=80&w=800&auto=format&fit=crop`
         });
       }
@@ -195,9 +196,24 @@ export default function NewIn() {
                   <div className="flex flex-col gap-2 px-2">
                     <h3 className="text-base md:text-lg font-medium text-[#1b1d0e] font-hei line-clamp-1">{product.name}</h3>
                     <div className="flex flex-wrap items-baseline gap-2">
-                      <span className="text-xs md:text-sm text-[#a3a3a3] line-through">{product.originalPrice}</span>
-                      <span className="text-lg md:text-xl font-bold text-black font-sans">{product.discountPrice}</span>
-                      <span className="text-sm md:text-base font-bold text-[#dc2626] font-sans">{product.discountRate}</span>
+                      {product.isNew ? (
+                        <>
+                          <span className="text-xs md:text-sm text-[#a3a3a3] line-through">{product.originalPrice}</span>
+                          <span className="text-lg md:text-xl font-bold text-black font-sans">{product.discountPrice}</span>
+                          <span className="text-sm md:text-base font-bold text-[#dc2626] font-sans">{product.discountRate}</span>
+                        </>
+                      ) : (
+                        <span className="text-lg md:text-xl font-bold text-black font-sans">{product.originalPrice}</span>
+                      )}
+                    </div>
+                    {/* Badges below price */}
+                    <div className="flex gap-2 mt-1">
+                      {product.isNew && (
+                        <span className="bg-black text-white text-[9px] md:text-[10px] font-bold px-2 py-0.5 rounded-full tracking-tighter uppercase">NEW</span>
+                      )}
+                      {product.isBest && (
+                        <span className="bg-[#7c2d12]/90 text-white text-[9px] md:text-[10px] font-bold px-2 py-0.5 rounded-full tracking-tighter uppercase">BEST</span>
+                      )}
                     </div>
                   </div>
                 </div>

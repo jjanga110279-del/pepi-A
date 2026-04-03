@@ -25,8 +25,13 @@ import {
   FaComment,
   FaExternalLinkAlt
 } from 'react-icons/fa';
-import { FiHome, FiLayers, FiGrid } from 'react-icons/fi';
-import { GiLargeDress, GiTrousers, GiBigDiamondRing, GiTShirt } from 'react-icons/gi';
+import { FiHome, FiLayers, FiGrid, FiWind } from 'react-icons/fi';
+import { 
+  GiLargeDress, 
+  GiTrousers, 
+  GiBigDiamondRing, 
+  GiTShirt
+} from 'react-icons/gi';
 import { MdOutlineDryCleaning } from 'react-icons/md';
 
 export const ICONS = {
@@ -64,6 +69,36 @@ export const ICONS = {
   dress: GiLargeDress,
   set: FiLayers,
   acc: GiBigDiamondRing,
+
+  // Outer Sub-categories
+  jacket: MdOutlineDryCleaning,
+  coat: MdOutlineDryCleaning,
+  jumper: FiWind,
+  cardigan: GiTShirt,
+
+  // Top Sub-categories
+  sleeveless: FaFemale,
+  tshirt: GiTShirt,
+  knit: GiTShirt,
+  blouse: FaFemale,
+
+  // Bottom Sub-categories
+  slacks: GiTrousers,
+  denim: GiTrousers,
+  skirt: FaFemale,
+  pants: GiTrousers,
+
+  // Dress Sub-categories
+  mini: GiLargeDress,
+  midi: GiLargeDress,
+  long: GiLargeDress,
+  jumpsuit: FaFemale,
+
+  // Set Sub-categories
+  knitSet: FiLayers,
+  pantsSet: FiLayers,
+  skirtSet: FiLayers,
+  sleevelessSet: FiLayers,
 
   // Payment Icons
   creditCard: FaCreditCard,
