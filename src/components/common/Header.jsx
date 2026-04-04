@@ -8,14 +8,17 @@ export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const isDetailPage = ['/about', '/terms', '/guide', '/privacy', '/customer-service', '/best50', '/new-in', '/outer', '/top', '/bottom', '/dress', '/sets'].includes(location.pathname);
+  const isDetailPage = ['/about', '/terms', '/guide', '/privacy', '/customer-service', '/best50', '/new-5', '/outer', '/top', '/bottom', '/dress', '/sets', '/accessory', '/sale', '/events'].includes(location.pathname) || location.pathname.startsWith('/product/');
   const isBest50Page = location.pathname === '/best50';
-  const isNewInPage = location.pathname === '/new-in';
+  const isNewInPage = location.pathname === '/new-5';
   const isOuterPage = location.pathname === '/outer';
   const isTopPage = location.pathname === '/top';
   const isBottomPage = location.pathname === '/bottom';
   const isDressPage = location.pathname === '/dress';
   const isSetsPage = location.pathname === '/sets';
+  const isAccessoryPage = location.pathname === '/accessory';
+  const isSalePage = location.pathname === '/sale';
+  const isEventsPage = location.pathname === '/events';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -76,8 +79,8 @@ export default function Header() {
             </div>
           </div>
 
-          {/* Desktop Navigation for Listing Pages (Best 50, New In, Outer, Top, Bottom, Dress, Sets) */}
-          {(isBest50Page || isNewInPage || isOuterPage || isTopPage || isBottomPage || isDressPage || isSetsPage) && (
+          {/* Desktop Navigation for Listing Pages (Best 50, New 5%, Outer, Top, Bottom, Dress, Sets, Accessory, Sale, Events) */}
+          {(isBest50Page || isNewInPage || isOuterPage || isTopPage || isBottomPage || isDressPage || isSetsPage || isAccessoryPage || isSalePage || isEventsPage) && (
             <nav className={`hidden lg:flex justify-center items-center gap-14 mt-10 pb-6 transition-all duration-300 ${isScrolled ? 'scale-95' : ''}`}>
               <div className="relative group">
                 <Link to="/best50" className={`text-[17px] md:text-[18px] font-bold tracking-[2px] uppercase font-hei transition-colors ${isBest50Page ? 'text-[#dc2626]' : 'text-black/80 hover:text-[#dc2626]'}`}>베스트 50</Link>
@@ -90,12 +93,15 @@ export default function Header() {
                 const isBottom = item === '하의';
                 const isDress = item === '원피스';
                 const isSets = item === '세트';
-                const isActive = (isNewIn && isNewInPage) || (isOuter && isOuterPage) || (isTop && isTopPage) || (isBottom && isBottomPage) || (isDress && isDressPage) || (isSets && isSetsPage);
+                const isAcc = item === '액세서리';
+                const isSale = item === 'SALE';
+                const isEvents = item === '이벤트/기획전';
+                const isActive = (isNewIn && isNewInPage) || (isOuter && isOuterPage) || (isTop && isTopPage) || (isBottom && isBottomPage) || (isDress && isDressPage) || (isSets && isSetsPage) || (isAcc && isAccessoryPage) || (isSale && isSalePage) || (isEvents && isEventsPage);
                 
                 return (
                   <div key={item} className="relative group">
                     {isNewIn ? (
-                      <Link to="/new-in" className={`text-[17px] md:text-[18px] font-bold tracking-[1.5px] font-hei transition-colors ${isActive ? 'text-[#dc2626]' : 'text-black/80 hover:text-[#dc2626]'}`}>{item}</Link>
+                      <Link to="/new-5" className={`text-[17px] md:text-[18px] font-bold tracking-[1.5px] font-hei transition-colors ${isActive ? 'text-[#dc2626]' : 'text-black/80 hover:text-[#dc2626]'}`}>{item}</Link>
                     ) : isOuter ? (
                       <Link to="/outer" className={`text-[17px] md:text-[18px] font-bold tracking-[1.5px] font-hei transition-colors ${isActive ? 'text-[#dc2626]' : 'text-black/80 hover:text-[#dc2626]'}`}>{item}</Link>
                     ) : isTop ? (
@@ -106,6 +112,12 @@ export default function Header() {
                       <Link to="/dress" className={`text-[17px] md:text-[18px] font-bold tracking-[1.5px] font-hei transition-colors ${isActive ? 'text-[#dc2626]' : 'text-black/80 hover:text-[#dc2626]'}`}>{item}</Link>
                     ) : isSets ? (
                       <Link to="/sets" className={`text-[17px] md:text-[18px] font-bold tracking-[1.5px] font-hei transition-colors ${isActive ? 'text-[#dc2626]' : 'text-black/80 hover:text-[#dc2626]'}`}>{item}</Link>
+                    ) : isAcc ? (
+                      <Link to="/accessory" className={`text-[17px] md:text-[18px] font-bold tracking-[1.5px] font-hei transition-colors ${isActive ? 'text-[#dc2626]' : 'text-black/80 hover:text-[#dc2626]'}`}>{item}</Link>
+                    ) : isSale ? (
+                      <Link to="/sale" className={`text-[17px] md:text-[18px] font-bold tracking-[1.5px] font-hei transition-colors ${isActive ? 'text-[#dc2626]' : 'text-black/80 hover:text-[#dc2626]'}`}>{item}</Link>
+                    ) : isEvents ? (
+                      <Link to="/events" className={`text-[17px] md:text-[18px] font-bold tracking-[1.5px] font-hei transition-colors ${isActive ? 'text-[#dc2626]' : 'text-black/80 hover:text-[#dc2626]'}`}>{item}</Link>
                     ) : (
                       <a href="#" className="text-[17px] md:text-[18px] font-bold text-black/80 hover:text-[#dc2626] tracking-[1.5px] font-hei transition-colors">{item}</a>
                     )}
@@ -127,15 +139,18 @@ export default function Header() {
               </div>
               <nav className="flex flex-col gap-6">
                 <Link to="/best50" className="text-lg font-bold tracking-widest font-hei text-[#7c2d12] hover:text-[#dc2626] transition-colors" onClick={toggleMobileMenu}>BEST 50</Link>
-                {['NEW IN', 'OUTER', 'TOP', 'BOTTOM', 'DRESS', 'SET', 'ACC', 'SALE', 'EVENT'].map((item) => {
-                  const isNewIn = item === 'NEW IN';
+                {['NEW IN 5%', 'OUTER', 'TOP', 'BOTTOM', 'DRESS', 'SET', 'ACC', 'SALE', 'EVENT'].map((item) => {
+                  const isNewIn = item === 'NEW IN 5%';
                   const isOuter = item === 'OUTER';
                   const isTop = item === 'TOP';
                   const isBottom = item === 'BOTTOM';
                   const isDress = item === 'DRESS';
                   const isSets = item === 'SET';
+                  const isAcc = item === 'ACC';
+                  const isSale = item === 'SALE';
+                  const isEvents = item === 'EVENT';
                   return isNewIn ? (
-                    <Link key={item} to="/new-in" className="text-lg font-bold tracking-widest font-hei text-black/80 hover:text-[#dc2626] transition-colors" onClick={toggleMobileMenu}>{item}</Link>
+                    <Link key={item} to="/new-5" className="text-lg font-bold tracking-widest font-hei text-black/80 hover:text-[#dc2626] transition-colors" onClick={toggleMobileMenu}>{item}</Link>
                   ) : isOuter ? (
                     <Link key={item} to="/outer" className="text-lg font-bold tracking-widest font-hei text-black/80 hover:text-[#dc2626] transition-colors" onClick={toggleMobileMenu}>{item}</Link>
                   ) : isTop ? (
@@ -146,6 +161,12 @@ export default function Header() {
                     <Link key={item} to="/dress" className="text-lg font-bold tracking-widest font-hei text-black/80 hover:text-[#dc2626] transition-colors" onClick={toggleMobileMenu}>{item}</Link>
                   ) : isSets ? (
                     <Link key={item} to="/sets" className="text-lg font-bold tracking-widest font-hei text-black/80 hover:text-[#dc2626] transition-colors" onClick={toggleMobileMenu}>{item}</Link>
+                  ) : isAcc ? (
+                    <Link key={item} to="/accessory" className="text-lg font-bold tracking-widest font-hei text-black/80 hover:text-[#dc2626] transition-colors" onClick={toggleMobileMenu}>{item}</Link>
+                  ) : isSale ? (
+                    <Link key={item} to="/sale" className="text-lg font-bold tracking-widest font-hei text-black/80 hover:text-[#dc2626] transition-colors" onClick={toggleMobileMenu}>{item}</Link>
+                  ) : isEvents ? (
+                    <Link key={item} to="/events" className="text-lg font-bold tracking-widest font-hei text-black/80 hover:text-[#dc2626] transition-colors" onClick={toggleMobileMenu}>{item}</Link>
                   ) : (
                     <a key={item} href="#" className="text-lg font-bold tracking-widest font-hei text-black/80 hover:text-[#dc2626] transition-colors" onClick={toggleMobileMenu}>{item}</a>
                   );
@@ -226,8 +247,11 @@ export default function Header() {
             const isBottom = item === '하의';
             const isDress = item === '원피스';
             const isSets = item === '세트';
+            const isAcc = item === '액세서리';
+            const isSale = item === 'SALE';
+            const isEvents = item === '이벤트/기획전';
             return isNewIn ? (
-              <Link key={item} to="/new-in" className="text-[16px] md:text-[17px] font-bold text-black/80 hover:text-[#dc2626] tracking-widest uppercase font-hei transition-colors">{item}</Link>
+              <Link key={item} to="/new-5" className="text-[16px] md:text-[17px] font-bold text-black/80 hover:text-[#dc2626] tracking-widest uppercase font-hei transition-colors">{item}</Link>
             ) : isOuter ? (
               <Link key={item} to="/outer" className="text-[16px] md:text-[17px] font-bold text-black/80 hover:text-[#dc2626] tracking-widest uppercase font-hei transition-colors">{item}</Link>
             ) : isTop ? (
@@ -238,6 +262,12 @@ export default function Header() {
               <Link key={item} to="/dress" className="text-[16px] md:text-[17px] font-bold text-black/80 hover:text-[#dc2626] tracking-widest uppercase font-hei transition-colors">{item}</Link>
             ) : isSets ? (
               <Link key={item} to="/sets" className="text-[16px] md:text-[17px] font-bold text-black/80 hover:text-[#dc2626] tracking-widest uppercase font-hei transition-colors">{item}</Link>
+            ) : isAcc ? (
+              <Link key={item} to="/accessory" className="text-[16px] md:text-[17px] font-bold text-black/80 hover:text-[#dc2626] tracking-widest uppercase font-hei transition-colors">{item}</Link>
+            ) : isSale ? (
+              <Link key={item} to="/sale" className="text-[16px] md:text-[17px] font-bold text-black/80 hover:text-[#dc2626] tracking-widest uppercase font-hei transition-colors">{item}</Link>
+            ) : isEvents ? (
+              <Link key={item} to="/events" className="text-[16px] md:text-[17px] font-bold text-black/80 hover:text-[#dc2626] tracking-widest uppercase font-hei transition-colors">{item}</Link>
             ) : (
               <a key={item} href="#" className="text-[16px] md:text-[17px] font-bold text-black/80 hover:text-[#dc2626] tracking-widest uppercase font-hei transition-colors">{item}</a>
             );
@@ -252,18 +282,20 @@ export default function Header() {
             <div className="flex justify-between items-center mb-12">
               <h2 className="text-xl font-serif font-bold italic">늘:pepi-i</h2>
               <button onClick={toggleMobileMenu}><X size={24} /></button>
-            </div>
-            <nav className="flex flex-col gap-6">
+            </div>            <nav className="flex flex-col gap-6">
               <Link to="/best50" className="text-lg font-bold tracking-widest font-hei text-[#7c2d12] hover:text-[#dc2626] transition-colors" onClick={toggleMobileMenu}>BEST 50</Link>
-              {['NEW IN', 'OUTER', 'TOP', 'BOTTOM', 'DRESS', 'SET', 'ACC', 'SALE', 'EVENT'].map((item) => {
-                const isNewIn = item === 'NEW IN';
+              {['NEW IN 5%', 'OUTER', 'TOP', 'BOTTOM', 'DRESS', 'SET', 'ACC', 'SALE', 'EVENT'].map((item) => {
+                const isNewIn = item === 'NEW IN 5%';
                 const isOuter = item === 'OUTER';
                 const isTop = item === 'TOP';
                 const isBottom = item === 'BOTTOM';
                 const isDress = item === 'DRESS';
                 const isSets = item === 'SET';
+                const isAcc = item === 'ACC';
+                const isSale = item === 'SALE';
+                const isEvents = item === 'EVENT';
                 return isNewIn ? (
-                  <Link key={item} to="/new-in" className="text-lg font-bold tracking-widest font-hei text-black/80 hover:text-[#dc2626] transition-colors" onClick={toggleMobileMenu}>{item}</Link>
+                  <Link key={item} to="/new-5" className="text-lg font-bold tracking-widest font-hei text-black/80 hover:text-[#dc2626] transition-colors" onClick={toggleMobileMenu}>{item}</Link>
                 ) : isOuter ? (
                   <Link key={item} to="/outer" className="text-lg font-bold tracking-widest font-hei text-black/80 hover:text-[#dc2626] transition-colors" onClick={toggleMobileMenu}>{item}</Link>
                 ) : isTop ? (
@@ -274,6 +306,12 @@ export default function Header() {
                   <Link key={item} to="/dress" className="text-lg font-bold tracking-widest font-hei text-black/80 hover:text-[#dc2626] transition-colors" onClick={toggleMobileMenu}>{item}</Link>
                 ) : isSets ? (
                   <Link key={item} to="/sets" className="text-lg font-bold tracking-widest font-hei text-black/80 hover:text-[#dc2626] transition-colors" onClick={toggleMobileMenu}>{item}</Link>
+                ) : isAcc ? (
+                  <Link key={item} to="/accessory" className="text-lg font-bold tracking-widest font-hei text-black/80 hover:text-[#dc2626] transition-colors" onClick={toggleMobileMenu}>{item}</Link>
+                ) : isSale ? (
+                  <Link key={item} to="/sale" className="text-lg font-bold tracking-widest font-hei text-black/80 hover:text-[#dc2626] transition-colors" onClick={toggleMobileMenu}>{item}</Link>
+                ) : isEvents ? (
+                  <Link key={item} to="/events" className="text-lg font-bold tracking-widest font-hei text-black/80 hover:text-[#dc2626] transition-colors" onClick={toggleMobileMenu}>{item}</Link>
                 ) : (
                   <a key={item} href="#" className="text-lg font-bold tracking-widest font-hei text-black/80 hover:text-[#dc2626] transition-colors" onClick={toggleMobileMenu}>{item}</a>
                 );

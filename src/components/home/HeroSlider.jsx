@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { IMAGES } from '../../constants/images';
 
 const slides = [
-  { id: 1, image: IMAGES.hero1, title: "The Soft Atelier", subtitle: "24 Autumn Collection" },
+  { id: 1, image: IMAGES.hero1, title: "The Soft 늘:pepi-i", subtitle: "24 Autumn Collection" },
   { id: 2, image: IMAGES.hero2, title: "Modern Classic", subtitle: "Essential Pieces" },
   { id: 3, image: IMAGES.hero3, title: "Linen Mood", subtitle: "Summer to Autumn" },
   { id: 4, image: IMAGES.hero4, title: "Urban Silhouette", subtitle: "Daily Wear" },

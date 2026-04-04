@@ -23,7 +23,11 @@ import {
   FaFemale,
   FaGem,
   FaComment,
-  FaExternalLinkAlt
+  FaExternalLinkAlt,
+  FaPlus,
+  FaShareAlt,
+  FaChartLine,
+  FaThumbsUp
 } from 'react-icons/fa';
 import { FiHome, FiLayers, FiGrid, FiWind } from 'react-icons/fi';
 import { 
@@ -106,5 +110,9 @@ export const ICONS = {
   piggyBank: FaPiggyBank,
   kakaoPay: FaComment,
   naverPay: FaExternalLinkAlt,
+  plus: FaPlus,
+  share: FaShareAlt,
+  trending: FaChartLine,
+  recommend: FaThumbsUp,
   others: FaEllipsisH,
 };

@@ -3,7 +3,7 @@ import Layout from '../components/common/Layout';
 import ProductCard from '../components/common/ProductCard';
 import { ICONS } from '../constants/icons';
 
-export default function Sets() {
+export default function Accessory() {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedSubCategory, setSelectedSubCategory] = useState('전체');
   const [sortBy, setSortBy] = useState('최신순');
@@ -11,46 +11,46 @@ export default function Sets() {
 
   const subCategories = [
     { name: '전체', icon: ICONS.all },
-    { name: '니트 세트', icon: ICONS.knitSet },
-    { name: '팬츠 세트', icon: ICONS.pantsSet },
-    { name: '스커트 세트', icon: ICONS.skirtSet },
-    { name: '슬리브리스 세트', icon: ICONS.sleevelessSet },
+    { name: '주얼리', icon: ICONS.acc },
+    { name: '가방', icon: ICONS.acc },
+    { name: '슈즈', icon: ICONS.acc },
+    { name: '기타', icon: ICONS.acc },
   ];
 
-  // 세트 세부 상품 데이터 생성
-  const generateSetsProducts = () => {
+  // 액세서리 세부 상품 데이터 생성
+  const generateAccProducts = () => {
     const products = [];
     const subData = {
-      '니트 세트': {
-        names: ['릴랙스드 코지 니트 투피스 세트', '캐시미어 블렌딩 니트 셋업', '케이블 꽈배기 가디건 세트', '골지 니트 슬릿 스커트 세트', '모헤어 오버핏 니트 팬츠 셋업', '브이넥 니트 베스트 세트'],
+      '주얼리': {
+        names: ['실버 925 미니멀 링', '진주 드롭 이어링', '골드 레이어드 목걸이', '크리스탈 테니스 팔찌', '엔틱 무드 펜던트', '심플 라인 뱅글'],
         images: [
-          'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1',
-          'https://images.unsplash.com/photo-1434389677669-e08b4cac3105',
-          'https://images.unsplash.com/photo-1521223890158-f9f7c3d5d504'
+          'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338',
+          'https://images.unsplash.com/photo-1535633302703-9420414421ee',
+          'https://images.unsplash.com/photo-1599643478123-53d0453b894a',
+          'https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0'
         ]
       },
-      '팬츠 세트': {
-        names: ['어반 리넨 베스트 쇼츠 셋업', '클래식 스트럭처 쇼츠 수트 세트', '데님 온 데님 오버사이즈 셋업', '프리미엄 라운지 조거 세트', '와이드 리넨 셔츠 팬츠 세트', '테일러드 블레이저 슬랙스 셋업'],
+      '가방': {
+        names: ['미니멀 레더 숄더백', '캔버스 데일리 토트백', '클래식 체인 크로스백', '소프트 호보백', '어반 백팩', '퀼팅 미니 파우치'],
         images: [
-          'https://images.unsplash.com/photo-1490481651871-ab68de25d43d',
-          'https://images.unsplash.com/photo-1551028719-00167b16eac5',
-          'https://images.unsplash.com/photo-1541099649105-f69ad21f3246'
+          'https://images.unsplash.com/photo-1584917033794-c735e946b991',
+          'https://images.unsplash.com/photo-1591561954557-26941169b49e',
+          'https://images.unsplash.com/photo-1548036328-c9fa89d128fa'
         ]
       },
-      '스커트 세트': {
-        names: ['선샤인 플리츠 스커트 세트', '슬림 골지 미디 스커트 세트', '트위드 자켓 미니 스커트 셋업', '체크 패턴 울 스커트 세트', '새틴 블라우스 롱 스커트 세트', '크롭 자켓 플레어 스커트 셋업'],
+      '슈즈': {
+        names: ['베이직 로우 스니커즈', '모던 스퀘어토 블로퍼', '데일리 플랫 슈즈', '청키 플랫폼 샌들', '클래식 첼시 부츠', '슬림 라인 펌프스'],
         images: [
-          'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f',
-          'https://images.unsplash.com/photo-1469334031218-e382a71b716b',
-          'https://images.unsplash.com/photo-1583496661160-fb5886a0aaaa'
+          'https://images.unsplash.com/photo-1543163521-1bf539c55dd2',
+          'https://images.unsplash.com/photo-1549298916-b41d501d3772',
+          'https://images.unsplash.com/photo-1560769629-975ec94e6a86'
         ]
       },
-      '슬리브리스 세트': {
-        names: ['블룸 실크 파자마 스타일 셋업', '린넨 나시 가디건 세트', '코튼 베이직 슬리브리스 셋업', '니트 나시 와이드 팬츠 세트', '실크 랩 탑 숏츠 세트', '홀터넥 탑 스커트 셋업'],
+      '기타': {
+        names: ['실크 스카프 에디션', '클래식 레더 벨트', '울 블렌드 비니', '패브릭 헤어 밴드', '빈티지 선글라스', '체크 패턴 머플러'],
         images: [
-          'https://images.unsplash.com/photo-1539109136881-3be0616acf4b',
-          'https://images.unsplash.com/photo-1576053139778-7e32f2ae3cfd',
-          'https://images.unsplash.com/photo-1523206489230-c012c64b2b48'
+          'https://images.unsplash.com/photo-1520903920243-00d872a2d1c9',
+          'https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3'
         ]
       }
     };
@@ -61,11 +61,11 @@ export default function Sets() {
       for (let i = 1; i <= 32; i++) {
         const nameIdx = (i - 1) % data.names.length;
         const imgIdx = (i - 1) % data.images.length;
-        const basePrice = 78000 + (Math.floor(Math.random() * 25) * 5000);
+        const basePrice = 25000 + (Math.floor(Math.random() * 15) * 5000);
         const discPrice = Math.floor(basePrice * 0.95);
         
         products.push({
-          id: `set-${idCount++}`,
+          id: `acc-${idCount++}`,
           subCategory: subName,
           name: data.names[nameIdx],
           originalPrice: `${basePrice.toLocaleString()}원`,
@@ -80,12 +80,12 @@ export default function Sets() {
     return products;
   };
 
-  const allSetsProducts = useMemo(() => generateSetsProducts(), []);
+  const allAccProducts = useMemo(() => generateAccProducts(), []);
 
   const filteredProducts = useMemo(() => {
     let result = selectedSubCategory === '전체' 
-      ? [...allSetsProducts] 
-      : allSetsProducts.filter(p => p.subCategory === selectedSubCategory);
+      ? [...allAccProducts] 
+      : allAccProducts.filter(p => p.subCategory === selectedSubCategory);
 
     // Sorting logic
     if (sortBy === '최신순') {
@@ -115,7 +115,7 @@ export default function Sets() {
     }
 
     return result;
-  }, [selectedSubCategory, allSetsProducts, sortBy]);
+  }, [selectedSubCategory, allAccProducts, sortBy]);
 
   const currentProducts = useMemo(() => {
     return filteredProducts.slice(
@@ -160,7 +160,7 @@ export default function Sets() {
       <div className="max-w-[1920px] mx-auto px-4 md:px-12 py-10 md:py-20 flex flex-col md:flex-row gap-12">
         {/* Sidebar */}
         <aside className="w-full md:w-[260px] shrink-0 border-r border-black/5 pr-12 hidden md:block">
-          <h2 className="text-2xl font-bold text-[#1b1d0e] font-serif mb-10 lowercase tracking-tight">set categories</h2>
+          <h2 className="text-2xl font-bold text-[#1b1d0e] font-serif mb-10 lowercase tracking-tight">accessory categories</h2>
           <nav className="flex flex-col gap-6">
             {subCategories.map((sub, idx) => (
               <button 
@@ -182,7 +182,7 @@ export default function Sets() {
           {/* Title & Filter Header */}
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
             <h1 className="text-4xl md:text-5xl font-bold text-[#1b1d0e] font-sans tracking-tight">
-              세트
+              액세서리
               {selectedSubCategory !== '전체' && <span className="text-xl md:text-2xl font-medium text-[#737373] ml-4 font-hei font-normal">/ {selectedSubCategory}</span>}
             </h1>
             <div className="flex items-center gap-6 text-[13px] md:text-[14px] font-medium text-[#a3a3a3]">

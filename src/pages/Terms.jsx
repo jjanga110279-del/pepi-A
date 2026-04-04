@@ -49,7 +49,7 @@ export default function Terms() {
               <h3 className="text-2xl font-bold text-[#1b1d0e] font-hei">제1조 (목적)</h3>
               <div className="text-lg text-black/80 leading-relaxed font-hei space-y-4">
                 <p>본 약관은 늘:pepi-i(이하 "몰")이 운영하는 온라인 쇼핑몰에서 제공하는 인터넷 관련 서비스(이하 "서비스")를 이용함에 있어 사이버 몰과 이용자의 권리, 의무 및 책임사항을 규정함을 목적으로 합니다.</p>
-                <p>'늘:pepi-i'는 프리미엄 아뜰리에 감성을 바탕으로 사용자에게 최상의 쇼핑 경험을 제공합니다.</p>
+                <p>'늘:pepi-i'는 프리미엄 늘:pepi-i 감성을 바탕으로 사용자에게 최상의 쇼핑 경험을 제공합니다.</p>
               </div>
             </div>
 
@@ -122,7 +122,7 @@ export default function Terms() {
             <div className="space-y-8">
               <h3 className="text-2xl font-bold text-[#1b1d0e] font-hei">제6조 (구매신청 및 개인정보 제공 동의 등)</h3>
               <p className="text-lg text-black/80 leading-relaxed font-hei">
-                "몰" 이용자는 "몰"상에서 다음 또는 이와 유사한 방법에 의하여 구매를 신청하며, "몰"은 이용자가 구매신청을 함에 있어서 다음의 각 내용을 알기 쉽게 제공하여야 합니다. 아뜰리에 제품의 특성상 주문 제작 상품의 경우 별도의 고지 사항을 따릅니다.
+                "몰" 이용자는 "몰"상에서 다음 또는 이와 유사한 방법에 의하여 구매를 신청하며, "몰"은 이용자가 구매신청을 함에 있어서 다음의 각 내용을 알기 쉽게 제공하여야 합니다. 늘:pepi-i 제품의 특성상 주문 제작 상품의 경우 별도의 고지 사항을 따릅니다.
               </p>
             </div>
 

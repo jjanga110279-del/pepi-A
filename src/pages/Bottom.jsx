@@ -1,10 +1,12 @@
 import React, { useState, useMemo } from 'react';
 import Layout from '../components/common/Layout';
+import ProductCard from '../components/common/ProductCard';
 import { ICONS } from '../constants/icons';
 
 export default function Bottom() {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedSubCategory, setSelectedSubCategory] = useState('전체');
+  const [sortBy, setSortBy] = useState('최신순');
   const itemsPerPage = 8;
 
   const subCategories = [
@@ -53,24 +55,23 @@ export default function Bottom() {
       }
     };
 
-    let id = 1;
+    let idCount = 1;
     Object.keys(subData).forEach(subName => {
       const data = subData[subName];
-      for (let i = 1; i <= 16; i++) {
+      for (let i = 1; i <= 32; i++) {
         const nameIdx = (i - 1) % data.names.length;
         const imgIdx = (i - 1) % data.images.length;
         const basePrice = 38000 + (Math.floor(Math.random() * 12) * 5000);
         const discPrice = Math.floor(basePrice * 0.95);
         
         products.push({
-          id: id++,
+          id: `bottom-${idCount++}`,
           subCategory: subName,
           name: data.names[nameIdx],
           originalPrice: `${basePrice.toLocaleString()}원`,
-          discountPrice: `${discPrice.toLocaleString()}원`,
-          discountRate: '5%',
-          isNew: i % 3 === 0,
-          isBest: i % 4 === 0,
+          price: `${discPrice.toLocaleString()}원`,
+          isNew: i % 5 === 0,
+          isBest: i % 7 === 0,
           image: `${data.images[imgIdx]}?q=80&w=800&auto=format&fit=crop`
         });
       }
@@ -82,9 +83,45 @@ export default function Bottom() {
   const allBottomProducts = useMemo(() => generateBottomProducts(), []);
 
   const filteredProducts = useMemo(() => {
-    if (selectedSubCategory === '전체') return allBottomProducts;
-    return allBottomProducts.filter(p => p.subCategory === selectedSubCategory);
-  }, [selectedSubCategory, allBottomProducts]);
+    let result = selectedSubCategory === '전체' 
+      ? [...allBottomProducts] 
+      : allBottomProducts.filter(p => p.subCategory === selectedSubCategory);
+
+    // Sorting logic
+    switch (sortBy) {
+      case '인기순':
+        result.sort((a, b) => {
+          const idA = parseInt(a.id.split('-')[1]);
+          const idB = parseInt(b.id.split('-')[1]);
+          return (idA % 7) - (idB % 7);
+        });
+        break;
+      case '낮은가격순':
+        result.sort((a, b) => {
+          const priceA = parseInt(a.price.replace(/[^0-9]/g, ''));
+          const priceB = parseInt(b.price.replace(/[^0-9]/g, ''));
+          return priceA - priceB;
+        });
+        break;
+      case '높은가격순':
+        result.sort((a, b) => {
+          const priceA = parseInt(a.price.replace(/[^0-9]/g, ''));
+          const priceB = parseInt(b.price.replace(/[^0-9]/g, ''));
+          return priceB - priceA;
+        });
+        break;
+      case '최신순':
+      default:
+        result.sort((a, b) => {
+          const idA = parseInt(a.id.split('-')[1]);
+          const idB = parseInt(b.id.split('-')[1]);
+          return idB - idA;
+        });
+        break;
+    }
+
+    return result;
+  }, [selectedSubCategory, allBottomProducts, sortBy]);
 
   const currentProducts = useMemo(() => {
     return filteredProducts.slice(
@@ -104,6 +141,19 @@ export default function Bottom() {
     setSelectedSubCategory(subCat);
     setCurrentPage(1);
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const getPageNumbers = () => {
+    const range = [];
+    const delta = 2;
+    for (let i = 1; i <= totalPages; i++) {
+      if (i === 1 || i === totalPages || (i >= currentPage - delta && i <= currentPage + delta)) {
+        range.push(i);
+      } else if (range[range.length - 1] !== '...') {
+        range.push('...');
+      }
+    }
+    return range;
   };
 
   return (
@@ -137,57 +187,43 @@ export default function Bottom() {
               {selectedSubCategory !== '전체' && <span className="text-xl md:text-2xl font-medium text-[#737373] ml-4 font-hei font-normal">/ {selectedSubCategory}</span>}
             </h1>
             <div className="flex items-center gap-6 text-[13px] md:text-[14px] font-medium text-[#a3a3a3]">
-              <button className="text-[#171717]">최신순</button>
-              <button className="hover:text-black transition-colors">인기순</button>
-              <button className="hover:text-black transition-colors">낮은가격순</button>
-              <button className="hover:text-black transition-colors">높은가격순</button>
+              <button 
+                onClick={() => { setSortBy('최신순'); setCurrentPage(1); }}
+                className={sortBy === '최신순' ? 'text-[#171717]' : 'hover:text-black transition-colors'}
+              >
+                최신순
+              </button>
+              <button 
+                onClick={() => { setSortBy('인기순'); setCurrentPage(1); }}
+                className={sortBy === '인기순' ? 'text-[#171717]' : 'hover:text-black transition-colors'}
+              >
+                인기순
+              </button>
+              <button 
+                onClick={() => { setSortBy('낮은가격순'); setCurrentPage(1); }}
+                className={sortBy === '낮은가격순' ? 'text-[#171717]' : 'hover:text-black transition-colors'}
+              >
+                낮은가격순
+              </button>
+              <button 
+                onClick={() => { setSortBy('높은가격순'); setCurrentPage(1); }}
+                className={sortBy === '높은가격순' ? 'text-[#171717]' : 'hover:text-black transition-colors'}
+              >
+                높은가격순
+              </button>
             </div>
           </div>
 
           {/* Product Grid */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-6 md:gap-x-8 gap-y-16 min-h-[800px]">
             {currentProducts.map((product) => (
-              <div key={product.id} className="flex flex-col gap-5 group cursor-pointer animate-fadeIn">
-                <div className="relative aspect-[3/4] bg-[#fafafa] rounded-[32px] md:rounded-[48px] overflow-hidden">
-                  <img 
-                    src={product.image} 
-                    alt={product.name} 
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <button className="absolute top-6 right-6 z-10 hover:scale-110 transition-transform drop-shadow-md">
-                    <ICONS.heart className="text-white text-[20px] md:text-[24px]" />
-                  </button>
-                </div>
-                <div className="flex flex-col gap-2 px-2">
-                  <h3 className="text-base md:text-lg font-medium text-[#1b1d0e] font-hei line-clamp-1">{product.name}</h3>
-                  <div className="flex flex-wrap items-baseline gap-2">
-                    {product.isNew ? (
-                      <>
-                        <span className="text-xs md:text-sm text-[#a3a3a3] line-through">{product.originalPrice}</span>
-                        <span className="text-lg md:text-xl font-bold text-black font-sans">{product.discountPrice}</span>
-                        <span className="text-sm md:text-base font-bold text-[#dc2626] font-sans">{product.discountRate}</span>
-                      </>
-                    ) : (
-                      <span className="text-lg md:text-xl font-bold text-black font-sans">{product.originalPrice}</span>
-                    )}
-                  </div>
-                  {/* Badges below price */}
-                  <div className="flex gap-2 mt-1">
-                    {product.isNew && (
-                      <span className="bg-black text-white text-[9px] md:text-[10px] font-bold px-2 py-0.5 rounded-full tracking-tighter uppercase">NEW</span>
-                    )}
-                    {product.isBest && (
-                      <span className="bg-[#7c2d12]/90 text-white text-[9px] md:text-[10px] font-bold px-2 py-0.5 rounded-full tracking-tighter uppercase">BEST</span>
-                    )}
-                  </div>
-                </div>
-              </div>
+              <ProductCard key={product.id} product={product} />
             ))}
           </div>
 
           {/* Pagination */}
           {totalPages > 1 && (
-            <div className="mt-24 flex justify-center items-center gap-4 md:gap-6">
+            <div className="mt-24 w-full flex justify-center items-center gap-4 md:gap-6">
               <button 
                 onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
                 disabled={currentPage === 1}
@@ -195,15 +231,19 @@ export default function Bottom() {
               >
                 <ICONS.chevronLeft className="text-[16px]" />
               </button>
-              <div className="flex gap-2 md:gap-3">
-                {[...Array(totalPages)].map((_, i) => (
-                  <button 
-                    key={i + 1} 
-                    onClick={() => handlePageChange(i + 1)}
-                    className={`w-12 h-12 rounded-full text-base font-bold flex items-center justify-center transition-all ${currentPage === i + 1 ? 'bg-[#9c3f00] text-white shadow-lg shadow-[#9c3f00]/20' : 'text-[#1b1d0e] hover:bg-gray-100'}`}
-                  >
-                    {i + 1}
-                  </button>
+              <div className="flex flex-wrap justify-center items-center gap-2 md:gap-3 max-w-full">
+                {getPageNumbers().map((page, i) => (
+                  page === '...' ? (
+                    <span key={`sep-${i}`} className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center text-[#737373] font-bold">...</span>
+                  ) : (
+                    <button 
+                      key={page} 
+                      onClick={() => handlePageChange(page)}
+                      className={`w-10 h-10 md:w-12 md:h-12 rounded-full text-sm md:text-base font-bold flex items-center justify-center transition-all ${currentPage === page ? 'bg-[#9c3f00] text-white shadow-lg shadow-[#9c3f00]/20' : 'text-[#1b1d0e] hover:bg-gray-100'}`}
+                    >
+                      {page}
+                    </button>
+                  )
                 ))}
               </div>
               <button 

@@ -8,12 +8,16 @@ import Guide from './pages/Guide';
 import Privacy from './pages/Privacy';
 import CustomerService from './pages/CustomerService';
 import Best50 from './pages/Best50';
-import NewIn from './pages/NewIn';
+import New5Percent from './pages/New5';
 import Outer from './pages/Outer';
 import Top from './pages/Top';
 import Bottom from './pages/Bottom';
 import Dress from './pages/Dress';
 import Sets from './pages/Sets';
+import Accessory from './pages/Accessory';
+import Sale from './pages/Sale';
+import Events from './pages/Events';
+import ProductDetail from './pages/ProductDetail';
 
 function App() {
   return (
@@ -27,12 +31,16 @@ function App() {
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/customer-service" element={<CustomerService />} />
         <Route path="/best50" element={<Best50 />} />
-        <Route path="/new-in" element={<NewIn />} />
+        <Route path="/new-5" element={<New5Percent />} />
         <Route path="/outer" element={<Outer />} />
         <Route path="/top" element={<Top />} />
         <Route path="/bottom" element={<Bottom />} />
         <Route path="/dress" element={<Dress />} />
         <Route path="/sets" element={<Sets />} />
+        <Route path="/accessory" element={<Accessory />} />
+        <Route path="/sale" element={<Sale />} />
+        <Route path="/events" element={<Events />} />
+        <Route path="/product/:id" element={<ProductDetail />} />
       </Routes>
     </BrowserRouter>
   );

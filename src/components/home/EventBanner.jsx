@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 import { IMAGES } from '../../constants/images';
 
 export default function EventBanner() {
@@ -16,11 +17,13 @@ export default function EventBanner() {
           <span className="text-[10px] md:text-xs tracking-[2px] md:tracking-widest uppercase mb-3 md:mb-4 opacity-90">Special Event</span>
           <h3 className="text-2xl md:text-5xl font-medium mb-4 md:mb-6 font-hei leading-tight">시즌 오프 기획전:<br className="md:hidden" /> 감각의 기록</h3>
           <p className="text-xs md:text-sm opacity-80 mb-6 md:mb-8 max-w-[280px] md:max-w-lg leading-relaxed font-hei">
-            pepi-i 아틀리에가 제안하는 이번 시즌 마지막 큐레이션을 특별한 혜택으로 만나보세요.
+            늘:pepi-i가 제안하는 이번 시즌 마지막 큐레이션을 특별한 혜택으로 만나보세요.
           </p>
-          <button className="px-6 py-2.5 md:px-8 md:py-3 border border-white/40 bg-white/10 backdrop-blur-sm rounded-full text-xs md:text-sm font-medium hover:bg-white hover:text-black transition-all font-hei">
-            기획전 보러가기
-          </button>
+          <Link to="/events">
+            <button className="px-6 py-2.5 md:px-8 md:py-3 border border-white/40 bg-white/10 backdrop-blur-sm rounded-full text-xs md:text-sm font-medium hover:bg-white hover:text-black transition-all font-hei">
+              기획전 보러가기
+            </button>
+          </Link>
         </div>
       </div>
     </section>
