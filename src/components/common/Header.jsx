@@ -8,7 +8,7 @@ export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const isDetailPage = ['/about', '/terms', '/guide', '/privacy', '/customer-service', '/best50', '/new-5', '/outer', '/top', '/bottom', '/dress', '/sets', '/accessory', '/sale', '/events', '/search', '/wishlist'].includes(location.pathname) || location.pathname.startsWith('/product/');
+  const isDetailPage = ['/about', '/terms', '/guide', '/privacy', '/customer-service', '/best50', '/new-5', '/outer', '/top', '/bottom', '/dress', '/sets', '/accessory', '/sale', '/events', '/search', '/wishlist', '/mypage'].includes(location.pathname) || location.pathname.startsWith('/product/');
   const isBest50Page = location.pathname === '/best50';
   const isNewInPage = location.pathname === '/new-5';
   const isOuterPage = location.pathname === '/outer';
@@ -70,7 +70,9 @@ export default function Header() {
                   <Link to="/wishlist" className="hover:opacity-70 transition-opacity text-black/80">
                     <ICONS.wishlist className="text-[22px]" />
                   </Link>
-                  <ICONS.user className="text-[20px] cursor-pointer hover:opacity-70 transition-opacity text-black/80" title="마이페이지" />
+                  <Link to="/mypage" className="hover:opacity-70 transition-opacity text-black/80">
+                    <ICONS.user className="text-[20px]" title="마이페이지" />
+                  </Link>
                 </div>
                 <div className="relative cursor-pointer hover:opacity-70 transition-opacity flex items-center">
                   <ICONS.cart className="text-[22px] text-black/80" />
@@ -234,7 +236,9 @@ export default function Header() {
                 <Link to="/wishlist" className="hover:opacity-70 transition-opacity">
                   <ICONS.wishlist className="text-[22px]" />
                 </Link>
-                <ICONS.user className="text-[20px] cursor-pointer hover:opacity-70 transition-opacity" />
+                <Link to="/mypage" className="hover:opacity-70 transition-opacity">
+                  <ICONS.user className="text-[20px]" />
+                </Link>
               </div>
               <div className="relative cursor-pointer hover:opacity-70 transition-opacity flex items-center">
                 <ICONS.cart className="text-[22px]" />

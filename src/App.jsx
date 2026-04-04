@@ -20,6 +20,7 @@ import Events from './pages/Events';
 import ProductDetail from './pages/ProductDetail';
 import Search from './pages/Search';
 import Wishlist from './pages/Wishlist';
+import MyPage from './pages/MyPage';
 
 function App() {
   return (
@@ -45,6 +46,7 @@ function App() {
         <Route path="/product/:id" element={<ProductDetail />} />
         <Route path="/search" element={<Search />} />
         <Route path="/wishlist" element={<Wishlist />} />
+        <Route path="/mypage" element={<MyPage />} />
       </Routes>
     </BrowserRouter>
   );

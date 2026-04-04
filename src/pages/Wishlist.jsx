@@ -74,7 +74,7 @@ export default function Wishlist() {
   };
 
   const sideMenu = [
-    { name: '프로필', path: '#', icon: User, active: false },
+    { name: '프로필', path: '/mypage', icon: User, active: false },
     { name: '주문/결재 내역', path: '#', icon: ShoppingBag, active: false },
     { name: '관심 상품', path: '/wishlist', icon: Heart, active: true },
     { name: '쿠폰', path: '#', icon: Ticket, active: false },
