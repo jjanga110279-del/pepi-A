@@ -92,11 +92,11 @@ export default function ProductDetail() {
 
             {/* Spirit Description Box */}
             <div className="bg-[#FAFAFA] rounded-2xl p-6 mb-10">
-              <span className="text-[#9C3F00] text-sm mb-2 block font-sans">Romantic Atelier Spirit</span>
+              <span className="text-[#9C3F00] text-sm mb-2 block font-sans">Romantic 늘:pepi-i Spirit</span>
               <h3 className="text-lg font-bold text-[#1b1d0e] font-hei mb-3">섬세한 핀턱과 레이스가 조화로운 페미닌 무드</h3>
               <p className="text-[14px] text-[#564338] leading-[23px] font-hei opacity-80">
                 내추럴한 텍스처가 돋보이는 고급 소재를 사용하여 착용 시 부드럽게 떨어지는 실루엣을 완성합니다. 
-                일상의 특별함을 더해줄 pepi-i만의 감성을 만나보세요.
+                일상의 특별함을 더해줄 늘:pepi-i만의 감성을 만나보세요.
               </p>
             </div>
 

@@ -18,6 +18,7 @@ import Accessory from './pages/Accessory';
 import Sale from './pages/Sale';
 import Events from './pages/Events';
 import ProductDetail from './pages/ProductDetail';
+import Search from './pages/Search';
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
         <Route path="/sale" element={<Sale />} />
         <Route path="/events" element={<Events />} />
         <Route path="/product/:id" element={<ProductDetail />} />
+        <Route path="/search" element={<Search />} />
       </Routes>
     </BrowserRouter>
   );

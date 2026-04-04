@@ -27,7 +27,8 @@ import {
   FaPlus,
   FaShareAlt,
   FaChartLine,
-  FaThumbsUp
+  FaThumbsUp,
+  FaTimes
 } from 'react-icons/fa';
 import { FiHome, FiLayers, FiGrid, FiWind } from 'react-icons/fi';
 import { 
@@ -114,5 +115,6 @@ export const ICONS = {
   share: FaShareAlt,
   trending: FaChartLine,
   recommend: FaThumbsUp,
+  close: FaTimes,
   others: FaEllipsisH,
 };

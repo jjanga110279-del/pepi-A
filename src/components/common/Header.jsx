@@ -8,7 +8,7 @@ export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const isDetailPage = ['/about', '/terms', '/guide', '/privacy', '/customer-service', '/best50', '/new-5', '/outer', '/top', '/bottom', '/dress', '/sets', '/accessory', '/sale', '/events'].includes(location.pathname) || location.pathname.startsWith('/product/');
+  const isDetailPage = ['/about', '/terms', '/guide', '/privacy', '/customer-service', '/best50', '/new-5', '/outer', '/top', '/bottom', '/dress', '/sets', '/accessory', '/sale', '/events', '/search'].includes(location.pathname) || location.pathname.startsWith('/product/');
   const isBest50Page = location.pathname === '/best50';
   const isNewInPage = location.pathname === '/new-5';
   const isOuterPage = location.pathname === '/outer';
@@ -29,6 +29,12 @@ export default function Header() {
   }, []);
 
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
+
+  const goToSearch = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    navigate('/search');
+  };
 
   // Detail Page Header
   if (isDetailPage) {
@@ -56,10 +62,14 @@ export default function Header() {
 
             {/* Right: Icons & Login */}
             <div className="flex items-center gap-4 md:gap-8 z-10">
-              <div className="hidden lg:flex items-center gap-7">
-                <ICONS.search className="text-[18px] cursor-pointer hover:opacity-70 transition-opacity text-black/80" />
-                <ICONS.wishlist className="text-[22px] cursor-pointer hover:opacity-70 transition-opacity text-black/80" />
-                <ICONS.user className="text-[20px] cursor-pointer hover:opacity-70 transition-opacity text-black/80" title="마이페이지" />
+              <div className="flex items-center gap-4 md:gap-7">
+                <button onClick={goToSearch} className="hover:opacity-70 transition-opacity text-black/80 p-1">
+                  <ICONS.search className="text-[18px] md:text-[20px]" />
+                </button>
+                <div className="hidden lg:flex items-center gap-7">
+                  <ICONS.wishlist className="text-[22px] cursor-pointer hover:opacity-70 transition-opacity text-black/80" />
+                  <ICONS.user className="text-[20px] cursor-pointer hover:opacity-70 transition-opacity text-black/80" title="마이페이지" />
+                </div>
                 <div className="relative cursor-pointer hover:opacity-70 transition-opacity flex items-center">
                   <ICONS.cart className="text-[22px] text-black/80" />
                   <span className="absolute -top-1.5 -right-1.5 bg-red-600 text-white text-[10px] md:text-[11px] font-bold rounded-full w-4 h-4 md:w-5 md:h-5 flex items-center justify-center border-2 border-white">2</span>
@@ -79,7 +89,7 @@ export default function Header() {
             </div>
           </div>
 
-          {/* Desktop Navigation for Listing Pages (Best 50, New 5%, Outer, Top, Bottom, Dress, Sets, Accessory, Sale, Events) */}
+          {/* Desktop Navigation */}
           {(isBest50Page || isNewInPage || isOuterPage || isTopPage || isBottomPage || isDressPage || isSetsPage || isAccessoryPage || isSalePage || isEventsPage) && (
             <nav className={`hidden lg:flex justify-center items-center gap-14 mt-10 pb-6 transition-all duration-300 ${isScrolled ? 'scale-95' : ''}`}>
               <div className="relative group">
@@ -193,7 +203,7 @@ export default function Header() {
     <header className={`fixed top-0 left-0 w-full z-50 bg-white/95 backdrop-blur-md border-b border-black/5 transition-all duration-300 ${isScrolled ? 'py-3' : 'py-5 md:py-6'}`}>
       <div className="max-w-[1920px] mx-auto px-4 md:px-10">
         <div className="flex items-center justify-between relative h-12 md:h-14">
-          {/* Left: Mobile Menu & Home/Search */}
+          {/* Left: Mobile Menu & Home */}
           <div className="flex items-center gap-4 md:gap-6 z-10">
             <button className="lg:hidden p-1.5" onClick={toggleMobileMenu}>
               <Menu size={24} />
@@ -205,7 +215,7 @@ export default function Header() {
             </div>
           </div>
 
-          {/* Center: Logo (Absolute centered like Detail pages) */}
+          {/* Center: Logo */}
           <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2">
             <Link to="/">
               <h1 className={`font-serif font-bold italic transition-all duration-300 tracking-tighter ${isScrolled ? 'text-2xl md:text-3xl opacity-90' : 'text-4xl md:text-5xl'}`}>늘:pepi-i</h1>
@@ -214,10 +224,14 @@ export default function Header() {
 
           {/* Right: User Actions */}
           <div className="flex items-center gap-4 md:gap-8 z-10">
-            <div className="hidden lg:flex items-center gap-7 text-black/80">
-              <ICONS.search className="text-[18px] cursor-pointer hover:opacity-70 transition-opacity" />
-              <ICONS.wishlist className="text-[22px] cursor-pointer hover:opacity-70 transition-opacity" />
-              <ICONS.user className="text-[20px] cursor-pointer hover:opacity-70 transition-opacity" />
+            <div className="flex items-center gap-4 md:gap-7 text-black/80">
+              <button onClick={goToSearch} className="hover:opacity-70 transition-opacity p-1">
+                <ICONS.search className="text-[18px] md:text-[20px]" />
+              </button>
+              <div className="hidden lg:flex items-center gap-7">
+                <ICONS.wishlist className="text-[22px] cursor-pointer hover:opacity-70 transition-opacity" />
+                <ICONS.user className="text-[20px] cursor-pointer hover:opacity-70 transition-opacity" />
+              </div>
               <div className="relative cursor-pointer hover:opacity-70 transition-opacity flex items-center">
                 <ICONS.cart className="text-[22px]" />
                 <span className="absolute -top-1.5 -right-1.5 bg-red-600 text-white text-[10px] md:text-[11px] font-bold rounded-full w-4 h-4 md:w-5 md:h-5 flex items-center justify-center border-2 border-white">1</span>
@@ -282,7 +296,8 @@ export default function Header() {
             <div className="flex justify-between items-center mb-12">
               <h2 className="text-xl font-serif font-bold italic">늘:pepi-i</h2>
               <button onClick={toggleMobileMenu}><X size={24} /></button>
-            </div>            <nav className="flex flex-col gap-6">
+            </div>
+            <nav className="flex flex-col gap-6">
               <Link to="/best50" className="text-lg font-bold tracking-widest font-hei text-[#7c2d12] hover:text-[#dc2626] transition-colors" onClick={toggleMobileMenu}>BEST 50</Link>
               {['NEW IN 5%', 'OUTER', 'TOP', 'BOTTOM', 'DRESS', 'SET', 'ACC', 'SALE', 'EVENT'].map((item) => {
                 const isNewIn = item === 'NEW IN 5%';
