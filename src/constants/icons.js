@@ -15,7 +15,7 @@ import {
   FaClock, 
   FaMap,
   FaCreditCard,
-  FaLandmark,
+  FaLandmark, 
   FaPiggyBank,
   FaWallet,
   FaMobileAlt,
@@ -28,7 +28,9 @@ import {
   FaShareAlt,
   FaChartLine,
   FaThumbsUp,
-  FaTimes
+  FaTimes,
+  FaShoppingBag,
+  FaShoePrints
 } from 'react-icons/fa';
 import { FiHome, FiLayers, FiGrid, FiWind } from 'react-icons/fi';
 import { 
@@ -104,6 +106,11 @@ export const ICONS = {
   pantsSet: FiLayers,
   skirtSet: FiLayers,
   sleevelessSet: FiLayers,
+
+  // Accessory Sub-categories
+  jewelry: GiBigDiamondRing,
+  bag: FaShoppingBag,
+  shoes: FaShoePrints,
 
   // Payment Icons
   creditCard: FaCreditCard,

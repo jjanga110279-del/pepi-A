@@ -2,8 +2,14 @@ import React from 'react';
 import { useNavigate } from 'react-router';
 import { ICONS } from '../../constants/icons';
 
-export default function ProductCard({ product, hideNewBadge = false, hideBestBadge = false, hideSaleBadge = false }) {
+export default function ProductCard({ product, hideNewBadge = false, hideBestBadge = false, hideSaleBadge = false, isWishlistPage = false, onRemove }) {
   const navigate = useNavigate();
+  
+  // Initialize state from localStorage to persist across pages
+  const [isLiked, setIsLiked] = React.useState(() => {
+    const wishlist = JSON.parse(localStorage.getItem('pepi_wishlist') || '[]');
+    return wishlist.some(item => item.id === product.id);
+  });
 
   // Determine pricing style based on flags
   const isNew = product.isNew;
@@ -13,6 +19,31 @@ export default function ProductCard({ product, hideNewBadge = false, hideBestBad
   const handleNavigate = (e) => {
     e.preventDefault();
     navigate(`/product/${product.id}`, { state: { product } });
+  };
+
+  const handleLike = (e) => {
+    e.stopPropagation();
+    
+    const wishlist = JSON.parse(localStorage.getItem('pepi_wishlist') || '[]');
+    let newWishlist;
+
+    if (isLiked) {
+      // Remove from wishlist
+      newWishlist = wishlist.filter(item => item.id !== product.id);
+      if (isWishlistPage && onRemove) {
+        onRemove(product.id);
+      }
+    } else {
+      // Add to wishlist
+      if (!wishlist.some(item => item.id === product.id)) {
+        newWishlist = [...wishlist, product];
+      } else {
+        newWishlist = wishlist;
+      }
+    }
+
+    localStorage.setItem('pepi_wishlist', JSON.stringify(newWishlist));
+    setIsLiked(!isLiked);
   };
 
   return (
@@ -27,12 +58,14 @@ export default function ProductCard({ product, hideNewBadge = false, hideBestBad
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
         />
         <button 
-          onClick={(e) => {
-            e.stopPropagation();
-          }}
+          onClick={handleLike}
           className="absolute top-6 right-6 z-10 hover:scale-110 transition-transform drop-shadow-md"
         >
-          <ICONS.heart className="text-white text-[20px] md:text-[24px] brightness-0 invert" />
+          {isLiked ? (
+            <ICONS.heartFilled className="text-[#dc2626] text-[20px] md:text-[24px]" />
+          ) : (
+            <ICONS.heart className="text-white text-[20px] md:text-[24px] brightness-0 invert" />
+          )}
         </button>
       </div>
       

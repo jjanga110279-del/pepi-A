@@ -11,10 +11,10 @@ export default function Accessory() {
 
   const subCategories = [
     { name: '전체', icon: ICONS.all },
-    { name: '주얼리', icon: ICONS.acc },
-    { name: '가방', icon: ICONS.acc },
-    { name: '슈즈', icon: ICONS.acc },
-    { name: '기타', icon: ICONS.acc },
+    { name: '주얼리', icon: ICONS.jewelry },
+    { name: '가방', icon: ICONS.bag },
+    { name: '슈즈', icon: ICONS.shoes },
+    { name: '기타', icon: ICONS.others },
   ];
 
   // 액세서리 세부 상품 데이터 생성

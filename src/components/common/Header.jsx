@@ -8,7 +8,7 @@ export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const isDetailPage = ['/about', '/terms', '/guide', '/privacy', '/customer-service', '/best50', '/new-5', '/outer', '/top', '/bottom', '/dress', '/sets', '/accessory', '/sale', '/events', '/search'].includes(location.pathname) || location.pathname.startsWith('/product/');
+  const isDetailPage = ['/about', '/terms', '/guide', '/privacy', '/customer-service', '/best50', '/new-5', '/outer', '/top', '/bottom', '/dress', '/sets', '/accessory', '/sale', '/events', '/search', '/wishlist'].includes(location.pathname) || location.pathname.startsWith('/product/');
   const isBest50Page = location.pathname === '/best50';
   const isNewInPage = location.pathname === '/new-5';
   const isOuterPage = location.pathname === '/outer';
@@ -67,7 +67,9 @@ export default function Header() {
                   <ICONS.search className="text-[18px] md:text-[20px]" />
                 </button>
                 <div className="hidden lg:flex items-center gap-7">
-                  <ICONS.wishlist className="text-[22px] cursor-pointer hover:opacity-70 transition-opacity text-black/80" />
+                  <Link to="/wishlist" className="hover:opacity-70 transition-opacity text-black/80">
+                    <ICONS.wishlist className="text-[22px]" />
+                  </Link>
                   <ICONS.user className="text-[20px] cursor-pointer hover:opacity-70 transition-opacity text-black/80" title="마이페이지" />
                 </div>
                 <div className="relative cursor-pointer hover:opacity-70 transition-opacity flex items-center">
@@ -229,7 +231,9 @@ export default function Header() {
                 <ICONS.search className="text-[18px] md:text-[20px]" />
               </button>
               <div className="hidden lg:flex items-center gap-7">
-                <ICONS.wishlist className="text-[22px] cursor-pointer hover:opacity-70 transition-opacity" />
+                <Link to="/wishlist" className="hover:opacity-70 transition-opacity">
+                  <ICONS.wishlist className="text-[22px]" />
+                </Link>
                 <ICONS.user className="text-[20px] cursor-pointer hover:opacity-70 transition-opacity" />
               </div>
               <div className="relative cursor-pointer hover:opacity-70 transition-opacity flex items-center">

@@ -19,6 +19,7 @@ import Sale from './pages/Sale';
 import Events from './pages/Events';
 import ProductDetail from './pages/ProductDetail';
 import Search from './pages/Search';
+import Wishlist from './pages/Wishlist';
 
 function App() {
   return (
@@ -43,6 +44,7 @@ function App() {
         <Route path="/events" element={<Events />} />
         <Route path="/product/:id" element={<ProductDetail />} />
         <Route path="/search" element={<Search />} />
+        <Route path="/wishlist" element={<Wishlist />} />
       </Routes>
     </BrowserRouter>
   );
