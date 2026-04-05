@@ -19,7 +19,7 @@ import {
 export default function MyPage() {
   const sideMenu = [
     { name: '프로필', path: '/mypage', icon: User, active: true },
-    { name: '주문/결재 내역', path: '#', icon: ShoppingBag, active: false },
+    { name: '주문/결재 내역', path: '/order-history', icon: ShoppingBag, active: false },
     { name: '관심 상품', path: '/wishlist', icon: Heart, active: false },
     { name: '쿠폰', path: '#', icon: Ticket, active: false },
     { name: '포인트', path: '#', icon: Coins, active: false },
@@ -169,7 +169,7 @@ export default function MyPage() {
                   <div className="flex flex-col gap-1 px-4">
                     <span className="text-[10px] font-bold text-black/40 uppercase tracking-wider font-sans">{product.brand}</span>
                     <h4 className="text-[18px] font-bold text-black font-hei leading-tight">{product.name}</h4>
-                    <span className="text-[18px] font-bold text-black font-serif">{product.price}</span>
+                    <span className="text-[18px] font-bold text-black font-sans">{product.price}</span>
                   </div>
                 </div>
               ))}

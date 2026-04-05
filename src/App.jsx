@@ -21,6 +21,7 @@ import ProductDetail from './pages/ProductDetail';
 import Search from './pages/Search';
 import Wishlist from './pages/Wishlist';
 import MyPage from './pages/MyPage';
+import OrderHistory from './pages/OrderHistory';
 
 function App() {
   return (
@@ -47,6 +48,7 @@ function App() {
         <Route path="/search" element={<Search />} />
         <Route path="/wishlist" element={<Wishlist />} />
         <Route path="/mypage" element={<MyPage />} />
+        <Route path="/order-history" element={<OrderHistory />} />
       </Routes>
     </BrowserRouter>
   );
