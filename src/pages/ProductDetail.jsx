@@ -49,64 +49,87 @@ export default function ProductDetail() {
   const [currentTab, setCurrentTab] = useState('detail');
   const [sortBy, setSortBy] = useState('recommended');
   const [photoOnly, setPhotoOnly] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const reviewsPerPage = 5;
   const tabRef = React.useRef(null);
-  const [reviews, setReviews] = useState([
-    { 
-      id: 1, 
-      user: '김*현', 
-      date: '2024.03.15', 
-      rating: 5, 
-      content: '디자인도 사진이랑 똑같고 배송도 빨랐어요. 소재가 너무 좋아서 다른 색상도 구매하고 싶네요. 사이즈도 정사이즈로 딱 맞아요!', 
-      option: 'Ivory / S 구매', 
-      image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=200&auto=format&fit=crop',
-      helpful: 12,
-      notHelpful: 0
-    },
-    { 
-      id: 2, 
-      user: '이*영', 
-      date: '2024.03.14', 
-      rating: 4, 
-      content: '색감이 너무 예뻐요. 다만 소매가 조금 기네요.', 
-      option: 'Beige / M 구매', 
-      image: 'https://images.unsplash.com/photo-1434389677669-e08b4cac3105?q=80&w=200&auto=format&fit=crop',
-      helpful: 5,
-      notHelpful: 1
-    },
-    { 
-      id: 3, 
-      user: '박*서', 
-      date: '2024.03.12', 
-      rating: 5, 
-      content: '완전 만족합니다! 배송도 빠르고 상품 상태도 아주 좋아요.', 
-      option: 'Charcoal / L 구매', 
-      image: null,
-      helpful: 8,
-      notHelpful: 0
-    },
-    { 
-      id: 4, 
-      user: '최*아', 
-      date: '2024.03.10', 
-      rating: 5, 
-      content: '생각보다 얇지만 핏이 너무 예뻐서 자주 입을 것 같아요.', 
-      option: 'Ivory / M 구매', 
-      image: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=200&auto=format&fit=crop',
-      helpful: 3,
-      notHelpful: 0
-    },
-    { 
-      id: 5, 
-      user: '정*진', 
-      date: '2024.03.08', 
-      rating: 4, 
-      content: '무난하게 입기 좋습니다.', 
-      option: 'Beige / S 구매', 
-      image: null,
-      helpful: 2,
-      notHelpful: 0
-    }
-  ]);
+
+  // 제품별 맞춤 리뷰 데이터 생성 헬퍼 함수
+  const generateReviews = (count, category) => {
+    const names = ['김*현', '이*영', '박*서', '최*아', '정*진', '윤*나', '한*지', '조*우', '임*민', '강*수'];
+    const fashionImages = [
+      '1515886657613-9f3515b0c78f', '1434389677669-e08b4cac3105', '1490481651871-ab68de25d43d',
+      '1539109136881-3be0616acf4b', '1469334031218-e382a71b716b', '1496747611176-843222e1e57c',
+      '1572804013307-f9a8a9264bb7', '1485230895905-ec40ba36bc9c', '1492707892479-7bc8d5a4ee93',
+      '1554412930-c74c636ff851'
+    ];
+
+    const contents = {
+      outer: [
+        '핏이 너무 예술이에요. 어깨 라인이 딱 잡혀서 고급스러워 보입니다.',
+        '소재가 정말 탄탄하네요. 유행 안 타고 오래 입을 수 있을 것 같아요.',
+        '배송도 빠르고 포장도 정성스러워서 감동했습니다. 자켓 맛집이네요.',
+        '색감이 화면보다 실물이 훨씬 예뻐요. 가볍고 따뜻해서 자주 손이 가요.'
+      ],
+      dress: [
+        '기장감도 적당하고 허리 라인을 잘 잡아줘서 날씬해 보여요.',
+        '중요한 모임에 입고 나갔는데 다들 어디서 샀냐고 물어보네요.',
+        '하늘하늘한 소재가 너무 기분 좋아요. 여성스러운 무드 뿜뿜입니다.',
+        '안감이 꼼꼼하게 되어 있어서 비침 걱정 없이 입을 수 있어요.',
+        '데이트 룩으로 최고예요. 남친이 너무 예쁘다고 칭찬해줬어요.'
+      ],
+      top: [
+        '기본 템으로 최고예요. 촉감이 너무 부드러워서 피부에 닿는 느낌이 좋아요.',
+        '깔별로 쟁여두고 싶은 아이템입니다. 청바지, 스커트 어디든 잘 어울려요.',
+        '세탁 후에도 변형이 거의 없어서 놀랐어요. 퀄리티 대박입니다.',
+        '사이즈가 정사이즈라 편하게 잘 맞아요. 가성비 최고의 선택이었습니다.'
+      ]
+    };
+
+    const categoryKey = category === 'outer' ? 'outer' : category === 'dress' ? 'dress' : 'top';
+    const selectedContents = contents[categoryKey];
+
+    return Array.from({ length: count }, (_, i) => {
+      const reviewImages = [];
+      if (i % 2 === 0) {
+        const imgCount = (i % 3) + 1;
+        for (let j = 0; j < imgCount; j++) {
+          reviewImages.push(`https://images.unsplash.com/photo-${fashionImages[(i + j) % fashionImages.length]}?q=80&w=600&auto=format&fit=crop`);
+        }
+      }
+
+      return {
+        id: i + 1,
+        user: names[i % names.length],
+        date: `2024.03.${Math.max(1, 28 - i)}`,
+        rating: i % 5 === 0 ? 4 : 5,
+        content: `${product.name} ${selectedContents[i % selectedContents.length]}`,
+        option: `Option ${i + 1} 구매`,
+        images: reviewImages,
+        activeIndex: 0, // 현재 메인으로 보여줄 이미지 인덱스
+        helpful: Math.floor(Math.random() * 20),
+        notHelpful: Math.floor(Math.random() * 2)
+      };
+    });
+  };
+
+  const getInitialReviews = () => {
+    const isOuter = product.name.includes('자켓') || product.name.includes('코트');
+    const isDress = product.name.includes('원피스');
+    
+    if (isOuter) return generateReviews(6, 'outer');
+    if (isDress) return generateReviews(22, 'dress');
+    return generateReviews(12, 'top');
+  };
+
+  const [reviews, setReviews] = useState(getInitialReviews());
+
+  // 제품이 변경될 때마다 리뷰 데이터 및 페이지 초기화
+  React.useEffect(() => {
+    setReviews(getInitialReviews());
+    setCurrentPage(1);
+    setSelectedUser(null);
+  }, [product.id]);
 
   const handleHelpfulClick = (reviewId, type) => {
     setReviews(prev => prev.map(rev => {
@@ -120,14 +143,50 @@ export default function ProductDetail() {
     }));
   };
 
+  const handleReviewImageClick = (reviewId, idx, e) => {
+    e.stopPropagation(); // 부모의 작성자 필터링 클릭 방지
+    setReviews(prev => prev.map(rev => 
+      rev.id === reviewId ? { ...rev, activeIndex: idx } : rev
+    ));
+  };
+
   const filteredReviews = reviews
-    .filter(rev => !photoOnly || rev.image)
+    .filter(rev => !photoOnly || rev.images.length > 0)
+    .filter(rev => !selectedUser || rev.user === selectedUser)
     .sort((a, b) => {
       if (sortBy === 'latest') return new Date(b.date) - new Date(a.date);
       if (sortBy === 'rating') return b.rating - a.rating;
       if (sortBy === 'recommended') return b.helpful - a.helpful;
       return 0;
     });
+
+  // 페이지네이션 로직
+  const totalPages = Math.ceil(filteredReviews.length / reviewsPerPage);
+  const currentReviews = filteredReviews.slice(
+    (currentPage - 1) * reviewsPerPage,
+    currentPage * reviewsPerPage
+  );
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    if (tabRef.current) {
+      const yOffset = -120;
+      const element = tabRef.current;
+      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
+  };
+
+  const handleUserClick = (userName) => {
+    setSelectedUser(userName);
+    setCurrentPage(1);
+    if (tabRef.current) {
+      const yOffset = -120;
+      const element = tabRef.current;
+      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
+  };
 
   // 장바구니에서 '옵션 변경'으로 들어왔을 때 초기 데이터 설정
   React.useEffect(() => {
@@ -915,22 +974,46 @@ export default function ProductDetail() {
           {currentTab === 'review' && (
             <div className="flex flex-col gap-10">
               <div className="flex justify-between items-center border-b border-black/5 pb-6">
-                <h3 className="text-xl font-bold font-hei text-[#1b1d0e]">구매후기 <span className="text-[#9C3F00]">{reviews.length}</span></h3>
-                <button className="px-6 py-2 bg-[#1b1d0e] text-white text-sm font-bold rounded-lg hover:bg-black transition-all">후기 작성하기</button>
+                <h3 className="text-xl font-bold font-hei text-[#1b1d0e]">
+                  구매후기 <span className="text-[#9C3F00]">{reviews.length}</span>
+                  {selectedUser && (
+                    <span className="ml-4 text-[14px] text-black/40 font-normal">
+                      '{selectedUser}'님의 리뷰 모아보기
+                    </span>
+                  )}
+                </h3>
+                <div className="flex gap-3">
+                  {selectedUser && (
+                    <button 
+                      onClick={() => setSelectedUser(null)}
+                      className="px-4 py-2 border border-black/10 text-sm font-bold rounded-lg hover:bg-[#FAFAFA] transition-all"
+                    >
+                      전체 리뷰 보기
+                    </button>
+                  )}
+                </div>
               </div>
 
               {/* Filter & Sort Bar */}
-              <div className="flex justify-between items-center bg-[#FAFAFA] rounded-xl px-6 py-4">
-                <button 
-                  onClick={() => setPhotoOnly(!photoOnly)}
-                  className="flex items-center gap-2 group"
-                >
-                  <div className={`w-5 h-5 rounded border flex items-center justify-center transition-all ${photoOnly ? 'bg-[#9C3F00] border-[#9C3F00]' : 'bg-white border-black/10 group-hover:border-black/20'}`}>
-                    {photoOnly && <Check size={12} className="text-white" />}
-                  </div>
-                  <span className={`text-[13px] font-medium font-hei ${photoOnly ? 'text-black' : 'text-black/60'}`}>포토리뷰만 보기</span>
-                </button>
-                <div className="flex gap-4">
+              <div className="flex justify-between items-center bg-[#FAFAFA] rounded-xl px-8 py-4">
+                <div className="flex gap-8 items-center">
+                  <button 
+                    onClick={() => setPhotoOnly(false)}
+                    className={`text-[14px] font-hei transition-all relative py-1 ${!photoOnly ? 'text-black font-bold' : 'text-black/40 hover:text-black/60'}`}
+                  >
+                    전체
+                    {!photoOnly && <div className="absolute bottom-0 left-0 w-full h-0.5 bg-black" />}
+                  </button>
+                  <button 
+                    onClick={() => setPhotoOnly(true)}
+                    className={`text-[14px] font-hei transition-all relative py-1 ${photoOnly ? 'text-black font-bold' : 'text-black/40 hover:text-black/60'}`}
+                  >
+                    포토리뷰
+                    {photoOnly && <div className="absolute bottom-0 left-0 w-full h-0.5 bg-black" />}
+                  </button>
+                </div>
+                
+                <div className="flex gap-6 items-center border-l border-black/5 pl-8">
                   {[
                     { id: 'recommended', label: '추천순' },
                     { id: 'latest', label: '최신순' },
@@ -947,78 +1030,136 @@ export default function ProductDetail() {
                 </div>
               </div>
 
-              <div className="flex flex-col gap-8">
-                {filteredReviews.map((rev) => (
-                  <div key={rev.id} className="border-b border-black/5 pb-8">
-                    <div className="flex gap-6">
-                      {rev.image && (
-                        <div className="w-24 h-24 md:w-32 md:h-32 rounded-xl overflow-hidden shrink-0 bg-[#FAFAFA]">
-                          <img src={rev.image} alt="" className="w-full h-full object-cover" />
-                        </div>
-                      )}
-                      <div className="flex flex-col gap-3 flex-grow">
-                        <div className="flex justify-between items-start">
-                          <div className="flex flex-col gap-1">
-                            <div className="flex gap-0.5">
-                              {[...Array(5)].map((_, i) => (
-                                <ICONS.star key={i} className={`${i < rev.rating ? 'text-yellow-400' : 'text-black/10'} text-[10px]`} />
-                              ))}
+              <div className="flex flex-col gap-12">
+                {currentReviews.length > 0 ? (
+                  currentReviews.map((rev) => (
+                    <div key={rev.id} className="border-b border-black/5 pb-16">
+                      <div className="flex flex-col lg:flex-row gap-10">
+                        {/* 1. Review Images (Left) */}
+                        {rev.images.length > 0 && (
+                          <div 
+                            className="w-full lg:w-[320px] flex flex-col gap-3 shrink-0"
+                          >
+                            {/* Main Large Image */}
+                            <div 
+                              onClick={() => handleUserClick(rev.user)}
+                              className="w-full aspect-square rounded-2xl overflow-hidden bg-[#FAFAFA] border border-black/5 cursor-pointer group/img"
+                            >
+                              <img 
+                                src={rev.images[rev.activeIndex || 0]} 
+                                alt="" 
+                                className="w-full h-full object-cover group-hover/img:scale-105 transition-transform duration-500" 
+                              />
                             </div>
-                            <div className="flex items-center gap-2 text-[12px] font-hei">
-                              <span className="font-bold text-[#1b1d0e]">{rev.user}</span>
-                              <span className="text-black/30">{rev.date}</span>
-                            </div>
+                            {/* Sub Images (Horizontal) */}
+                            {rev.images.length > 1 && (
+                              <div className="flex gap-2 overflow-x-auto no-scrollbar">
+                                {rev.images.map((img, idx) => (
+                                  <div 
+                                    key={idx} 
+                                    onClick={(e) => handleReviewImageClick(rev.id, idx, e)}
+                                    className={`w-20 h-20 shrink-0 rounded-xl overflow-hidden border cursor-pointer transition-all ${rev.activeIndex === idx ? 'border-[#9C3F00] opacity-100' : 'border-black/5 opacity-60 hover:opacity-100'}`}
+                                  >
+                                    <img src={img} alt="" className="w-full h-full object-cover" />
+                                  </div>
+                                ))}
+                              </div>
+                            )}
                           </div>
-                        </div>
-                        <div className="text-[12px] text-black/40 font-hei bg-[#F5F5F5] inline-block self-start px-2 py-0.5 rounded">
-                          {rev.option}
-                        </div>
-                        <p className="text-[14px] text-[#564338] leading-relaxed font-hei opacity-80">
-                          {rev.content}
-                        </p>
+                        )}
                         
-                        {/* Helpful Buttons */}
-                        <div className="flex gap-3 mt-4">
-                          <button 
-                            onClick={() => handleHelpfulClick(rev.id, 'helpful')}
-                            className="flex items-center gap-1.5 px-4 py-2 rounded-full border border-black/5 hover:border-black/10 transition-all group"
+                        {/* 2. Review Content (Right) */}
+                        <div className="flex flex-col gap-6 flex-grow">
+                          {/* Clickable Info Area */}
+                          <div 
+                            onClick={() => handleUserClick(rev.user)}
+                            className="flex flex-col gap-4 cursor-pointer group/text"
                           >
-                            <ThumbsUp size={14} className="text-black/20 group-hover:text-[#9C3F00] transition-colors" />
-                            <span className="text-[12px] font-hei text-[#525252]">도움이 돼요</span>
-                            <span className="text-[12px] font-bold font-sans text-black ml-1">{rev.helpful}</span>
-                          </button>
-                          <button 
-                            onClick={() => handleHelpfulClick(rev.id, 'notHelpful')}
-                            className="flex items-center gap-1.5 px-4 py-2 rounded-full border border-black/5 hover:border-black/10 transition-all group"
-                          >
-                            <ThumbsDown size={14} className="text-black/20 group-hover:text-black/40 transition-colors" />
-                            <span className="text-[12px] font-hei text-[#525252]">도움이 안 돼요</span>
-                            <span className="text-[12px] font-bold font-sans text-black ml-1">{rev.notHelpful}</span>
-                          </button>
+                            <div className="flex justify-between items-start">
+                              <div className="flex flex-col gap-1">
+                                <div className="flex gap-0.5 mb-1">
+                                  {[...Array(5)].map((_, i) => (
+                                    <ICONS.star key={i} className={`${i < rev.rating ? 'text-yellow-400' : 'text-black/10'} text-[10px]`} />
+                                  ))}
+                                </div>
+                                <div className="flex items-center gap-2 text-[13px] font-hei">
+                                  <span className="font-bold text-[#1b1d0e] group-hover/text:text-[#9C3F00] transition-colors">{rev.user}</span>
+                                  <span className="text-black/30">{rev.date}</span>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="text-[12px] text-black/40 font-hei bg-[#F5F5F5] inline-block self-start px-2 py-0.5 rounded">
+                              {rev.option}
+                            </div>
+                            <p className="text-[16px] text-[#564338] leading-relaxed font-hei opacity-80 group-hover/text:opacity-100 transition-opacity">
+                              {rev.content}
+                            </p>
+                          </div>
+                          
+                          {/* Helpful Buttons (Always Interactive) */}
+                          <div className="flex gap-3 mt-2">
+                            <button 
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleHelpfulClick(rev.id, 'helpful');
+                              }}
+                              className="flex items-center gap-1.5 px-4 py-2 rounded-full border border-black/5 hover:border-black/10 transition-all group/btn"
+                            >
+                              <ThumbsUp size={14} className="text-black/20 group-hover/btn:text-[#9C3F00] transition-colors" />
+                              <span className="text-[12px] font-hei text-[#525252]">도움이 돼요</span>
+                              <span className="text-[12px] font-bold font-sans text-black ml-1">{rev.helpful}</span>
+                            </button>
+                            <button 
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleHelpfulClick(rev.id, 'notHelpful');
+                              }}
+                              className="flex items-center gap-1.5 px-4 py-2 rounded-full border border-black/5 hover:border-black/10 transition-all group/btn"
+                            >
+                              <ThumbsDown size={14} className="text-black/20 group-hover/btn:text-black/40 transition-colors" />
+                              <span className="text-[12px] font-hei text-[#525252]">도움이 안 돼요</span>
+                              <span className="text-[12px] font-bold font-sans text-black ml-1">{rev.notHelpful}</span>
+                            </button>
+                          </div>
                         </div>
                       </div>
                     </div>
+                  ))
+                ) : (
+                  <div className="py-24 text-center bg-[#FAFAFA] rounded-[32px] border border-dashed border-black/10">
+                    <p className="text-black/40 font-hei">조건에 맞는 리뷰가 없습니다.</p>
                   </div>
-                ))}
+                )}
               </div>
 
               {/* Pagination */}
-              <div className="flex justify-center items-center gap-2 mt-10">
-                <button className="w-10 h-10 flex items-center justify-center rounded-full text-black/20 hover:text-black transition-all">
-                  <ICONS.chevronLeft size={16} />
-                </button>
-                {[1, 2, 3, 4].map((page) => (
+              {totalPages > 1 && (
+                <div className="flex justify-center items-center gap-2 mt-10">
                   <button 
-                    key={page}
-                    className={`w-10 h-10 flex items-center justify-center rounded-full text-sm font-bold transition-all ${page === 1 ? 'bg-[#9C3F00] text-white' : 'text-[#1B1D0E] hover:bg-[#FAFAFA]'}`}
+                    onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
+                    disabled={currentPage === 1}
+                    className="w-10 h-10 flex items-center justify-center rounded-full text-black/20 hover:text-black transition-all disabled:opacity-30"
                   >
-                    {page}
+                    <ICONS.chevronLeft size={16} />
                   </button>
-                ))}
-                <button className="w-10 h-10 flex items-center justify-center rounded-full text-black/20 hover:text-black transition-all">
-                  <ICONS.chevronRight size={16} />
-                </button>
-              </div>
+                  {[...Array(totalPages)].map((_, i) => (
+                    <button 
+                      key={i + 1}
+                      onClick={() => handlePageChange(i + 1)}
+                      className={`w-10 h-10 flex items-center justify-center rounded-full text-sm font-bold transition-all ${currentPage === i + 1 ? 'bg-[#9C3F00] text-white' : 'text-[#1B1D0E] hover:bg-[#FAFAFA]'}`}
+                    >
+                      {i + 1}
+                    </button>
+                  ))}
+                  <button 
+                    onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))}
+                    disabled={currentPage === totalPages}
+                    className="w-10 h-10 flex items-center justify-center rounded-full text-black/20 hover:text-black transition-all disabled:opacity-30"
+                  >
+                    <ICONS.chevronRight size={16} />
+                  </button>
+                </div>
+              )}
             </div>
           )}
         </div>

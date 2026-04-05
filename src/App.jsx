@@ -20,6 +20,9 @@ import Events from './pages/Events';
 import ProductDetail from './pages/ProductDetail';
 import Search from './pages/Search';
 import Wishlist from './pages/Wishlist';
+import MyReviews from './pages/MyReviews';
+import ReviewWrite from './pages/ReviewWrite';
+import ReviewEdit from './pages/ReviewEdit';
 import MyPage from './pages/MyPage';
 import OrderHistory from './pages/OrderHistory';
 import OrderDetail from './pages/OrderDetail';
@@ -66,6 +69,9 @@ function App() {
             <Route path="/product/:id" element={<ProductDetail />} />
             <Route path="/search" element={<Search />} />
             <Route path="/wishlist" element={<Wishlist />} />
+            <Route path="/my-reviews" element={<MyReviews />} />
+            <Route path="/write-review/:id" element={<ReviewWrite />} />
+            <Route path="/edit-review/:id" element={<ReviewEdit />} />
             <Route path="/mypage" element={<MyPage />} />
             <Route path="/order-history" element={<OrderHistory />} />
             <Route path="/order-detail/:id" element={<OrderDetail />} />

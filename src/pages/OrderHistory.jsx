@@ -13,7 +13,8 @@ import {
   ChevronRight,
   Search,
   Calendar,
-  MapPin
+  MapPin,
+  ClipboardList
 } from 'lucide-react';
 
 export default function OrderHistory() {
@@ -35,6 +36,7 @@ export default function OrderHistory() {
     { name: '주문/결재 내역', path: '/order-history', icon: ShoppingBag, active: true },
     { name: '주소록 관리', path: '/address-book', icon: MapPin, active: false },
     { name: '관심 상품', path: '/wishlist', icon: Heart, active: false },
+    { name: '내 리뷰관리', path: '/my-reviews', icon: ClipboardList, active: false },
     { name: '쿠폰', path: '/coupons', icon: Ticket, active: false },
     { name: '포인트', path: '/points', icon: Coins, active: false },
     { name: '설정', path: '/settings', icon: Settings, active: false },
@@ -176,6 +178,15 @@ export default function OrderHistory() {
                             </div>
                           </div>
                           <div className="flex flex-row md:flex-col gap-2 w-full md:w-auto">
+                            {product.status === '배송완료' && (
+                              <Link 
+                                to={`/write-review/${product.id}`}
+                                state={{ product }}
+                                className="flex-1 md:w-auto px-8 py-3 rounded-full text-[14px] font-bold flex items-center justify-center transition-all font-hei bg-[#1b1d0e] text-white hover:bg-black"
+                              >
+                                리뷰 작성하기
+                              </Link>
+                            )}
                             <Link 
                               to="/mypage"
                               className="flex-1 md:w-auto px-8 py-3 rounded-full text-[14px] font-bold flex items-center justify-center transition-all font-hei border border-black/10 text-black hover:bg-gray-200"
