@@ -26,6 +26,9 @@ import Coupons from './pages/Coupons';
 import Points from './pages/Points';
 import Settings from './pages/Settings';
 import EditProfile from './pages/EditProfile';
+import Signup from './pages/Signup';
+import Login from './pages/Login';
+import FindPassword from './pages/FindPassword';
 import { UserProvider } from './context/UserContext';
 
 function App() {
@@ -59,6 +62,9 @@ function App() {
           <Route path="/points" element={<Points />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/edit-profile" element={<EditProfile />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/find-password" element={<FindPassword />} />
         </Routes>
       </BrowserRouter>
     </UserProvider>

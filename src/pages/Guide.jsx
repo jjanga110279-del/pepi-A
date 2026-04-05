@@ -72,11 +72,11 @@ export default function Guide() {
                 <span className="text-[15px] md:text-[16px] font-medium font-hei text-gray-700">무통장 입금</span>
               </div>
               <div className="border border-gray-100 rounded-[24px] p-8 md:p-10 flex flex-col items-center justify-center gap-4 bg-white">
-                <ICONS.kakaoPay className="text-[#FEE500] w-8 h-8 md:w-10 md:h-10" />
+                <div className="w-8 h-8 md:w-10 md:h-10 bg-[#FEE500] rounded-[8px] flex items-center justify-center text-[14px] md:text-[16px] font-black font-sans text-[#1B1D0E]">K</div>
                 <span className="text-[15px] md:text-[16px] font-medium font-hei text-gray-700">카카오페이</span>
               </div>
               <div className="border border-gray-100 rounded-[24px] p-8 md:p-10 flex flex-col items-center justify-center gap-4 bg-white">
-                <ICONS.naverPay className="text-[#03C75A] w-8 h-8 md:w-10 md:h-10" />
+                <div className="w-8 h-8 md:w-10 md:h-10 bg-[#03C75A] rounded-[8px] flex items-center justify-center text-[14px] md:text-[16px] font-black font-sans text-white">N</div>
                 <span className="text-[15px] md:text-[16px] font-medium font-hei text-gray-700">네이버페이</span>
               </div>
               <div className="border border-gray-100 rounded-[24px] p-8 md:p-10 flex flex-col items-center justify-center gap-4 bg-white">
