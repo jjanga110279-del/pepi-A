@@ -77,9 +77,9 @@ export default function Wishlist() {
     { name: '프로필', path: '/mypage', icon: User, active: false },
     { name: '주문/결재 내역', path: '/order-history', icon: ShoppingBag, active: false },
     { name: '관심 상품', path: '/wishlist', icon: Heart, active: true },
-    { name: '쿠폰', path: '#', icon: Ticket, active: false },
-    { name: '포인트', path: '#', icon: Coins, active: false },
-    { name: '설정', path: '#', icon: Settings, active: false },
+    { name: '쿠폰', path: '/coupons', icon: Ticket, active: false },
+    { name: '포인트', path: '/points', icon: Coins, active: false },
+    { name: '설정', path: '/settings', icon: Settings, active: false },
     { name: '고객 센터', path: '/customer-service', icon: Headphones, active: false },
   ];
 
@@ -155,7 +155,7 @@ export default function Wishlist() {
                     setSelectedItems([]);
                   }
                 }}
-                className="flex items-center gap-2 px-4 py-1.5 border border-[#171717] rounded-full text-[12px] font-bold text-[#171717] hover:bg-black hover:text-white transition-all"
+                className="flex items-center gap-2 px-4 py-1.5 border border-black/10 rounded-full text-[12px] font-bold text-black hover:bg-gray-200 transition-all"
               >
                 <span>선택 삭제</span>
                 <Trash2 size={12} />

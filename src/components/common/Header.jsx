@@ -8,7 +8,7 @@ export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const isDetailPage = ['/about', '/terms', '/guide', '/privacy', '/customer-service', '/best50', '/new-5', '/outer', '/top', '/bottom', '/dress', '/sets', '/accessory', '/sale', '/events', '/search', '/wishlist', '/mypage', '/order-history'].includes(location.pathname) || location.pathname.startsWith('/product/');
+  const isDetailPage = ['/about', '/terms', '/guide', '/privacy', '/customer-service', '/best50', '/new-5', '/outer', '/top', '/bottom', '/dress', '/sets', '/accessory', '/sale', '/events', '/search', '/wishlist', '/mypage', '/order-history', '/coupons', '/points', '/settings'].includes(location.pathname) || location.pathname.startsWith('/product/');
   const isBest50Page = location.pathname === '/best50';
   const isNewInPage = location.pathname === '/new-5';
   const isOuterPage = location.pathname === '/outer';

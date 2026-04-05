@@ -1,15 +1,28 @@
-import React from 'react';
-import { Link } from 'react-router';
+import React, { useEffect } from 'react';
+import { Link, useLocation } from 'react-router';
 import Layout from '../components/common/Layout';
 import { CreditCard, Landmark, PiggyBank, MapPin, Package, RotateCcw, AlertTriangle, PenTool, CheckCircle2, Box, MessageCircle, Navigation, Smartphone, ArrowRight } from 'lucide-react';
 import { ICONS } from '../constants/icons';
 
 export default function Guide() {
+  const location = useLocation();
   const tabs = [
     { name: '이용약관', path: '/terms' },
     { name: '개인정보 처리방침', path: '/privacy' },
     { name: '이용안내', path: '/guide' },
   ];
+
+  useEffect(() => {
+    if (location.hash) {
+      const id = location.hash.replace('#', '');
+      const element = document.getElementById(id);
+      if (element) {
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+      }
+    }
+  }, [location]);
 
   return (
     <Layout>
@@ -87,7 +100,7 @@ export default function Guide() {
           </section>
 
           {/* Delivery Section */}
-          <section className="flex flex-col gap-6 md:gap-10">
+          <section id="delivery-section" className="flex flex-col gap-6 md:gap-10 scroll-mt-32">
             <div className="flex items-center gap-3">
               <Package className="text-[#9c3f00] w-6 h-6 md:w-8 md:h-8" />
               <h2 className="text-2xl md:text-[30px] font-hei text-[#1b1d0e]">배송 안내</h2>
@@ -139,7 +152,7 @@ export default function Guide() {
           </section>
 
           {/* Return & Exchange Section */}
-          <section className="flex flex-col gap-6 md:gap-10">
+          <section id="return-section" className="flex flex-col gap-6 md:gap-10 scroll-mt-32">
             <div className="flex items-center gap-3">
               <RotateCcw className="text-[#9c3f00] w-6 h-6 md:w-8 md:h-8" />
               <h2 className="text-2xl md:text-[30px] font-hei text-[#1b1d0e]">교환 및 반품 안내</h2>
@@ -273,3 +286,4 @@ export default function Guide() {
     </Layout>
   );
 }
+

@@ -22,6 +22,9 @@ import Search from './pages/Search';
 import Wishlist from './pages/Wishlist';
 import MyPage from './pages/MyPage';
 import OrderHistory from './pages/OrderHistory';
+import Coupons from './pages/Coupons';
+import Points from './pages/Points';
+import Settings from './pages/Settings';
 
 function App() {
   return (
@@ -49,6 +52,9 @@ function App() {
         <Route path="/wishlist" element={<Wishlist />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/order-history" element={<OrderHistory />} />
+        <Route path="/coupons" element={<Coupons />} />
+        <Route path="/points" element={<Points />} />
+        <Route path="/settings" element={<Settings />} />
       </Routes>
     </BrowserRouter>
   );

@@ -21,9 +21,9 @@ export default function MyPage() {
     { name: '프로필', path: '/mypage', icon: User, active: true },
     { name: '주문/결재 내역', path: '/order-history', icon: ShoppingBag, active: false },
     { name: '관심 상품', path: '/wishlist', icon: Heart, active: false },
-    { name: '쿠폰', path: '#', icon: Ticket, active: false },
-    { name: '포인트', path: '#', icon: Coins, active: false },
-    { name: '설정', path: '#', icon: Settings, active: false },
+    { name: '쿠폰', path: '/coupons', icon: Ticket, active: false },
+    { name: '포인트', path: '/points', icon: Ticket, active: false },
+    { name: '설정', path: '/settings', icon: Settings, active: false },
     { name: '고객 센터', path: '/customer-service', icon: Headphones, active: false },
   ];
 
@@ -103,9 +103,9 @@ export default function MyPage() {
                   <span className="text-[10px] text-black/40 font-hei">보유 쿠폰</span>
                   <span className="text-[20px] font-bold text-black font-sans leading-none">04</span>
                 </div>
-                <button className="w-[112px] h-[37px] bg-[#F0F0F0] rounded-full text-[11px] font-bold text-black flex items-center justify-center hover:bg-black hover:text-white transition-all font-hei">
+                <Link to="/coupons" className="w-[112px] h-[37px] bg-white border border-black/10 rounded-full text-[11px] font-bold text-black flex items-center justify-center hover:bg-gray-200 transition-all font-hei">
                   혜택 더보기
-                </button>
+                </Link>
               </div>
             </div>
           </section>
@@ -114,10 +114,10 @@ export default function MyPage() {
           <section className="border-b border-black/5 pb-16 mb-16">
             <div className="flex items-center justify-between mb-10">
               <h3 className="text-[18px] font-bold text-black font-hei">주문/배송조회</h3>
-              <div className="flex items-center gap-1 text-black/40 hover:text-black cursor-pointer transition-colors">
+              <Link to="/order-history" className="flex items-center gap-1 text-black/40 hover:text-black transition-colors group">
                 <span className="text-[12px] font-bold font-hei">전체 주문 보기</span>
-                <ChevronRight size={14} />
-              </div>
+                <ChevronRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
+              </Link>
             </div>
             
             <div className="bg-white border border-black/5 rounded-[48px] overflow-hidden flex flex-col md:flex-row">
@@ -143,8 +143,8 @@ export default function MyPage() {
                   <p className="text-xl font-bold font-sans">0</p>
                 </div>
                 <div className="flex gap-2">
-                  <button className="px-4 py-1.5 bg-white border border-black/20 rounded-full text-[11px] font-bold font-hei text-black/60 hover:bg-black hover:text-white hover:border-black transition-all">배송조회</button>
-                  <button className="px-4 py-1.5 bg-white border border-black/20 rounded-full text-[11px] font-bold font-hei text-black/60 hover:bg-black hover:text-white hover:border-black transition-all">구매확정</button>
+                  <button className="px-4 py-1.5 bg-white border border-black/10 rounded-full text-[11px] font-bold font-hei text-black hover:bg-gray-200 transition-all">배송조회</button>
+                  <button className="px-4 py-1.5 bg-white border border-black/10 rounded-full text-[11px] font-bold font-hei text-black hover:bg-gray-200 transition-all">구매확정</button>
                 </div>
               </div>
             </div>
