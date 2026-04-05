@@ -25,38 +25,43 @@ import OrderHistory from './pages/OrderHistory';
 import Coupons from './pages/Coupons';
 import Points from './pages/Points';
 import Settings from './pages/Settings';
+import EditProfile from './pages/EditProfile';
+import { UserProvider } from './context/UserContext';
 
 function App() {
   return (
-    <BrowserRouter>
-      <ScrollToTop />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/terms" element={<Terms />} />
-        <Route path="/guide" element={<Guide />} />
-        <Route path="/privacy" element={<Privacy />} />
-        <Route path="/customer-service" element={<CustomerService />} />
-        <Route path="/best50" element={<Best50 />} />
-        <Route path="/new-5" element={<New5Percent />} />
-        <Route path="/outer" element={<Outer />} />
-        <Route path="/top" element={<Top />} />
-        <Route path="/bottom" element={<Bottom />} />
-        <Route path="/dress" element={<Dress />} />
-        <Route path="/sets" element={<Sets />} />
-        <Route path="/accessory" element={<Accessory />} />
-        <Route path="/sale" element={<Sale />} />
-        <Route path="/events" element={<Events />} />
-        <Route path="/product/:id" element={<ProductDetail />} />
-        <Route path="/search" element={<Search />} />
-        <Route path="/wishlist" element={<Wishlist />} />
-        <Route path="/mypage" element={<MyPage />} />
-        <Route path="/order-history" element={<OrderHistory />} />
-        <Route path="/coupons" element={<Coupons />} />
-        <Route path="/points" element={<Points />} />
-        <Route path="/settings" element={<Settings />} />
-      </Routes>
-    </BrowserRouter>
+    <UserProvider>
+      <BrowserRouter>
+        <ScrollToTop />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/terms" element={<Terms />} />
+          <Route path="/guide" element={<Guide />} />
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/customer-service" element={<CustomerService />} />
+          <Route path="/best50" element={<Best50 />} />
+          <Route path="/new-5" element={<New5Percent />} />
+          <Route path="/outer" element={<Outer />} />
+          <Route path="/top" element={<Top />} />
+          <Route path="/bottom" element={<Bottom />} />
+          <Route path="/dress" element={<Dress />} />
+          <Route path="/sets" element={<Sets />} />
+          <Route path="/accessory" element={<Accessory />} />
+          <Route path="/sale" element={<Sale />} />
+          <Route path="/events" element={<Events />} />
+          <Route path="/product/:id" element={<ProductDetail />} />
+          <Route path="/search" element={<Search />} />
+          <Route path="/wishlist" element={<Wishlist />} />
+          <Route path="/mypage" element={<MyPage />} />
+          <Route path="/order-history" element={<OrderHistory />} />
+          <Route path="/coupons" element={<Coupons />} />
+          <Route path="/points" element={<Points />} />
+          <Route path="/settings" element={<Settings />} />
+          <Route path="/edit-profile" element={<EditProfile />} />
+        </Routes>
+      </BrowserRouter>
+    </UserProvider>
   );
 }
 

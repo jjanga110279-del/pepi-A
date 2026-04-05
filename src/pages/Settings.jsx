@@ -110,9 +110,9 @@ export default function Settings() {
             
             <div className="flex flex-col gap-4">
               {[
-                { icon: Lock, label: '비밀번호 변경', path: '#' },
-                { icon: Smartphone, label: '휴대폰 번호 변경', path: '#' },
-                { icon: User, label: '회원 정보 수정', path: '#' }
+                { icon: Lock, label: '비밀번호 변경', path: '/edit-profile#password' },
+                { icon: Smartphone, label: '휴대폰 번호 변경', path: '/edit-profile#phone' },
+                { icon: User, label: '회원 정보 수정', path: '/edit-profile' }
               ].map((item, idx) => (
                 <Link 
                   key={idx} 

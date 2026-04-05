@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import Layout from '../components/common/Layout';
+import { useUser } from '../context/UserContext';
 import { 
   User, 
   ShoppingBag, 
@@ -17,12 +18,14 @@ import {
 } from 'lucide-react';
 
 export default function MyPage() {
+  const { user } = useUser();
+
   const sideMenu = [
     { name: '프로필', path: '/mypage', icon: User, active: true },
     { name: '주문/결재 내역', path: '/order-history', icon: ShoppingBag, active: false },
     { name: '관심 상품', path: '/wishlist', icon: Heart, active: false },
     { name: '쿠폰', path: '/coupons', icon: Ticket, active: false },
-    { name: '포인트', path: '/points', icon: Ticket, active: false },
+    { name: '포인트', path: '/points', icon: Coins, active: false },
     { name: '설정', path: '/settings', icon: Settings, active: false },
     { name: '고객 센터', path: '/customer-service', icon: Headphones, active: false },
   ];
@@ -47,7 +50,7 @@ export default function MyPage() {
   return (
     <Layout>
       <div className="max-w-[1920px] mx-auto px-4 md:px-12 py-10 md:py-20 flex flex-col md:flex-row gap-12">
-        {/* Sidebar - Synchronized with Wishlist */}
+        {/* Sidebar */}
         <aside className="w-full md:w-[260px] shrink-0 border-r border-black/5 pr-12 hidden md:block">
           <h2 className="text-2xl font-bold text-[#1b1d0e] font-serif mb-10 lowercase tracking-tight">my page categories</h2>
           <nav className="flex flex-col gap-6">
@@ -71,39 +74,36 @@ export default function MyPage() {
           {/* Section: User Summary & My Wallet */}
           <section className="flex flex-col xl:flex-row justify-between items-start border-b border-black/5 pb-16 mb-16 gap-12">
             <div className="flex items-center gap-8 py-[69px]">
-              <div className="w-32 h-32 rounded-full border border-black/5 flex items-center justify-center overflow-hidden">
-                 <img src="https://images.unsplash.com/photo-1434389677669-e08b4cac3105?q=80&w=400&auto=format&fit=crop" alt="Elena Kim" className="w-full h-full object-cover" />
+              <div className="w-32 h-32 rounded-full border border-black/5 flex items-center justify-center overflow-hidden bg-gray-50">
+                 <img src={user.profileImage} alt={user.name} className="w-full h-full object-cover" />
               </div>
               <div className="flex flex-col gap-2">
                 <div className="flex items-center gap-4">
-                  <h1 className="text-[36px] font-bold text-black font-serif leading-none">Elena Kim</h1>
-                  <span className="border border-black rounded-full px-4 py-1 text-[10px] font-bold tracking-tight">VIP GOLD</span>
+                  <h1 className="text-[36px] font-bold text-black font-hei leading-none">{user.name}</h1>
+                  <span className="border border-black rounded-full px-4 py-1 text-[10px] font-bold tracking-tight uppercase">{user.rank}</span>
                 </div>
-                <p className="text-[14px] font-medium text-black/60 font-sans">elena.kim@atelier.com</p>
+                <p className="text-[14px] font-medium text-black/60 font-sans">{user.email}</p>
                 <div className="mt-2">
-                  <button className="text-[12px] font-bold text-black border-b border-black pb-0.5 font-hei">회원 정보 수정</button>
+                  <Link to="/edit-profile" className="text-[12px] font-bold text-black border-b border-black pb-0.5 font-hei hover:text-[#dc2626] hover:border-[#dc2626] transition-colors">회원 정보 수정</Link>
                 </div>
               </div>
             </div>
 
-            {/* MY WALLET - Exact Figma Specs */}
+            {/* MY WALLET */}
             <div className="w-[305px] h-[265px] bg-[#FAFAFA]/50 border border-black/5 rounded-[48px] p-[41px] flex flex-col justify-between">
-              {/* Upper Section */}
               <div className="flex flex-col gap-4">
-                <span className="text-[10px] font-bold text-black/40 font-sans tracking-tight">나의 혜택 (My Benefits)</span>
+                <span className="text-[10px] font-bold text-black/40 font-sans tracking-tight uppercase">My Benefits</span>
                 <div className="flex items-baseline gap-2">
                   <span className="text-[36px] font-bold text-[#9C3F00] font-serif leading-none tracking-tight">12,450</span>
                   <span className="text-[14px] font-bold text-black/60 font-sans">P</span>
                 </div>
               </div>
-              
-              {/* Lower Section with Divider */}
               <div className="pt-[40px] border-t border-black/5 flex items-end justify-between">
                 <div className="flex flex-col gap-1">
                   <span className="text-[10px] text-black/40 font-hei">보유 쿠폰</span>
                   <span className="text-[20px] font-bold text-black font-sans leading-none">04</span>
                 </div>
-                <Link to="/coupons" className="w-[112px] h-[37px] bg-white border border-black/10 rounded-full text-[11px] font-bold text-black flex items-center justify-center hover:bg-gray-200 transition-all font-hei">
+                <Link to="/coupons" className="px-5 py-2.5 bg-white border border-black/10 rounded-full text-[11px] font-bold text-black hover:bg-gray-200 transition-all font-hei">
                   혜택 더보기
                 </Link>
               </div>
@@ -135,7 +135,6 @@ export default function MyPage() {
                 </div>
               ))}
               
-              {/* Special Section: Delivery Completed */}
               <div className="flex-[1.5] flex flex-col items-center justify-center py-10 gap-4 bg-[#FAFAFA]/30 p-8">
                 <CheckCircle size={24} className="text-black/20" />
                 <div className="text-center mb-2">
