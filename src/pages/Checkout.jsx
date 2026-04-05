@@ -122,11 +122,10 @@ export default function Checkout() {
       detailAddress: formData.detailAddress
     };
     
-    addOrder(orderData);
+    const newOrder = addOrder(orderData);
     
-    alert('주문이 완료되었습니다. 감사합니다!');
     if (location.state?.fromCart) clearCart();
-    navigate('/order-history');
+    navigate('/order-success', { state: { order: newOrder } });
   };
 
   return (
@@ -300,11 +299,11 @@ export default function Checkout() {
           <div className="w-full max-w-lg bg-white rounded-[40px] shadow-2xl p-10 animate-in zoom-in-95 duration-200">
             <div className="flex justify-between items-center mb-8">
               <h4 className="text-[20px] font-bold text-black font-serif">나의 주소록</h4>
-              <button onClick={() => setShowAddressBook(false)}><X size={24} className="text-black/20 hover:text-black"/></button>
+              <button type="button" onClick={() => setShowAddressBook(false)}><X size={24} className="text-black/20 hover:text-black"/></button>
             </div>
             <div className="flex flex-col gap-4 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
               {addressBook.map((addr) => (
-                <button key={addr.id} onClick={() => selectFromAddressBook(addr)} className="w-full flex flex-col items-start p-6 rounded-3xl border border-black/5 hover:border-[#9C3F00] hover:bg-[#9C3F00]/5 transition-all group text-left">
+                <button key={addr.id} type="button" onClick={() => selectFromAddressBook(addr)} className="w-full flex flex-col items-start p-6 rounded-3xl border border-black/5 hover:border-[#9C3F00] hover:bg-[#9C3F00]/5 transition-all group text-left">
                   <div className="flex items-center gap-2 mb-2">
                     <span className="text-[15px] font-bold text-black font-hei">{addr.label}</span>
                     {addr.isDefault && <span className="px-2 py-0.5 bg-black text-white text-[9px] font-bold rounded-full uppercase">Default</span>}

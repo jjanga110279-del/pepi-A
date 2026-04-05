@@ -19,7 +19,23 @@ import {
 } from 'lucide-react';
 
 export default function MyPage() {
-  const { user } = useUser();
+  const { user, orders } = useUser();
+
+  const orderStats = {
+    paymentDone: 0,
+    preparing: 0,
+    shipping: 0,
+    delivered: 0
+  };
+
+  orders.forEach(order => {
+    order.items.forEach(item => {
+      if (item.status === '결제완료' || item.status === '주문 확인 중') orderStats.paymentDone++;
+      else if (item.status === '상품준비중') orderStats.preparing++;
+      else if (item.status === '배송중') orderStats.shipping++;
+      else if (item.status === '배송완료') orderStats.delivered++;
+    });
+  });
 
   const sideMenu = [
     { name: '프로필', path: '/mypage', icon: User, active: true },
@@ -124,9 +140,9 @@ export default function MyPage() {
             
             <div className="bg-white border border-black/5 rounded-[48px] overflow-hidden flex flex-col md:flex-row">
               {[
-                { label: '결제 완료', icon: CreditCard, count: 0 },
-                { label: '상품 준비 중', icon: ClipboardList, count: 0 },
-                { label: '배송 중', icon: Truck, count: 0 }
+                { label: '결제 완료', icon: CreditCard, count: orderStats.paymentDone },
+                { label: '상품 준비 중', icon: ClipboardList, count: orderStats.preparing },
+                { label: '배송 중', icon: Truck, count: orderStats.shipping }
               ].map((item, idx) => (
                 <div key={idx} className="flex-1 border-b md:border-b-0 md:border-r border-black/5 flex flex-col items-center justify-center py-10 gap-4 group cursor-pointer hover:bg-[#FAFAFA] transition-colors">
                   <item.icon size={24} className="text-black/20 group-hover:text-black transition-colors" />
@@ -141,10 +157,10 @@ export default function MyPage() {
                 <CheckCircle size={24} className="text-black/20" />
                 <div className="text-center mb-2">
                   <p className="text-[12px] font-bold text-black/40 mb-1 font-hei">배송 완료</p>
-                  <p className="text-xl font-bold font-sans">0</p>
+                  <p className="text-xl font-bold font-sans">{orderStats.delivered}</p>
                 </div>
                 <div className="flex gap-2">
-                  <button className="px-4 py-1.5 bg-white border border-black/10 rounded-full text-[11px] font-bold font-hei text-black hover:bg-gray-200 transition-all">배송조회</button>
+                  <button onClick={() => navigate('/order-history')} className="px-4 py-1.5 bg-white border border-black/10 rounded-full text-[11px] font-bold font-hei text-black hover:bg-gray-200 transition-all">배송조회</button>
                   <button className="px-4 py-1.5 bg-white border border-black/10 rounded-full text-[11px] font-bold font-hei text-black hover:bg-gray-200 transition-all">구매확정</button>
                 </div>
               </div>

@@ -176,8 +176,27 @@ export default function OrderHistory() {
                             </div>
                           </div>
                           <div className="flex flex-row md:flex-col gap-2 w-full md:w-auto">
-                            <button className="flex-1 md:w-auto px-8 py-3 rounded-full text-[14px] font-bold flex items-center justify-center transition-all font-hei border border-black/10 text-black hover:bg-gray-200">배송조회</button>
-                            <button className="flex-1 md:w-auto px-8 py-3 rounded-full text-[14px] font-bold flex items-center justify-center transition-all font-hei border border-black/10 text-black hover:bg-gray-200">리뷰 작성</button>
+                            <Link 
+                              to="/mypage"
+                              className="flex-1 md:w-auto px-8 py-3 rounded-full text-[14px] font-bold flex items-center justify-center transition-all font-hei border border-black/10 text-black hover:bg-gray-200"
+                            >
+                              배송조회
+                            </Link>
+                            {product.status === '접수완료' ? (
+                              <Link 
+                                to={`/return-detail/${order.id}/${product.id}`}
+                                className="flex-1 md:w-auto px-8 py-3 rounded-full text-[14px] font-bold flex items-center justify-center transition-all font-hei bg-[#FAFAFA] border border-black/5 text-[#9C3F00] hover:bg-[#9C3F00]/5"
+                              >
+                                접수 내역 확인
+                              </Link>
+                            ) : (
+                              <Link 
+                                to={`/return-request/${order.id}/${product.id}`}
+                                className="flex-1 md:w-auto px-8 py-3 rounded-full text-[14px] font-bold flex items-center justify-center transition-all font-hei border border-black/10 text-black hover:bg-gray-200"
+                              >
+                                교환/반품 접수
+                              </Link>
+                            )}
                           </div>
                         </div>
                       </article>

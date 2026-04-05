@@ -23,6 +23,10 @@ import Wishlist from './pages/Wishlist';
 import MyPage from './pages/MyPage';
 import OrderHistory from './pages/OrderHistory';
 import OrderDetail from './pages/OrderDetail';
+import OrderSuccess from './pages/OrderSuccess';
+import ReturnRequest from './pages/ReturnRequest';
+import ReturnSuccess from './pages/ReturnSuccess';
+import ReturnDetail from './pages/ReturnDetail';
 import Coupons from './pages/Coupons';
 import Points from './pages/Points';
 import Settings from './pages/Settings';
@@ -65,6 +69,10 @@ function App() {
             <Route path="/mypage" element={<MyPage />} />
             <Route path="/order-history" element={<OrderHistory />} />
             <Route path="/order-detail/:id" element={<OrderDetail />} />
+            <Route path="/order-success" element={<OrderSuccess />} />
+            <Route path="/return-request/:orderId/:itemId" element={<ReturnRequest />} />
+            <Route path="/return-success" element={<ReturnSuccess />} />
+            <Route path="/return-detail/:orderId/:itemId" element={<ReturnDetail />} />
             <Route path="/coupons" element={<Coupons />} />
             <Route path="/points" element={<Points />} />
             <Route path="/settings" element={<Settings />} />

@@ -108,6 +108,21 @@ export function UserProvider({ children }) {
       date: new Date().toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\. /g, '.').replace(/\.$/, ''),
     };
     setOrders(prev => [newOrder, ...prev]);
+    return newOrder;
+  };
+
+  const updateOrderItemStatus = (orderId, itemId, newStatus, requestDetail = null) => {
+    setOrders(prev => prev.map(order => {
+      if (order.id === orderId) {
+        return {
+          ...order,
+          items: order.items.map(item => 
+            item.id === itemId ? { ...item, status: newStatus, returnDetail: requestDetail } : item
+          )
+        };
+      }
+      return order;
+    }));
   };
 
   return (
@@ -115,7 +130,7 @@ export function UserProvider({ children }) {
       user, updateUser, 
       coupons, useCoupon,
       addressBook, addAddress, removeAddress, setDefaultAddress,
-      orders, addOrder
+      orders, addOrder, updateOrderItemStatus
     }}>
       {children}
     </UserContext.Provider>
