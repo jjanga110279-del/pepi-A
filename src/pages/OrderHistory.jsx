@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router';
 import Layout from '../components/common/Layout';
+import { useUser } from '../context/UserContext';
 import { 
   User, 
   ShoppingBag, 
@@ -11,10 +12,12 @@ import {
   Headphones,
   ChevronRight,
   Search,
-  Calendar
+  Calendar,
+  MapPin
 } from 'lucide-react';
 
 export default function OrderHistory() {
+  const { orders } = useUser();
   const [currentTab, setCurrentTab] = useState('주문 내역');
   const [dateRange, setDateRange] = useState('3개월');
   const [startDate, setStartDate] = useState('2024-01-01');
@@ -30,6 +33,7 @@ export default function OrderHistory() {
   const sideMenu = [
     { name: '프로필', path: '/mypage', icon: User, active: false },
     { name: '주문/결재 내역', path: '/order-history', icon: ShoppingBag, active: true },
+    { name: '주소록 관리', path: '/address-book', icon: MapPin, active: false },
     { name: '관심 상품', path: '/wishlist', icon: Heart, active: false },
     { name: '쿠폰', path: '/coupons', icon: Ticket, active: false },
     { name: '포인트', path: '/points', icon: Coins, active: false },
@@ -37,110 +41,7 @@ export default function OrderHistory() {
     { name: '고객 센터', path: '/customer-service', icon: Headphones, active: false },
   ];
 
-  const orderItems = [
-    {
-      id: '20240325-001234',
-      date: '2024.03.25',
-      name: '시그니처 울 트라우저',
-      color: 'Charcoal',
-      option: 'M',
-      price: '425,000원',
-      status: '배송중',
-      image: 'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?q=80&w=200&auto=format&fit=crop',
-      buttons: ['리뷰 작성', '반품접수']
-    },
-    {
-      id: '20240320-001102',
-      date: '2024.03.20',
-      name: '프리미엄 캐시미어 가디건',
-      color: 'Beige',
-      option: 'Free',
-      price: '189,000원',
-      status: '배송완료',
-      image: 'https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=200&auto=format&fit=crop',
-      buttons: ['리뷰 작성', '교환접수']
-    },
-    {
-      id: '20240318-001050',
-      date: '2024.03.18',
-      name: '울 블렌드 싱글 코트',
-      color: 'Black',
-      option: 'L',
-      price: '528,000원',
-      status: '배송완료',
-      image: 'https://images.unsplash.com/photo-1539533113208-f6df8cc8b543?q=80&w=200&auto=format&fit=crop',
-      buttons: ['리뷰 작성', '반품접수']
-    },
-    {
-      id: '20240315-000987',
-      date: '2024.03.15',
-      name: '오버사이즈 코튼 셔츠',
-      color: 'White',
-      option: 'L',
-      price: '89,000원',
-      status: '배송완료',
-      image: 'https://images.unsplash.com/photo-1598033129183-c4f50c717658?q=80&w=200&auto=format&fit=crop',
-      buttons: ['리뷰 작성', '교환접수']
-    }
-  ];
-
-  const paymentItems = [
-    {
-      id: 'P20240315-000987',
-      date: '2024.03.15 14:30:22',
-      name: '오버사이즈 코튼 셔츠 외 1건',
-      method: '신용카드 (현대 45**)',
-      amount: '128,000원',
-      status: '결제완료',
-      image: 'https://images.unsplash.com/photo-1598033129183-c4f50c717658?q=80&w=200&auto=format&fit=crop'
-    },
-    {
-      id: 'P20240312-000854',
-      date: '2024.03.12 11:15:45',
-      name: '린넨 블렌드 슬랙스',
-      method: '계좌이체 (국민은행)',
-      amount: '125,000원',
-      status: '결제완료',
-      image: 'https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?q=80&w=200&auto=format&fit=crop'
-    },
-    {
-      id: 'P20240310-000721',
-      date: '2024.03.10 16:40:10',
-      name: '헤비 코튼 스웻셔츠',
-      method: '카카오페이',
-      amount: '79,000원',
-      status: '결제완료',
-      image: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=200&auto=format&fit=crop'
-    },
-    {
-      id: 'P20240308-000654',
-      date: '2024.03.08 09:20:15',
-      name: '프리미엄 캐시미어 가디건',
-      method: '신용카드 (삼성 12**)',
-      amount: '189,000원',
-      status: '결제완료',
-      image: 'https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=200&auto=format&fit=crop'
-    },
-    {
-      id: 'P20240305-000543',
-      date: '2024.03.05 20:12:33',
-      name: '울 블렌드 싱글 코트',
-      method: '네이버페이',
-      amount: '528,000원',
-      status: '결제완료',
-      image: 'https://images.unsplash.com/photo-1539533113208-f6df8cc8b543?q=80&w=200&auto=format&fit=crop'
-    },
-    {
-      id: 'P20240301-000432',
-      date: '2024.03.01 13:05:50',
-      name: '시그니처 울 트라우저',
-      method: '신용카드 (비씨 78**)',
-      amount: '425,000원',
-      status: '결제완료',
-      image: 'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?q=80&w=200&auto=format&fit=crop'
-    }
-  ];
-
+  // 반품 내역은 임시 목데이터 유지 (기능 미구현)
   const returnItems = [
     {
       id: 'R20240320-001102',
@@ -155,83 +56,13 @@ export default function OrderHistory() {
       refundDate: '2024.03.22',
       collectionDate: '완료',
       image: 'https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=200&auto=format&fit=crop'
-    },
-    {
-      id: 'R20240318-001050',
-      date: '2024.03.18',
-      name: '울 블렌드 싱글 코트',
-      color: 'Black',
-      option: 'L',
-      quantity: 1,
-      price: '528,000원',
-      status: '교환접수',
-      reason: '상품 불량',
-      refundDate: '-',
-      collectionDate: '2024.03.21 예정',
-      image: 'https://images.unsplash.com/photo-1539533113208-f6df8cc8b543?q=80&w=200&auto=format&fit=crop'
-    },
-    {
-      id: 'R20240315-000987',
-      date: '2024.03.15',
-      name: '오버사이즈 코튼 셔츠',
-      color: 'White',
-      option: 'L',
-      quantity: 2,
-      price: '178,000원',
-      status: '반품접수',
-      reason: '단순 변심',
-      refundDate: '처리 대기',
-      collectionDate: '2024.03.19 예정',
-      image: 'https://images.unsplash.com/photo-1598033129183-c4f50c717658?q=80&w=200&auto=format&fit=crop'
-    },
-    {
-      id: 'R20240312-000854',
-      date: '2024.03.12',
-      name: '린넨 블렌드 슬랙스',
-      color: 'Navy',
-      option: 'S',
-      quantity: 1,
-      price: '125,000원',
-      status: '반품완료',
-      reason: '사이즈 부적합',
-      refundDate: '2024.03.14',
-      collectionDate: '완료',
-      image: 'https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?q=80&w=200&auto=format&fit=crop'
-    },
-    {
-      id: 'R20240310-000721',
-      date: '2024.03.10',
-      name: '헤비 코튼 스웻셔츠',
-      color: 'Gray',
-      option: 'M',
-      quantity: 1,
-      price: '79,000원',
-      status: '교환완료',
-      reason: '오배송',
-      refundDate: '-',
-      collectionDate: '완료',
-      image: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=200&auto=format&fit=crop'
-    },
-    {
-      id: 'R20240305-000543',
-      date: '2024.03.05',
-      name: '시그니처 울 트라우저',
-      color: 'Charcoal',
-      option: 'M',
-      quantity: 1,
-      price: '425,000원',
-      status: '반품접수',
-      reason: '단순 변심',
-      refundDate: '처리 대기',
-      collectionDate: '2024.03.08 예정',
-      image: 'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?q=80&w=200&auto=format&fit=crop'
     }
   ];
 
   return (
     <Layout>
       <div className="max-w-[1920px] mx-auto px-4 md:px-12 py-10 md:py-20 flex flex-col md:flex-row gap-12">
-        {/* Sidebar - Perfectly matched with MyPage */}
+        {/* Sidebar */}
         <aside className="w-full md:w-[260px] shrink-0 border-r border-black/5 pr-12 hidden md:block">
           <h2 className="text-2xl font-bold text-[#1b1d0e] font-serif mb-10 lowercase tracking-tight">my page categories</h2>
           <nav className="flex flex-col gap-6">
@@ -320,47 +151,46 @@ export default function OrderHistory() {
           <div className="flex flex-col gap-8">
             {currentTab === '주문 내역' && (
               <>
-                {orderItems.map((order) => (
-                  <article key={order.id} className="w-full border border-black/10 rounded-2xl overflow-hidden bg-white">
-                    <div className="bg-[#F9FAFB] h-14 px-6 flex items-center justify-between border-b border-black/5">
-                      <span className="text-[12px] font-medium text-black/60 font-sans">
-                        {order.date} <span className="mx-2 text-black/10">|</span> 주문번호 {order.id}
-                      </span>
-                      <button className="text-[12px] font-bold text-black/40 hover:text-black transition-colors font-hei">상세보기</button>
-                    </div>
-                    <div className="p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-                      <div className="flex items-start gap-6 flex-grow">
-                        <div className="w-[96px] h-[128px] rounded-lg overflow-hidden bg-[#F5F5F5] shrink-0 border border-black/5">
-                          <img src={order.image} alt={order.name} className="w-full h-full object-cover" />
+                {orders.map((order) => (
+                  <div key={order.id} className="flex flex-col gap-4">
+                    {order.items.map((product, pIdx) => (
+                      <article key={`${order.id}-${pIdx}`} className="w-full border border-black/10 rounded-2xl overflow-hidden bg-white">
+                        <div className="bg-[#F9FAFB] h-14 px-6 flex items-center justify-between border-b border-black/5">
+                          <span className="text-[12px] font-medium text-black/60 font-sans">
+                            {order.date} <span className="mx-2 text-black/10">|</span> 주문번호 {order.id}
+                          </span>
+                          <Link to={`/order-detail/${order.id}`} className="text-[12px] font-bold text-black/40 hover:text-black transition-colors font-hei">상세보기</Link>
                         </div>
-                        <div className="flex flex-col gap-2 py-1">
-                          <span className="text-[14px] font-bold text-[#9C3F00] font-hei">{order.status}</span>
-                          <h3 className="text-[18px] font-bold text-black font-hei leading-tight">{order.name}</h3>
-                          <p className="text-[12px] font-bold text-black/40 font-sans uppercase tracking-tight">
-                            Color: {order.color} / Size: {order.option}
-                          </p>
-                          <span className="text-[18px] font-bold text-black font-sans mt-1">{order.price}</span>
+                        <div className="p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+                          <div className="flex items-start gap-6 flex-grow">
+                            <div className="w-[96px] h-[128px] rounded-lg overflow-hidden bg-[#F5F5F5] shrink-0 border border-black/5">
+                              <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
+                            </div>
+                            <div className="flex flex-col gap-2 py-1">
+                              <span className="text-[14px] font-bold text-[#9C3F00] font-hei">{product.status}</span>
+                              <h3 className="text-[18px] font-bold text-black font-hei leading-tight">{product.name}</h3>
+                              <p className="text-[12px] font-bold text-black/40 font-sans uppercase tracking-tight">
+                                Color: {product.color} / Size: {product.size || product.option}
+                              </p>
+                              <span className="text-[18px] font-bold text-black font-sans mt-1">₩{product.price.toLocaleString()}</span>
+                            </div>
+                          </div>
+                          <div className="flex flex-row md:flex-col gap-2 w-full md:w-auto">
+                            <button className="flex-1 md:w-auto px-8 py-3 rounded-full text-[14px] font-bold flex items-center justify-center transition-all font-hei border border-black/10 text-black hover:bg-gray-200">배송조회</button>
+                            <button className="flex-1 md:w-auto px-8 py-3 rounded-full text-[14px] font-bold flex items-center justify-center transition-all font-hei border border-black/10 text-black hover:bg-gray-200">리뷰 작성</button>
+                          </div>
                         </div>
-                      </div>
-                      <div className="flex flex-row md:flex-col gap-2 w-full md:w-auto">
-                        {order.buttons.map((btn, bIdx) => (
-                          <button 
-                            key={bIdx}
-                            className={`flex-1 md:w-auto px-8 py-3 rounded-full text-[14px] font-bold flex items-center justify-center transition-all font-hei border border-black/10 text-black hover:bg-gray-200`}
-                          >
-                            {btn}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  </article>
+                      </article>
+                    ))}
+                  </div>
                 ))}
+                {orders.length === 0 && <div className="py-20 text-center text-black/40 font-hei">주문 내역이 없습니다.</div>}
               </>
             )}
 
             {currentTab === '결제 내역' && (
               <>
-                {paymentItems.map((payment) => (
+                {orders.map((payment) => (
                   <article key={payment.id} className="w-full border border-black/10 rounded-2xl overflow-hidden bg-white shadow-sm">
                     <div className="bg-[#F9FAFB] h-14 px-6 flex items-center justify-between border-b border-black/5">
                       <span className="text-[12px] font-medium text-black/60 font-sans">
@@ -371,24 +201,27 @@ export default function OrderHistory() {
                     <div className="p-8 flex flex-col md:flex-row items-center justify-between gap-8">
                       <div className="flex items-center gap-8 flex-grow">
                         <div className="w-[80px] h-[80px] rounded-2xl overflow-hidden bg-[#F5F5F5] shrink-0 border border-black/5">
-                          <img src={payment.image} alt={payment.name} className="w-full h-full object-cover" />
+                          <img src={payment.items[0].image} alt={payment.items[0].name} className="w-full h-full object-cover" />
                         </div>
                         <div className="flex flex-col gap-1">
-                          <h3 className="text-[18px] font-bold text-black font-hei leading-tight">{payment.name}</h3>
+                          <h3 className="text-[18px] font-bold text-black font-hei leading-tight">
+                            {payment.items[0].name} {payment.items.length > 1 ? `외 ${payment.items.length - 1}건` : ''}
+                          </h3>
                           <div className="flex items-center gap-3">
-                            <span className="text-[14px] text-black/40 font-sans">{payment.method}</span>
+                            <span className="text-[14px] text-black/40 font-sans">{payment.paymentDetail}</span>
                             <span className="w-1 h-1 bg-black/10 rounded-full" />
-                            <span className="text-[14px] font-bold text-[#9C3F00] font-hei">{payment.status}</span>
+                            <span className="text-[14px] font-bold text-[#9C3F00] font-hei">결제완료</span>
                           </div>
                         </div>
                       </div>
                       <div className="text-right flex flex-col items-end">
                         <p className="text-[12px] text-black/40 font-hei mb-1 font-bold">총 결제금액</p>
-                        <span className="text-[24px] font-bold text-black font-sans leading-none">{payment.amount}</span>
+                        <span className="text-[24px] font-bold text-black font-sans leading-none">₩{payment.totalPrice.toLocaleString()}</span>
                       </div>
                     </div>
                   </article>
                 ))}
+                {orders.length === 0 && <div className="py-20 text-center text-black/40 font-hei">결제 내역이 없습니다.</div>}
               </>
             )}
 

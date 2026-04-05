@@ -2,13 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router';
 import { ICONS } from '../../constants/icons';
 import { Menu, X } from 'lucide-react';
+import { useCart } from '../../context/CartContext';
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const isDetailPage = ['/about', '/terms', '/guide', '/privacy', '/customer-service', '/best50', '/new-5', '/outer', '/top', '/bottom', '/dress', '/sets', '/accessory', '/sale', '/events', '/search', '/wishlist', '/mypage', '/order-history', '/coupons', '/points', '/settings', '/edit-profile', '/login', '/signup', '/find-password'].includes(location.pathname) || location.pathname.startsWith('/product/');
+  const { totalCount } = useCart();
+
+  const isDetailPage = ['/about', '/terms', '/guide', '/privacy', '/customer-service', '/best50', '/new-5', '/outer', '/top', '/bottom', '/dress', '/sets', '/accessory', '/sale', '/events', '/search', '/wishlist', '/mypage', '/order-history', '/coupons', '/points', '/settings', '/edit-profile', '/login', '/signup', '/find-password', '/cart'].includes(location.pathname) || location.pathname.startsWith('/product/');
   const isBest50Page = location.pathname === '/best50';
   const isNewInPage = location.pathname === '/new-5';
   const isOuterPage = location.pathname === '/outer';
@@ -74,10 +77,12 @@ export default function Header() {
                     <ICONS.user className="text-[20px]" title="마이페이지" />
                   </Link>
                 </div>
-                <div className="relative cursor-pointer hover:opacity-70 transition-opacity flex items-center">
+                <Link to="/cart" className="relative cursor-pointer hover:opacity-70 transition-opacity flex items-center">
                   <ICONS.cart className="text-[22px] text-black/80" />
-                  <span className="absolute -top-1.5 -right-1.5 bg-red-600 text-white text-[10px] md:text-[11px] font-bold rounded-full w-4 h-4 md:w-5 md:h-5 flex items-center justify-center border-2 border-white">2</span>
-                </div>
+                  {totalCount > 0 && (
+                    <span className="absolute -top-1.5 -right-1.5 bg-red-600 text-white text-[10px] md:text-[11px] font-bold rounded-full w-4 h-4 md:w-5 md:h-5 flex items-center justify-center border-2 border-white">{totalCount}</span>
+                  )}
+                </Link>
               </div>
               
               <div className="w-px h-5 bg-black/10 hidden lg:block mx-3" />
@@ -189,9 +194,9 @@ export default function Header() {
             </div>
             <div className="p-6 pt-12 border-t border-black/5 flex flex-col gap-4 mt-auto">
               <div className="flex items-center gap-2 text-sm font-hei text-left tracking-tight">
-                <button className="hover:text-[#dc2626] transition-colors">로그인</button>
+                <Link to="/login" className="hover:text-[#dc2626] transition-colors">로그인</Link>
                 <span className="text-black/20">/</span>
-                <button className="hover:text-[#dc2626] transition-colors">회원가입</button>
+                <Link to="/signup" className="hover:text-[#dc2626] transition-colors">회원가입</Link>
               </div>
               <button className="text-sm font-hei text-left hover:text-[#dc2626] transition-colors">마이페이지</button>
               <button className="text-sm font-hei text-left hover:text-[#dc2626] transition-colors">고객센터</button>
@@ -240,10 +245,12 @@ export default function Header() {
                   <ICONS.user className="text-[20px]" />
                 </Link>
               </div>
-              <div className="relative cursor-pointer hover:opacity-70 transition-opacity flex items-center">
+              <Link to="/cart" className="relative cursor-pointer hover:opacity-70 transition-opacity flex items-center">
                 <ICONS.cart className="text-[22px]" />
-                <span className="absolute -top-1.5 -right-1.5 bg-red-600 text-white text-[10px] md:text-[11px] font-bold rounded-full w-4 h-4 md:w-5 md:h-5 flex items-center justify-center border-2 border-white">1</span>
-              </div>
+                {totalCount > 0 && (
+                  <span className="absolute -top-1.5 -right-1.5 bg-red-600 text-white text-[10px] md:text-[11px] font-bold rounded-full w-4 h-4 md:w-5 md:h-5 flex items-center justify-center border-2 border-white">{totalCount}</span>
+                )}
+              </Link>
             </div>
             
             <div className="w-px h-5 bg-black/10 hidden lg:block mx-3" />
@@ -343,9 +350,9 @@ export default function Header() {
           </div>
           <div className="p-6 pt-12 border-t border-black/5 flex flex-col gap-4 mt-auto">
             <div className="flex items-center gap-2 text-sm font-hei text-left tracking-tight">
-              <Link to="/login" className="hover:text-[#dc2626] transition-colors">로그인</Link>
+              <Link to="/login" className="hover:text-[#dc2626] transition-colors" onClick={toggleMobileMenu}>로그인</Link>
               <span className="text-black/20">/</span>
-              <Link to="/signup" className="hover:text-[#dc2626] transition-colors">회원가입</Link>
+              <Link to="/signup" className="hover:text-[#dc2626] transition-colors" onClick={toggleMobileMenu}>회원가입</Link>
             </div>
             <button className="text-sm font-hei text-left hover:text-[#dc2626] transition-colors">마이페이지</button>
             <button className="text-sm font-hei text-left hover:text-[#dc2626] transition-colors">고객센터</button>
