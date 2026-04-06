@@ -64,7 +64,7 @@ export default function OrderDetail() {
               <section className="flex flex-col gap-6">
                 <div className="flex items-center gap-3 border-b border-black/5 pb-4">
                   <Package size={20} className="text-black/20" />
-                  <h2 className="text-[20px] font-bold text-[#1B1D0E] font-serif">주문 상품 정보</h2>
+                  <h2 className="text-[20px] font-bold text-[#1B1D0E] font-hei">주문 상품 정보</h2>
                 </div>
                 <div className="flex flex-col gap-4">
                   {order.items.map((item, idx) => (
@@ -78,7 +78,7 @@ export default function OrderDetail() {
                             <span className="text-[11px] font-bold text-black/40 uppercase tracking-widest font-sans">{item.brand}</span>
                             <h3 className="text-[18px] font-bold text-black font-hei leading-tight">{item.name}</h3>
                           </div>
-                          <span className="px-4 py-1.5 bg-black text-white text-[11px] font-bold rounded-full uppercase tracking-tight">{item.status}</span>
+                          <span className="text-[14px] font-bold text-[#dc2626] font-hei">{item.status}</span>
                         </div>
                         <p className="text-[13px] font-bold text-black/40 font-sans uppercase">Color: {item.color} / Size: {item.size || item.option}</p>
                         <div className="flex items-center gap-3 mt-2">
@@ -96,7 +96,7 @@ export default function OrderDetail() {
               <section className="flex flex-col gap-6">
                 <div className="flex items-center gap-3 border-b border-black/5 pb-4">
                   <Truck size={20} className="text-black/20" />
-                  <h2 className="text-[20px] font-bold text-[#1B1D0E] font-serif">배송지 정보</h2>
+                  <h2 className="text-[20px] font-bold text-[#1B1D0E] font-hei">배송지 정보</h2>
                 </div>
                 <div className="bg-[#FAFAFA] rounded-[40px] p-10 flex flex-col gap-8">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
@@ -137,9 +137,9 @@ export default function OrderDetail() {
             {/* 3. Payment Summary */}
             <aside className="w-full lg:w-[400px] shrink-0 lg:sticky lg:top-32">
               <div className="bg-white border border-black/5 shadow-xl rounded-[48px] overflow-hidden">
-                <div className="bg-black p-8 flex items-center gap-4">
-                  <CreditCard size={24} className="text-white/60" />
-                  <h3 className="text-[18px] font-bold text-white font-serif">결제 정보 상세</h3>
+                <div className="bg-gray-100 p-8 flex items-center gap-4">
+                  <CreditCard size={24} className="text-black/40" />
+                  <h3 className="text-[18px] font-bold text-black/80 font-hei">결제 정보 상세</h3>
                 </div>
                 <div className="p-10 flex flex-col gap-8">
                   <div className="flex flex-col gap-6">

@@ -63,9 +63,9 @@ export default function AddressBook() {
             <h1 className="text-[36px] font-bold text-[#000000] font-hei">주소록 관리</h1>
             <button 
               onClick={() => setShowAddForm(true)}
-              className="flex items-center gap-2 px-6 py-3 bg-black text-white rounded-full text-[14px] font-bold hover:bg-black/80 transition-all shadow-lg"
+              className="px-10 py-2.5 bg-gray-100 hover:bg-gray-200 rounded-full text-[13px] font-medium transition-all inline-flex items-center gap-2 font-hei"
             >
-              <Plus size={18} /> 새 배송지 등록
+              <Plus size={16} /> <span className="font-hei">새 배송지 등록</span>
             </button>
           </div>
 
@@ -77,7 +77,7 @@ export default function AddressBook() {
                     <div className="flex flex-col gap-1">
                       <div className="flex items-center gap-2">
                         <span className="text-[16px] font-bold text-black font-hei">{addr.label}</span>
-                        {addr.isDefault && <span className="px-2 py-0.5 bg-black text-white text-[9px] font-bold rounded-full uppercase tracking-tighter">Default</span>}
+                        {addr.isDefault && <span className="px-2 py-0.5 bg-white border border-black text-black text-[9px] font-bold rounded-full uppercase tracking-tighter">Default</span>}
                       </div>
                       <span className="text-[14px] font-bold text-black font-hei">{addr.name}</span>
                     </div>
