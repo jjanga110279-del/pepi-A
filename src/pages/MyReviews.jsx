@@ -139,10 +139,12 @@ export default function MyReviews() {
                     <ClipboardList size={32} className="text-black/10" />
                   </div>
                   <p className="text-[16px] text-black/40 font-hei">작성된 리뷰가 없습니다.</p>
-                  <Link to="/order-history" className="px-8 py-3 bg-[#1b1d0e] text-white rounded-full text-[14px] font-bold font-hei hover:bg-black transition-all">
+                  <Link 
+                   to="/order-history" 
+                   className="w-full max-w-[280px] h-[66px] bg-white border border-[#9C3F00] text-[#9C3F00] rounded-full flex items-center justify-center text-[16px] font-bold hover:bg-[#9C3F00]/5 transition-all active:translate-y-0.5 font-hei"
+                  >
                     리뷰 작성하러 가기
-                  </Link>
-                </div>
+                  </Link>                </div>
               )}
             </div>
           </div>

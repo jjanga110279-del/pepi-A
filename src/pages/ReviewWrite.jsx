@@ -96,13 +96,6 @@ export default function ReviewWrite() {
       <div className="max-w-[1280px] mx-auto px-4 md:px-12 py-12 md:py-32">
         {/* Header Section */}
         <div className="flex flex-col gap-6 mb-16 md:mb-32">
-          <button 
-            onClick={() => navigate(-1)}
-            className="flex items-center gap-2 text-black/40 hover:text-black transition-colors group w-fit"
-          >
-            <ChevronLeft size={20} className="group-hover:-translate-x-1 transition-transform" />
-            <span className="text-[14px] font-bold font-hei">뒤로가기</span>
-          </button>
           <div className="flex flex-col gap-2">
             <h1 className="text-[36px] font-black text-[#1B1D0E] font-hei leading-tight">리뷰 작성하기</h1>
             <p className="text-[14px] text-[#9CA3AF] font-hei">구매하신 상품의 소중한 경험을 들려주세요.</p>
@@ -269,13 +262,12 @@ export default function ReviewWrite() {
               <p className="text-[12px] text-[#9CA3AF] font-hei max-w-[440px]">
                 리뷰를 게시함으로써 커뮤니티 가이드라인 및 개인정보 처리방침에 동의하게 됩니다.
               </p>
-              <button 
+              <button
                 type="submit"
-                className="w-full md:w-[215px] h-[60px] bg-[#1B1D0E] text-white rounded-full text-[14px] font-bold font-hei hover:bg-black transition-all shadow-xl shadow-black/10"
+                className="w-full md:w-[215px] h-[66px] bg-white border border-[#9C3F00] text-[#9C3F00] rounded-full text-[16px] font-bold font-hei hover:bg-[#9C3F00]/5 transition-all active:translate-y-0.5"
               >
                 리뷰 게시하기
-              </button>
-            </div>
+              </button>            </div>
           </form>
         </div>
       </div>

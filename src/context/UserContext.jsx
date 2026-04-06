@@ -5,6 +5,23 @@ const UserContext = createContext();
 export function UserProvider({ children }) {
   const [user, setUser] = useState(null);
 
+  const login = (email) => {
+    setUser({
+      name: '짱아',
+      email: email || 'elena.kim@atelier.com',
+      phone: '010-1234-5678',
+      zipcode: '06035',
+      address: '서울특별시 강남구 가로수길 15',
+      detailAddress: '아뜰리에 빌딩 3층',
+      profileImage: 'https://images.unsplash.com/photo-1434389677669-e08b4cac3105?q=80&w=400&auto=format&fit=crop',
+      rank: 'VIP GOLD'
+    });
+  };
+
+  const logout = () => {
+    setUser(null);
+  };
+
   // 쿠폰 상태 관리
   const [coupons, setCoupons] = useState([
     { id: 1, name: '신규 가입 10,000원 할인', amount: 10000, minPrice: 50000, expiry: '2024.12.31', used: false },
@@ -14,7 +31,7 @@ export function UserProvider({ children }) {
 
   // 주소록 상태 관리
   const [addressBook, setAddressBook] = useState([
-    { id: 1, label: '우리집 (기본)', name: 'Elena Kim', phone: '010-1234-5678', zipcode: '06035', address: '서울특별시 강남구 가로수길 15', detail: '아뜰리에 빌딩 3층', isDefault: true },
+    { id: 1, label: '우리집 (기본)', name: '짱아', phone: '010-1234-5678', zipcode: '06035', address: '서울특별시 강남구 가로수길 15', detail: '아뜰리에 빌딩 3층', isDefault: true },
     { id: 2, label: '회사', name: '김엘레나', phone: '010-1234-5678', zipcode: '04524', address: '서울특별시 중구 세종대로 110', detail: '7층 디자인팀', isDefault: false }
   ]);
 
@@ -154,7 +171,7 @@ export function UserProvider({ children }) {
 
   return (
     <UserContext.Provider value={{ 
-      user, updateUser, 
+      user, updateUser, login, logout,
       coupons, useCoupon,
       addressBook, addAddress, removeAddress, setDefaultAddress,
       orders, addOrder, updateOrderItemStatus,

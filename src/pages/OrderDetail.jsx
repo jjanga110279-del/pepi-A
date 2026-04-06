@@ -105,7 +105,7 @@ export default function OrderDetail() {
                         <UserIcon size={16} />
                         <span className="text-[12px] font-bold uppercase tracking-widest font-hei">수령인</span>
                       </div>
-                      <p className="text-[16px] font-bold text-black font-hei">{order.shippingName || 'Elena Kim'}</p>
+                      <p className="text-[16px] font-bold text-black font-hei">{order.shippingName || '짱아'}</p>
                     </div>
                     <div className="flex flex-col gap-4">
                       <div className="flex items-center gap-2 text-black/40">

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router';
 import Layout from '../components/common/Layout';
 import { useUser } from '../context/UserContext';
 import { 
@@ -18,7 +18,17 @@ import {
 } from 'lucide-react';
 
 export default function OrderHistory() {
-  const { orders } = useUser();
+  const { orders, user } = useUser();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user) {
+      navigate('/login', { state: { from: '/order-history' } });
+    }
+  }, [user, navigate]);
+
+  if (!user) return null;
+
   const [currentTab, setCurrentTab] = useState('주문 내역');
   const [dateRange, setDateRange] = useState('3개월');
   const [startDate, setStartDate] = useState('2024-01-01');
@@ -182,7 +192,7 @@ export default function OrderHistory() {
                               <Link 
                                 to={`/write-review/${product.id}`}
                                 state={{ product }}
-                                className="flex-1 md:w-auto px-8 py-3 rounded-full text-[14px] font-bold flex items-center justify-center transition-all font-hei bg-[#1b1d0e] text-white hover:bg-black"
+                                className="flex-1 md:w-auto px-8 py-3 rounded-full text-[14px] font-bold flex items-center justify-center transition-all font-hei border border-[#9C3F00] text-[#9C3F00] hover:bg-[#9C3F00]/5 bg-white"
                               >
                                 리뷰 작성하기
                               </Link>

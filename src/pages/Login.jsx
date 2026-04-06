@@ -3,9 +3,11 @@ import { Link, useNavigate } from 'react-router';
 import Layout from '../components/common/Layout';
 import loginEditorial from '../assets/images/login_editorial.png';
 import { Mail, Lock, Eye, EyeOff, Check } from 'lucide-react';
+import { useUser } from '../context/UserContext';
 
 export default function Login() {
   const navigate = useNavigate();
+  const { login } = useUser();
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
@@ -15,8 +17,9 @@ export default function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert('임시 비밀번호로 로그인되었습니다. 보안을 위해 비밀번호를 바로 변경해주세요.');
-    navigate('/edit-profile#password');
+    login(formData.email);
+    alert('반가워요, 짱아님! 로그인이 완료되었습니다.');
+    navigate(-1); // 이전 페이지로 이동
   };
 
   return (

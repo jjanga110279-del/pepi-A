@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router';
 import { ICONS } from '../../constants/icons';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, LogOut } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
+import { useUser } from '../../context/UserContext';
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -10,8 +11,25 @@ export default function Header() {
   const location = useLocation();
   const navigate = useNavigate();
   const { totalCount } = useCart();
+  const { user, logout } = useUser();
 
-  const isDetailPage = ['/about', '/terms', '/guide', '/privacy', '/customer-service', '/best50', '/new-5', '/outer', '/top', '/bottom', '/dress', '/sets', '/accessory', '/sale', '/events', '/search', '/wishlist', '/mypage', '/order-history', '/order-success', '/return-success', '/coupons', '/points', '/settings', '/edit-profile', '/login', '/signup', '/find-password', '/cart', '/checkout'].includes(location.pathname) || location.pathname.startsWith('/product/') || location.pathname.startsWith('/order-detail/') || location.pathname.startsWith('/return-request/');
+  const handleLogout = () => {
+    logout();
+    alert('로그아웃 되었습니다.');
+    navigate('/');
+  };
+
+  const handleProtectedNavigation = (path, e) => {
+    e.preventDefault();
+    if (!user) {
+      alert('로그인이 필요한 서비스입니다.');
+      navigate('/login', { state: { from: path } });
+    } else {
+      navigate(path);
+    }
+  };
+
+  const isDetailPage = ['/about', '/terms', '/guide', '/privacy', '/customer-service', '/best50', '/new-5', '/outer', '/top', '/bottom', '/dress', '/sets', '/accessory', '/sale', '/events', '/search', '/wishlist', '/mypage', '/order-history', '/order-success', '/return-success', '/coupons', '/points', '/settings', '/edit-profile', '/login', '/signup', '/find-password', '/cart', '/checkout'].includes(location.pathname) || location.pathname.startsWith('/product/') || location.pathname.startsWith('/order-detail/') || location.pathname.startsWith('/return-request/') || location.pathname.startsWith('/write-review/');
   const isBest50Page = location.pathname === '/best50';
   const isNewInPage = location.pathname === '/new-5';
   const isOuterPage = location.pathname === '/outer';
@@ -70,27 +88,40 @@ export default function Header() {
                   <ICONS.search className="text-[18px] md:text-[20px]" />
                 </button>
                 <div className="hidden lg:flex items-center gap-7">
-                  <Link to="/wishlist" className="hover:opacity-70 transition-opacity text-black/80">
+                  <button onClick={(e) => handleProtectedNavigation('/wishlist', e)} className="hover:opacity-70 transition-opacity text-black/80">
                     <ICONS.wishlist className="text-[22px]" />
-                  </Link>
-                  <Link to="/mypage" className="hover:opacity-70 transition-opacity text-black/80">
+                  </button>
+                  <button onClick={(e) => handleProtectedNavigation('/mypage', e)} className="hover:opacity-70 transition-opacity text-black/80">
                     <ICONS.user className="text-[20px]" title="마이페이지" />
-                  </Link>
+                  </button>
                 </div>
-                <Link to="/cart" className="relative cursor-pointer hover:opacity-70 transition-opacity flex items-center">
+                <button onClick={(e) => handleProtectedNavigation('/cart', e)} className="relative cursor-pointer hover:opacity-70 transition-opacity flex items-center">
                   <ICONS.cart className="text-[22px] text-black/80" />
-                  {totalCount > 0 && (
+                  {user && totalCount > 0 && (
                     <span className="absolute -top-1.5 -right-1.5 bg-red-600 text-white text-[10px] md:text-[11px] font-bold rounded-full w-4 h-4 md:w-5 md:h-5 flex items-center justify-center border-2 border-white">{totalCount}</span>
                   )}
-                </Link>
+                </button>
               </div>
               
               <div className="w-px h-5 bg-black/10 hidden lg:block mx-3" />
-              <div className="hidden sm:flex items-center gap-2 text-sm md:text-[16px] font-bold font-hei text-black/90 tracking-tight">
-                <Link to="/login" className="hover:text-[#dc2626] transition-colors">로그인</Link>
-                <span className="text-black/20 font-normal">/</span>
-                <Link to="/signup" className="hover:text-[#dc2626] transition-colors">회원가입</Link>
-              </div>
+              {user ? (
+                <div className="hidden sm:flex items-center gap-4 text-sm md:text-[16px] font-bold font-hei text-black/90 tracking-tight">
+                  <span className="text-[#9C3F00]">{user.name}님</span>
+                  <button 
+                    onClick={handleLogout}
+                    className="flex items-center gap-1 text-black/40 hover:text-black transition-colors"
+                  >
+                    <LogOut size={16} />
+                    <span className="text-[13px]">로그아웃</span>
+                  </button>
+                </div>
+              ) : (
+                <div className="hidden sm:flex items-center gap-2 text-sm md:text-[16px] font-bold font-hei text-black/90 tracking-tight">
+                  <Link to="/login" className="hover:text-[#dc2626] transition-colors">로그인</Link>
+                  <span className="text-black/20 font-normal">/</span>
+                  <Link to="/signup" className="hover:text-[#dc2626] transition-colors">회원가입</Link>
+                </div>
+              )}
               
               <button className="lg:hidden p-1.5 ml-1" onClick={toggleMobileMenu}>
                 <Menu size={26} />
@@ -238,27 +269,40 @@ export default function Header() {
                 <ICONS.search className="text-[18px] md:text-[20px]" />
               </button>
               <div className="hidden lg:flex items-center gap-7">
-                <Link to="/wishlist" className="hover:opacity-70 transition-opacity">
+                <button onClick={(e) => handleProtectedNavigation('/wishlist', e)} className="hover:opacity-70 transition-opacity">
                   <ICONS.wishlist className="text-[22px]" />
-                </Link>
-                <Link to="/mypage" className="hover:opacity-70 transition-opacity">
+                </button>
+                <button onClick={(e) => handleProtectedNavigation('/mypage', e)} className="hover:opacity-70 transition-opacity">
                   <ICONS.user className="text-[20px]" />
-                </Link>
+                </button>
               </div>
-              <Link to="/cart" className="relative cursor-pointer hover:opacity-70 transition-opacity flex items-center">
+              <button onClick={(e) => handleProtectedNavigation('/cart', e)} className="relative cursor-pointer hover:opacity-70 transition-opacity flex items-center">
                 <ICONS.cart className="text-[22px]" />
-                {totalCount > 0 && (
+                {user && totalCount > 0 && (
                   <span className="absolute -top-1.5 -right-1.5 bg-red-600 text-white text-[10px] md:text-[11px] font-bold rounded-full w-4 h-4 md:w-5 md:h-5 flex items-center justify-center border-2 border-white">{totalCount}</span>
                 )}
-              </Link>
+              </button>
             </div>
             
             <div className="w-px h-5 bg-black/10 hidden lg:block mx-3" />
-            <div className="hidden sm:flex items-center gap-2 text-sm md:text-[16px] font-bold font-hei text-black/90 tracking-tight">
-              <Link to="/login" className="hover:text-[#dc2626] transition-colors">로그인</Link>
-              <span className="text-black/20 font-normal">/</span>
-              <Link to="/signup" className="hover:text-[#dc2626] transition-colors">회원가입</Link>
-            </div>
+            {user ? (
+              <div className="hidden sm:flex items-center gap-4 text-sm md:text-[16px] font-bold font-hei text-black/90 tracking-tight">
+                <span className="text-[#dc2626]">{user.name}님</span>
+                <button 
+                  onClick={handleLogout}
+                  className="flex items-center gap-1 text-black/40 hover:text-black transition-colors"
+                >
+                  <LogOut size={16} />
+                  <span className="text-[13px]">로그아웃</span>
+                </button>
+              </div>
+            ) : (
+              <div className="hidden sm:flex items-center gap-2 text-sm md:text-[16px] font-bold font-hei text-black/90 tracking-tight">
+                <Link to="/login" className="hover:text-[#dc2626] transition-colors">로그인</Link>
+                <span className="text-black/20 font-normal">/</span>
+                <Link to="/signup" className="hover:text-[#dc2626] transition-colors">회원가입</Link>
+              </div>
+            )}
             
             <button className="lg:hidden p-1.5 ml-1" onClick={toggleMobileMenu}>
               <Menu size={26} />

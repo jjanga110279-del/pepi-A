@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link } from 'react-router';
+import React, { useEffect } from 'react';
+import { Link, useNavigate } from 'react-router';
 import Layout from '../components/common/Layout';
 import { useUser } from '../context/UserContext';
 import { 
@@ -20,6 +20,15 @@ import {
 
 export default function MyPage() {
   const { user, orders } = useUser();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user) {
+      navigate('/login', { state: { from: '/mypage' } });
+    }
+  }, [user, navigate]);
+
+  if (!user) return null;
 
   const orderStats = {
     paymentDone: 0,

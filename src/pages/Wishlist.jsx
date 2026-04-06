@@ -236,7 +236,7 @@ export default function Wishlist() {
               <p className="text-[#737373] text-sm mb-8 font-hei">마음에 드는 상품에 하트를 눌러보세요!</p>
               <Link 
                 to="/" 
-                className="px-10 py-2.5 bg-gray-100 hover:bg-gray-200 rounded-full text-[13px] font-medium transition-all inline-block text-black"
+                className="w-full max-w-[280px] h-[66px] bg-white border border-[#9C3F00] text-[#9C3F00] rounded-full flex items-center justify-center text-[16px] font-bold hover:bg-[#9C3F00]/5 transition-all active:translate-y-0.5 font-hei"
               >
                 쇼핑하러 가기
               </Link>
