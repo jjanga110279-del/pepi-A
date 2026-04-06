@@ -15,7 +15,8 @@ import {
   Building2,
   Banknote,
   MapPin,
-  Plus
+  Plus,
+  Search as SearchIcon
 } from 'lucide-react';
 
 export default function Checkout() {
@@ -31,6 +32,23 @@ export default function Checkout() {
   const [selectedCoupon, setSelectedCoupon] = useState(null);
   const [showAddressBook, setShowAddressBook] = useState(false);
   
+  // 주소 검색 관련 상태
+  const [showAddressSearch, setShowAddressSearch] = useState(false);
+  const [addressSearchQuery, setAddressSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+  const [isSearching, setIsSearching] = useState(false);
+  const [focusedIndex, setFocusedIndex] = useState(-1);
+
+  const allMockAddresses = [
+    { zip: '06035', base: '서울특별시 강남구 가로수길 15 (신사동)' },
+    { zip: '04524', base: '서울특별시 중구 세종대로 110 (태평로1가, 서울특별시청)' },
+    { zip: '03154', base: '서울특별시 종로구 사직로 161 (세종로, 경복궁)' },
+    { zip: '06164', base: '서울특별시 강남구 영동대로 513 (삼성동, 코엑스)' },
+    { zip: '05551', base: '서울특별시 송파구 올림픽로 300 (신천동, 롯데월드타워)' },
+    { zip: '48058', base: '부산광역시 해운대구 수영강변대로 120 (우동, 영화의전당)' },
+    { zip: '16514', base: '경기도 수원시 영통구 광교중앙로 140 (이의동, 경기도청)' }
+  ];
+
   const [formData, setFormData] = useState({
     ordererName: user.name || '',
     ordererPhone: user.phone || '',
@@ -49,6 +67,58 @@ export default function Checkout() {
   });
 
   const availableCoupons = coupons.filter(c => !c.used);
+
+  // 실시간 주소 검색 시뮬레이션
+  useEffect(() => {
+    if (addressSearchQuery.length > 0) {
+      setIsSearching(true);
+      const timer = setTimeout(() => {
+        const filtered = allMockAddresses.filter(addr => 
+          addr.base.toLowerCase().includes(addressSearchQuery.toLowerCase()) || 
+          addr.zip.includes(addressSearchQuery)
+        );
+        setSearchResults(filtered);
+        setIsSearching(false);
+        setFocusedIndex(-1);
+      }, 300);
+      return () => clearTimeout(timer);
+    } else {
+      setSearchResults([]);
+      setIsSearching(false);
+      setFocusedIndex(-1);
+    }
+  }, [addressSearchQuery]);
+
+  const selectAddress = (addr) => {
+    setFormData(prev => ({
+      ...prev,
+      zipcode: addr.zip,
+      address: addr.base,
+      detailAddress: ''
+    }));
+    setShowAddressSearch(false);
+    setAddressSearchQuery('');
+    setFocusedIndex(-1);
+  };
+
+  const handleKeyDown = (e) => {
+    if (!showAddressSearch || searchResults.length === 0) return;
+
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      setFocusedIndex(prev => (prev < searchResults.length - 1 ? prev + 1 : prev));
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      setFocusedIndex(prev => (prev > 0 ? prev - 1 : 0));
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      if (focusedIndex >= 0 && focusedIndex < searchResults.length) {
+        selectAddress(searchResults[focusedIndex]);
+      }
+    } else if (e.key === 'Escape') {
+      setShowAddressSearch(false);
+    }
+  };
 
   useEffect(() => {
     if (location.state?.items) {
@@ -170,13 +240,90 @@ export default function Checkout() {
                     <input type="text" value={formData.shippingName} onChange={(e) => setFormData({...formData, shippingName: e.target.value})} placeholder="수령인" className="h-14 px-6 bg-[#FAFAFA] rounded-2xl border-none font-hei font-bold" required />
                     <input type="tel" value={formData.shippingPhone} onChange={(e) => setFormData({...formData, shippingPhone: e.target.value})} placeholder="연락처" className="h-14 px-6 bg-[#FAFAFA] rounded-2xl border-none font-sans font-bold" required />
                   </div>
-                  <div className="flex flex-col gap-3">
+                  <div className="flex flex-col gap-3 relative">
                     <div className="flex gap-2">
                       <input type="text" value={formData.zipcode} placeholder="우편번호" readOnly className="w-32 h-14 px-6 bg-[#FAFAFA] rounded-2xl border-none font-bold" />
-                      <button type="button" className="px-6 bg-white border border-black/10 rounded-2xl text-[13px] font-bold hover:bg-gray-200 transition-all font-hei">주소 찾기</button>
+                      <button 
+                        type="button" 
+                        onClick={() => {
+                          setShowAddressSearch(true);
+                          setSearchResults(allMockAddresses.slice(0, 3));
+                        }}
+                        className="px-6 bg-white border border-black/10 rounded-2xl text-[13px] font-bold hover:bg-gray-200 transition-all font-hei"
+                      >
+                        주소 검색
+                      </button>
                     </div>
                     <input type="text" value={formData.address} placeholder="기본 주소" readOnly className="w-full h-14 px-6 bg-[#FAFAFA] rounded-2xl border-none font-bold" />
                     <input type="text" value={formData.detailAddress} onChange={(e) => setFormData({...formData, detailAddress: e.target.value})} placeholder="상세 주소" className="w-full h-14 px-6 bg-white border border-black/10 rounded-2xl focus:border-black/20 outline-none" required />
+
+                    {/* Real-feel Address Search Modal - NOW APPEARING ABOVE */}
+                    {showAddressSearch && (
+                      <div className="absolute left-0 bottom-full mb-2 w-full bg-white border border-black/10 rounded-3xl shadow-[0_-20px_50px_rgba(0,0,0,0.15)] z-50 p-6 animate-in slide-in-from-bottom-2 duration-200">
+                        <div className="flex justify-between items-center mb-6">
+                          <h4 className="text-[16px] font-bold text-black font-hei">주소 검색</h4>
+                          <button type="button" onClick={() => {
+                            setShowAddressSearch(false);
+                            setAddressSearchQuery('');
+                            setSearchResults([]);
+                          }}><X size={20} className="text-black/20 hover:text-black"/></button>
+                        </div>
+                        <div className="relative mb-6">
+                          <input 
+                            autoFocus
+                            type="text" 
+                            value={addressSearchQuery}
+                            onChange={(e) => setAddressSearchQuery(e.target.value)}
+                            onKeyDown={handleKeyDown}
+                            placeholder="주소 키워드 입력 (예: 서울, 강남, 춘천...)" 
+                            className="w-full h-12 pl-10 pr-4 bg-gray-50 border-none rounded-xl text-[14px] focus:ring-2 focus:ring-[#9C3F00]/20 font-hei" 
+                          />
+                          <div className="absolute left-3 top-1/2 -translate-y-1/2 text-black/20">
+                            {isSearching ? <SearchIcon size={18} className="animate-spin text-[#9C3F00]" /> : <SearchIcon size={18} />}
+                          </div>
+                        </div>
+                        <div className="flex flex-col gap-2 max-h-[300px] overflow-y-auto pr-2 custom-scrollbar">
+                          {addressSearchQuery.length === 0 ? (
+                            <div className="py-10 text-center">
+                              <p className="text-[13px] text-black/40 font-hei">찾으시는 도로명 주소 또는 지번을 입력하세요.</p>
+                            </div>
+                          ) : searchResults.length > 0 ? (
+                            <>
+                              <p className="text-[11px] font-bold text-black/30 uppercase tracking-wider mb-2 px-2">검색 결과 ({searchResults.length})</p>
+                              {searchResults.map((addr, i) => (
+                                <button 
+                                  key={i} 
+                                  type="button"
+                                  onClick={() => selectAddress(addr)}
+                                  onMouseEnter={() => setFocusedIndex(i)}
+                                  className={`flex flex-col items-start p-4 rounded-2xl transition-all border border-transparent text-left w-full group ${focusedIndex === i ? 'bg-[#9C3F00]/5 border-[#9C3F00]/10' : 'hover:bg-gray-50'}`}
+                                >
+                                  <span className={`text-[14px] font-bold mb-1 transition-colors font-hei ${focusedIndex === i ? 'text-[#9C3F00]' : 'text-black group-hover:text-[#9C3F00]'}`}>{addr.base}</span>
+                                  <span className={`text-[12px] font-sans ${focusedIndex === i ? 'text-[#9C3F00]/60' : 'text-black/40'}`}>우편번호: {addr.zip}</span>
+                                </button>
+                              ))}
+                            </>
+                          ) : !isSearching && (
+                            <div className="py-16 text-center flex flex-col items-center gap-4">
+                              <div className="w-12 h-12 bg-gray-50 rounded-full flex items-center justify-center text-black/20">
+                                <SearchIcon size={24} />
+                              </div>
+                              <div className="flex flex-col gap-1">
+                                <p className="text-[15px] font-bold text-black/60 font-hei">검색 결과가 없습니다.</p>
+                                <p className="text-[12px] text-black/30 font-hei">정확한 주소 또는 키워드로 다시 검색해 주세요.</p>
+                              </div>
+                              <button 
+                                type="button"
+                                onClick={() => setAddressSearchQuery('')}
+                                className="mt-2 px-6 py-2 bg-gray-100 hover:bg-gray-200 rounded-full text-[12px] font-bold text-black/60 transition-all"
+                              >
+                                검색어 초기화
+                              </button>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </section>
 

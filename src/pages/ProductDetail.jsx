@@ -296,14 +296,14 @@ export default function ProductDetail() {
     // 사용자가 요청한 '로그인 후 진행' 시나리오를 위해 강제로 로그인이 필요한 상태를 체크합니다.
     
     if (!user || user.name === 'Guest' || !user.email) {
-      setShowLoginModal(true);
+      setShowLoginModal(action); // 'cart' or 'buy'
       return false;
     }
     return true;
   };
 
   const handleAddToCart = () => {
-    if (!checkLoginAndProceed()) return;
+    if (!checkLoginAndProceed('cart')) return;
 
     if (selectedOptions.length === 0) {
       alert('옵션을 선택해주세요.');
@@ -327,7 +327,7 @@ export default function ProductDetail() {
   };
 
   const handleBuyNow = () => {
-    if (!checkLoginAndProceed()) return;
+    if (!checkLoginAndProceed('buy')) return;
 
     if (selectedOptions.length === 0) {
       alert('옵션을 선택해주세요.');
@@ -376,6 +376,12 @@ export default function ProductDetail() {
               <div className="flex flex-col gap-3 mt-4">
                 <Link 
                   to="/login"
+                  state={{ 
+                    from: location.pathname,
+                    action: showLoginModal === 'cart' ? 'add_to_cart' : 'buy_now',
+                    product: product,
+                    selectedOptions: selectedOptions
+                  }}
                   className="w-full h-16 bg-[#F9FAFB] border border-black/5 text-[#1B1D0E] rounded-full text-[16px] font-bold hover:bg-gray-200 transition-all shadow-[6px_6px_15px_rgba(0,0,0,0.1)] active:translate-y-0.5 active:shadow-inner flex items-center justify-center"
                 >
                   로그인하러 가기

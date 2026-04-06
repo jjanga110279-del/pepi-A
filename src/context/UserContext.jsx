@@ -125,6 +125,10 @@ export function UserProvider({ children }) {
     setAddressBook(prev => [...prev, { ...newAddr, id: Date.now(), isDefault: prev.length === 0 }]);
   };
 
+  const updateAddress = (id, updatedAddr) => {
+    setAddressBook(prev => prev.map(a => a.id === id ? { ...a, ...updatedAddr } : a));
+  };
+
   const removeAddress = (id) => {
     setAddressBook(prev => prev.filter(a => a.id !== id));
   };
@@ -173,7 +177,7 @@ export function UserProvider({ children }) {
     <UserContext.Provider value={{ 
       user, updateUser, login, logout,
       coupons, useCoupon,
-      addressBook, addAddress, removeAddress, setDefaultAddress,
+      addressBook, addAddress, updateAddress, removeAddress, setDefaultAddress,
       orders, addOrder, updateOrderItemStatus,
       reviews, addReview, updateReview, deleteReview
     }}>

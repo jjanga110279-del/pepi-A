@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router';
+import { Link, useNavigate, useLocation } from 'react-router';
 import Layout from '../components/common/Layout';
 import loginEditorial from '../assets/images/login_editorial.png';
 import { Mail, Lock, Eye, EyeOff, Check } from 'lucide-react';
 import { useUser } from '../context/UserContext';
+import { useCart } from '../context/CartContext';
 
 export default function Login() {
   const navigate = useNavigate();
   const { login } = useUser();
+  const { addToCart } = useCart();
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
@@ -15,11 +17,45 @@ export default function Login() {
     autoLogin: false
   });
 
+  const location = useLocation();
+  const from = location.state?.from || '/';
+  const action = location.state?.action;
+  const product = location.state?.product;
+  const selectedOptions = location.state?.selectedOptions;
+
   const handleSubmit = (e) => {
     e.preventDefault();
     login(formData.email);
     alert('반가워요, 짱아님! 로그인이 완료되었습니다.');
-    navigate(-1); // 이전 페이지로 이동
+
+    // 동작 수행 후 이동
+    if (action === 'add_to_cart' && product && selectedOptions) {
+      selectedOptions.forEach(opt => {
+        addToCart({
+          id: product.id,
+          name: product.name,
+          price: typeof product.price === 'string' ? parseInt(product.price.replace(/[^0-9]/g, '')) : product.price,
+          image: product.image,
+          color: opt.color,
+          size: opt.size,
+          quantity: opt.quantity
+        });
+      });
+      navigate('/cart');
+    } else if (action === 'buy_now' && product && selectedOptions) {
+      const itemsToOrder = selectedOptions.map(opt => ({
+        id: product.id,
+        name: product.name,
+        price: typeof product.price === 'string' ? parseInt(product.price.replace(/[^0-9]/g, '')) : product.price,
+        image: product.image,
+        color: opt.color,
+        size: opt.size,
+        quantity: opt.quantity
+      }));
+      navigate('/checkout', { state: { items: itemsToOrder, fromCart: false } });
+    } else {
+      navigate(from, { replace: true }); 
+    }
   };
 
   return (
