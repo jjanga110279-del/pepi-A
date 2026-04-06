@@ -43,6 +43,7 @@ import { MdOutlineDryCleaning } from 'react-icons/md';
 
 export const ICONS = {
   star: FaStar,
+  starFilled: FaStar,
   starReview: FaStar,
   
   arrowRight: FaArrowRight,

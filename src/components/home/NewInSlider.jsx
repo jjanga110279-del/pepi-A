@@ -123,6 +123,15 @@ export default function NewInSlider() {
                 <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-white p-6 text-center backdrop-blur-[2px]">
                   <h4 className="text-xl font-medium mb-1 font-hei">{item.name}</h4>
                   <p className="text-base font-bold mt-2">{item.price}</p>
+                  
+                  <div className="flex items-center gap-2 mt-3">
+                    <div className="flex items-center">
+                      <ICONS.starFilled className="text-[#FFD700] text-[14px]" />
+                      <span className="text-[13px] font-bold ml-1">4.8</span>
+                    </div>
+                    <span className="text-white/30 text-[10px]">|</span>
+                    <span className="text-[13px] text-white/70 font-medium">리뷰 {item.reviews || 0}</span>
+                  </div>
                 </div>
 
                 {/* Heart Icon - Fixed Home style */}

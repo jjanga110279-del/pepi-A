@@ -146,6 +146,16 @@ export default function ProductCard({ product, hideNewBadge = false, hideBestBad
           )}
         </div>
 
+        {/* Rating & Review Count */}
+        <div className="flex items-center gap-2 mt-0.5">
+          <div className="flex items-center">
+            <ICONS.starFilled className="text-[#FFD700] text-[12px] md:text-[14px]" />
+            <span className="text-[12px] md:text-[13px] font-bold text-black/80 ml-1 font-sans">4.8</span>
+          </div>
+          <span className="text-black/10 text-[10px]">|</span>
+          <span className="text-[12px] md:text-[13px] text-black/40 font-medium font-hei">리뷰 {product.reviews || 0}</span>
+        </div>
+
         {/* Badges below price */}
         <div className="flex gap-2 mt-1">
           {(isNew && !hideNewBadge) && (
