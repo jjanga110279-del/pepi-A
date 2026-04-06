@@ -4,21 +4,11 @@ import Layout from '../components/common/Layout';
 import { ICONS } from '../constants/icons';
 import { ALL_PRODUCTS } from '../constants/products';
 import ProductCard from '../components/common/ProductCard';
+import { BEST_PRODUCTS } from '../constants/products/best';
 
 export default function Best50() {
-  const bestProducts = ALL_PRODUCTS.filter(p => p.category === 'best');
-  
-  // Generate 50 items by repeating best products
-  const products = Array.from({ length: 50 }, (_, i) => {
-    const baseProduct = bestProducts[i % bestProducts.length];
-    return {
-      ...baseProduct,
-      id: `best-${i + 1}`,
-      realId: baseProduct.id,
-      rank: i + 1,
-      reviews: Math.floor(Math.random() * 1000 + 100).toLocaleString(),
-    };
-  });
+  // best.js에 정의된 50개의 실제 데이터를 사용합니다.
+  const products = BEST_PRODUCTS;
 
   return (
     <Layout>

@@ -2,77 +2,71 @@ import React, { useState, useMemo } from 'react';
 import Layout from '../components/common/Layout';
 import ProductCard from '../components/common/ProductCard';
 import { ICONS } from '../constants/icons';
+import { IMAGES } from '../constants/images';
+import { ALL_PRODUCTS } from '../constants/products';
 
 export default function Accessory() {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedSubCategory, setSelectedSubCategory] = useState('전체');
   const [sortBy, setSortBy] = useState('최신순');
-  const itemsPerPage = 8;
+  const itemsPerPage = 12;
 
   const subCategories = [
     { name: '전체', icon: ICONS.all },
-    { name: '주얼리', icon: ICONS.jewelry },
-    { name: '가방', icon: ICONS.bag },
-    { name: '슈즈', icon: ICONS.shoes },
-    { name: '기타', icon: ICONS.others },
+    { name: '주얼리', icon: ICONS.jewelry || '💍' },
+    { name: '가방', icon: ICONS.bag || '👜' },
+    { name: '슈즈', icon: ICONS.shoes || '👠' },
+    { name: '기타', icon: ICONS.others || '🕶️' },
   ];
 
-  // 액세서리 세부 상품 데이터 생성
+  // 모든 가용 이미지들을 모아 중복 없는 풍성한 이미지 풀 생성
+  const allAvailableImages = useMemo(() => {
+    const images = [
+      IMAGES.best4, IMAGES.best9, IMAGES.best10, IMAGES.best11, IMAGES.best23,
+      IMAGES.best1, IMAGES.best2, IMAGES.best3, IMAGES.best5, IMAGES.best6, 
+      IMAGES.best7, IMAGES.best8, IMAGES.best12, IMAGES.best13, IMAGES.best14, 
+      IMAGES.best15, IMAGES.best16, IMAGES.best17, IMAGES.best18,
+      IMAGES.newBag, IMAGES.newScarf, IMAGES.recItem1, IMAGES.hero4,
+      'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1535633302723-99e3d3e426ec?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1584917033794-c735e946b991?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1520903920243-00d872a2d1c9?q=80&w=800&auto=format&fit=crop'
+    ];
+    return Array.from(new Set(images)).filter(Boolean);
+  }, []);
+
   const generateAccProducts = () => {
     const products = [];
     const subData = {
-      '주얼리': {
-        names: ['실버 925 미니멀 링', '진주 드롭 이어링', '골드 레이어드 목걸이', '크리스탈 테니스 팔찌', '엔틱 무드 펜던트', '심플 라인 뱅글'],
-        images: [
-          'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338',
-          'https://images.unsplash.com/photo-1535633302703-9420414421ee',
-          'https://images.unsplash.com/photo-1599643478123-53d0453b894a',
-          'https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0'
-        ]
-      },
-      '가방': {
-        names: ['미니멀 레더 숄더백', '캔버스 데일리 토트백', '클래식 체인 크로스백', '소프트 호보백', '어반 백팩', '퀼팅 미니 파우치'],
-        images: [
-          'https://images.unsplash.com/photo-1584917033794-c735e946b991',
-          'https://images.unsplash.com/photo-1591561954557-26941169b49e',
-          'https://images.unsplash.com/photo-1548036328-c9fa89d128fa'
-        ]
-      },
-      '슈즈': {
-        names: ['베이직 로우 스니커즈', '모던 스퀘어토 블로퍼', '데일리 플랫 슈즈', '청키 플랫폼 샌들', '클래식 첼시 부츠', '슬림 라인 펌프스'],
-        images: [
-          'https://images.unsplash.com/photo-1543163521-1bf539c55dd2',
-          'https://images.unsplash.com/photo-1549298916-b41d501d3772',
-          'https://images.unsplash.com/photo-1560769629-975ec94e6a86'
-        ]
-      },
-      '기타': {
-        names: ['실크 스카프 에디션', '클래식 레더 벨트', '울 블렌드 비니', '패브릭 헤어 밴드', '빈티지 선글라스', '체크 패턴 머플러'],
-        images: [
-          'https://images.unsplash.com/photo-1520903920243-00d872a2d1c9',
-          'https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3'
-        ]
-      }
+      '주얼리': ['미니멀 925 링', '진주 드롭 이어링', '레이어드 목걸이', '테니스 팔찌'],
+      '가방': ['레더 숄더백', '데일리 토트백', '체인 크로스백', '소프트 호보백'],
+      '슈즈': ['로우 스니커즈', '스퀘어토 블로퍼', '데일리 플랫 슈즈', '청키 플랫폼 샌들'],
+      '기타': ['실크 스카프', '레더 벨트', '울 블렌드 비니', '패브릭 헤어 밴드']
     };
 
     let idCount = 1;
     Object.keys(subData).forEach(subName => {
-      const data = subData[subName];
-      for (let i = 1; i <= 32; i++) {
-        const nameIdx = (i - 1) % data.names.length;
-        const imgIdx = (i - 1) % data.images.length;
-        const basePrice = 25000 + (Math.floor(Math.random() * 15) * 5000);
-        const discPrice = Math.floor(basePrice * 0.95);
+      const names = subData[subName];
+      for (let i = 1; i <= 30; i++) {
+        const nameIdx = (i - 1) % names.length;
+        const imgIdx = (idCount - 1) % allAvailableImages.length;
+        const basePrice = 25000 + (Math.floor(Math.random() * 20) * 5000);
+        const isNewItem = i % 5 === 0;
+        const discPrice = isNewItem ? Math.floor(basePrice * 0.95) : basePrice;
         
         products.push({
-          id: `acc-${idCount++}`,
+          id: `acc-gen-${idCount++}`,
           subCategory: subName,
-          name: data.names[nameIdx],
-          originalPrice: `${basePrice.toLocaleString()}원`,
+          category: 'accessory',
+          name: names[nameIdx],
           price: `${discPrice.toLocaleString()}원`,
-          isNew: i % 5 === 0,
+          originalPrice: isNewItem ? `${basePrice.toLocaleString()}원` : null,
+          discount: isNewItem ? "5%" : null,
+          isNew: isNewItem,
           isBest: i % 7 === 0,
-          image: `${data.images[imgIdx]}?q=80&w=800&auto=format&fit=crop`
+          reviews: Math.floor(Math.random() * 250 + 20),
+          image: allAvailableImages[imgIdx]
         });
       }
     });
@@ -80,48 +74,27 @@ export default function Accessory() {
     return products;
   };
 
-  const allAccProducts = useMemo(() => generateAccProducts(), []);
+  const allAccProducts = useMemo(() => {
+    const realAccItems = ALL_PRODUCTS.filter(p => p.category === 'accessory');
+    return [...realAccItems, ...generateAccProducts()];
+  }, [allAvailableImages]);
 
   const filteredProducts = useMemo(() => {
     let result = selectedSubCategory === '전체' 
       ? [...allAccProducts] 
       : allAccProducts.filter(p => p.subCategory === selectedSubCategory);
 
-    // Sorting logic
-    if (sortBy === '최신순') {
-      result.sort((a, b) => {
-        const idA = parseInt(a.id.split('-')[1]);
-        const idB = parseInt(b.id.split('-')[1]);
-        return idB - idA;
-      });
-    } else if (sortBy === '인기순') {
-      result.sort((a, b) => {
-        const idA = parseInt(a.id.split('-')[1]);
-        const idB = parseInt(b.id.split('-')[1]);
-        return ((idA * 7) % 10) - ((idB * 7) % 10);
-      });
-    } else if (sortBy === '낮은가격순') {
-      result.sort((a, b) => {
-        const priceA = parseInt(a.price.replace(/[^0-9]/g, ''));
-        const priceB = parseInt(b.price.replace(/[^0-9]/g, ''));
-        return priceA - priceB;
-      });
+    if (sortBy === '낮은가격순') {
+      result.sort((a, b) => parseInt(a.price.replace(/[^0-9]/g, '')) - parseInt(b.price.replace(/[^0-9]/g, '')));
     } else if (sortBy === '높은가격순') {
-      result.sort((a, b) => {
-        const priceA = parseInt(a.price.replace(/[^0-9]/g, ''));
-        const priceB = parseInt(b.price.replace(/[^0-9]/g, ''));
-        return priceB - priceA;
-      });
+      result.sort((a, b) => parseInt(b.price.replace(/[^0-9]/g, '')) - parseInt(a.price.replace(/[^0-9]/g, '')));
     }
 
     return result;
   }, [selectedSubCategory, allAccProducts, sortBy]);
 
   const currentProducts = useMemo(() => {
-    return filteredProducts.slice(
-      (currentPage - 1) * itemsPerPage,
-      currentPage * itemsPerPage
-    );
+    return filteredProducts.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
   }, [filteredProducts, currentPage]);
 
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
@@ -135,11 +108,6 @@ export default function Accessory() {
     setSelectedSubCategory(subCat);
     setCurrentPage(1);
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const handleSortChange = (sort) => {
-    setSortBy(sort);
-    setCurrentPage(1);
   };
 
   const getPageNumbers = () => {
@@ -158,7 +126,6 @@ export default function Accessory() {
   return (
     <Layout>
       <div className="max-w-[1920px] mx-auto px-4 md:px-12 py-10 md:py-20 flex flex-col md:flex-row gap-12">
-        {/* Sidebar */}
         <aside className="w-full md:w-[260px] shrink-0 border-r border-black/5 pr-12 hidden md:block">
           <h2 className="text-2xl font-bold text-[#1b1d0e] font-serif mb-10 lowercase tracking-tight">accessory categories</h2>
           <nav className="flex flex-col gap-6">
@@ -169,7 +136,7 @@ export default function Accessory() {
                 className={`flex items-center gap-4 text-[16px] font-medium transition-colors group text-left ${selectedSubCategory === sub.name ? 'text-[#dc2626]' : 'text-[#737373] hover:text-[#dc2626]'}`}
               >
                 <span className={`w-5 h-5 flex items-center justify-center transition-all ${selectedSubCategory === sub.name ? 'grayscale-0 opacity-100' : 'grayscale group-hover:grayscale-0 opacity-50 group-hover:opacity-100'}`}>
-                  <sub.icon className="text-[20px]" />
+                  {typeof sub.icon === 'string' ? <span className="text-lg">{sub.icon}</span> : <sub.icon className="text-[20px]" />}
                 </span>
                 {sub.name}
               </button>
@@ -177,9 +144,7 @@ export default function Accessory() {
           </nav>
         </aside>
 
-        {/* Main Content */}
         <div className="flex-grow">
-          {/* Title & Filter Header */}
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
             <h1 className="text-4xl md:text-5xl font-bold text-[#1b1d0e] font-sans tracking-tight">
               액세서리
@@ -187,25 +152,17 @@ export default function Accessory() {
             </h1>
             <div className="flex items-center gap-6 text-[13px] md:text-[14px] font-medium text-[#a3a3a3]">
               {['최신순', '인기순', '낮은가격순', '높은가격순'].map((sort) => (
-                <button
-                  key={sort}
-                  onClick={() => handleSortChange(sort)}
-                  className={`transition-colors ${sortBy === sort ? 'text-[#171717]' : 'hover:text-black'}`}
-                >
-                  {sort}
-                </button>
+                <button key={sort} onClick={() => { setSortBy(sort); setCurrentPage(1); }} className={`transition-colors ${sortBy === sort ? 'text-[#171717]' : 'hover:text-black'}`}>{sort}</button>
               ))}
             </div>
           </div>
 
-          {/* Product Grid */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-6 md:gap-x-8 gap-y-16 min-h-[800px]">
             {currentProducts.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
           </div>
 
-          {/* Pagination */}
           {totalPages > 1 && (
             <div className="mt-24 w-full flex justify-center items-center gap-4 md:gap-6">
               <button 

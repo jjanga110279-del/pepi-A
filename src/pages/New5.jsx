@@ -2,12 +2,14 @@ import React, { useState, useMemo } from 'react';
 import Layout from '../components/common/Layout';
 import ProductCard from '../components/common/ProductCard';
 import { ICONS } from '../constants/icons';
+import { IMAGES } from '../constants/images';
+import { ALL_PRODUCTS } from '../constants/products';
 
 export default function NewIn() {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedCategory, setSelectedCategory] = useState('전체');
   const [sortBy, setSortBy] = useState('최신순');
-  const itemsPerPage = 8;
+  const itemsPerPage = 12;
 
   const categories = [
     { name: '전체', icon: ICONS.all },
@@ -19,89 +21,78 @@ export default function NewIn() {
     { name: '액세서리', icon: ICONS.acc },
   ];
 
+  // 모든 가용 이미지들을 모아 중복 없는 풍성한 이미지 풀 생성
+  const allAvailableImages = useMemo(() => {
+    const images = [
+      // 직접 올리신 로컬 이미지 (18개)
+      IMAGES.best1, IMAGES.best2, IMAGES.best3, IMAGES.best4, IMAGES.best5, 
+      IMAGES.best6, IMAGES.best7, IMAGES.best8, IMAGES.best9, IMAGES.best10,
+      IMAGES.best11, IMAGES.best12, IMAGES.best13, IMAGES.best14, IMAGES.best15,
+      IMAGES.best16, IMAGES.best17, IMAGES.best18,
+      
+      // 기존 프로젝트 고화질 이미지 및 피그마 에셋
+      IMAGES.newJacket, IMAGES.newScarf, IMAGES.newSkirt, IMAGES.newBag,
+      IMAGES.productLinenShirt, IMAGES.productSlacks, IMAGES.productBlouse, IMAGES.productDress,
+      IMAGES.bestItem1, IMAGES.bestItem2, IMAGES.recItem1, IMAGES.recItem2,
+      IMAGES.hero1, IMAGES.hero2, IMAGES.hero3, IMAGES.hero4, IMAGES.hero5, IMAGES.hero6,
+      
+      // 개별 페이지에서 사용하던 고화질 Unsplash 이미지 리스트
+      'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1551028719-00167b16eac5?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1544022613-e87ca75a784a?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1434389677669-e08b4cac3105?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1521223890158-f9f7c3d5d504?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1584273143981-44c210f24e2d?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1556906781-9a412961c28c?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1469334031218-e382a71b716b?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1583496661160-fb5886a0aaaa?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1492707892479-7bc8d5a4ee93?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1496747611176-843222e1e57c?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1595777457583-95e059d581b8?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1572804013307-f9a8a9264bb7?q=80&w=800&auto=format&fit=crop'
+    ];
+    // 중복 제거 및 유효한 값만 필터링
+    return Array.from(new Set(images)).filter(Boolean);
+  }, []);
+
   const generateProducts = () => {
     const products = [];
     const categoryData = {
-      '아우터': {
-        names: ['핸드메이드 코트', '트렌치 코트', '레더 자켓', '더블 코트', '울 자켓', '푸퍼 패딩', '가디건', '블레이저', '무스탕', '퀼팅 점퍼'],
-        images: [
-          'https://images.unsplash.com/photo-1539109136881-3be0616acf4b',
-          'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f',
-          'https://images.unsplash.com/photo-1551028719-00167b16eac5',
-          'https://images.unsplash.com/photo-1544022613-e87ca75a784a',
-          'https://images.unsplash.com/photo-1591047139829-d91aecb6caea'
-        ]
-      },
-      '상의': {
-        names: ['실크 블라우스', '캐시미어 니트', '스트라이프 셔츠', '오버핏 티셔츠', '터틀넥 스웨터', '셔링 탑', '퍼프 블라우스', '크롭 후드', '슬림 핏 폴라', '코튼 셔츠'],
-        images: [
-          'https://images.unsplash.com/photo-1490481651871-ab68de25d43d',
-          'https://images.unsplash.com/photo-1434389677669-e08b4cac3105',
-          'https://images.unsplash.com/photo-1521223890158-f9f7c3d5d504',
-          'https://images.unsplash.com/photo-1584273143981-44c210f24e2d',
-          'https://images.unsplash.com/photo-1556906781-9a412961c28c'
-        ]
-      },
-      '하의': {
-        names: ['와이드 슬랙스', '생지 데님', '플리츠 스커트', '트위드 미니', '부츠컷 팬츠', '조거 팬츠', '에이치라인 스커트', '코듀로이 바지', '린넨 쇼츠', '핀턱 슬랙스'],
-        images: [
-          'https://images.unsplash.com/photo-1469334031218-e382a71b716b',
-          'https://images.unsplash.com/photo-1483985988355-763728e1935b',
-          'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1',
-          'https://images.unsplash.com/photo-1583496661160-fb5886a0aaaa',
-          'https://images.unsplash.com/photo-1541099649105-f69ad21f3246'
-        ]
-      },
-      '원피스': {
-        names: ['새틴 롱 원피스', '미디 원피스', '미니 드레스', '플라워 원피스', '니트 원피스', '셔츠 원피스', '오프숄더 드레스', '뷔스티에 원피스', '슬립 드레스', '체크 원피스'],
-        images: [
-          'https://images.unsplash.com/photo-1492707892479-7bc8d5a4ee93',
-          'https://images.unsplash.com/photo-1496747611176-843222e1e57c',
-          'https://images.unsplash.com/photo-1515372039744-b8f02a3ae446',
-          'https://images.unsplash.com/photo-1595777457583-95e059d581b8',
-          'https://images.unsplash.com/photo-1572804013307-f9a8a9264bb7'
-        ]
-      },
-      '세트': {
-        names: ['트위드 셋업', '린넨 세트', '트레이닝 셋업', '수트 세트', '니트 투피스', '가디건 세트', '데님 셋업', '코튼 셋업', '라운지웨어 세트', '자켓&스커트 세트'],
-        images: [
-          'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1',
-          'https://images.unsplash.com/photo-1490481651871-ab68de25d43d',
-          'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f',
-          'https://images.unsplash.com/photo-1469334031218-e382a71b716b',
-          'https://images.unsplash.com/photo-1539109136881-3be0616acf4b'
-        ]
-      },
-      '액세서리': {
-        names: ['진주 이어링', '실크 스카프', '체인 네크리스', '레더 벨트', '울 베레모', '골드 브레이슬릿', '헤어 밴드', '선글라스', '숄더 백', '미니 파우치'],
-        images: [
-          'https://images.unsplash.com/photo-1535633302723-99e3d3e426ec',
-          'https://images.unsplash.com/photo-1584030373081-f37b7bb4fa8e',
-          'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338',
-          'https://images.unsplash.com/photo-1576053139778-7e32f2ae3cfd',
-          'https://images.unsplash.com/photo-1523206489230-c012c64b2b48'
-        ]
-      }
+      '아우터': ['핸드메이드 코트', '트렌치 코트', '레더 자켓', '더블 버튼 코트', '울 블렌드 자켓', '푸퍼 패딩', '롱 가디건', '모던 블레이저'],
+      '상의': ['실크 슬림 블라우스', '캐시미어 라운드 니트', '스트라이프 코튼 셔츠', '오버핏 레터링 티', '터틀넥 스웨터', '셔링 실크 탑'],
+      '하의': ['와이드 핀턱 슬랙스', '생지 데님 팬츠', '플리츠 미디 스커트', '트위드 미니 스커트', '세미 부츠컷 데님', '조거 트레이닝 팬츠'],
+      '원피스': ['새틴 슬립 롱 원피스', '브이넥 미디 원피스', '퍼프 소매 미니 드레스', '플라워 패턴 원피스', '니트 투피스 원피스'],
+      '세트': ['트위드 체크 셋업', '린넨 포켓 세트', '코튼 트레이닝 셋업', '수트 베스트 세트', '가디건 나시 세트'],
+      '액세서리': ['진주 드롭 이어링', '실크 쁘띠 스카프', '체인 레이어드 네크리스', '비건 레더 벨트', '울 베레모']
     };
 
     let idCount = 1;
     Object.keys(categoryData).forEach(catName => {
-      const data = categoryData[catName];
-      for (let i = 1; i <= 32; i++) {
-        const nameIdx = (i - 1) % data.names.length;
-        const imgIdx = (i - 1) % data.images.length;
-        const basePrice = 50000 + (Math.floor(Math.random() * 20) * 10000);
+      const names = categoryData[catName];
+      for (let i = 1; i <= 40; i++) {
+        const nameIdx = (i - 1) % names.length;
+        // 50개 이상의 이미지 풀에서 순차적으로 이미지를 가져와 중복을 최소화합니다.
+        const imgIdx = (idCount - 1) % allAvailableImages.length;
+        const basePrice = 40000 + (Math.floor(Math.random() * 30) * 10000);
         const discPrice = Math.floor(basePrice * 0.95);
         
         products.push({
-          id: `new-${idCount++}`,
+          id: `new-gen-${idCount++}`,
           category: catName,
-          name: `[NEW] ${data.names[nameIdx]}`,
+          name: `[NEW] ${names[nameIdx]}`,
           originalPrice: `${basePrice.toLocaleString()}원`,
           price: `${discPrice.toLocaleString()}원`,
+          discount: "5%",
           isNew: true,
-          isBest: i % 10 === 0, // 중간중간 베스트 적용
-          image: `${data.images[imgIdx]}?q=80&w=800&auto=format&fit=crop`
+          reviews: Math.floor(Math.random() * 200 + 10),
+          image: allAvailableImages[imgIdx]
         });
       }
     });
@@ -109,18 +100,17 @@ export default function NewIn() {
     return products;
   };
 
-  const allProducts = useMemo(() => generateProducts(), []);
+  const allProducts = useMemo(() => {
+    const realNewItems = ALL_PRODUCTS.filter(p => p.category === 'new');
+    return [...realNewItems, ...generateProducts()];
+  }, [allAvailableImages]);
 
   const filteredProducts = useMemo(() => {
     let result = selectedCategory === '전체' 
       ? [...allProducts] 
       : allProducts.filter(p => p.category === selectedCategory);
 
-    if (sortBy === '최신순') {
-      result.sort((a, b) => parseInt(b.id.split('-')[1]) - parseInt(a.id.split('-')[1]));
-    } else if (sortBy === '인기순') {
-      result.sort((a, b) => ((parseInt(b.id.split('-')[1]) * 7) % 10) - ((parseInt(a.id.split('-')[1]) * 7) % 10));
-    } else if (sortBy === '낮은가격순') {
+    if (sortBy === '낮은가격순') {
       result.sort((a, b) => parseInt(a.price.replace(/[^0-9]/g, '')) - parseInt(b.price.replace(/[^0-9]/g, '')));
     } else if (sortBy === '높은가격순') {
       result.sort((a, b) => parseInt(b.price.replace(/[^0-9]/g, '')) - parseInt(a.price.replace(/[^0-9]/g, '')));

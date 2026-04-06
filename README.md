@@ -6,7 +6,7 @@
 
 - **Framework:** React (Vite)
 - **Styling:** Tailwind CSS
-- **Routing:** React Router DOM
+- **Routing:** React Router
 - **Icons:** Lucide React & Custom Figma Assets
 - **Deployment:** Vite
 

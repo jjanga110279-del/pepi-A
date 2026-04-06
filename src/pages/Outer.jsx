@@ -2,76 +2,80 @@ import React, { useState, useMemo } from 'react';
 import Layout from '../components/common/Layout';
 import ProductCard from '../components/common/ProductCard';
 import { ICONS } from '../constants/icons';
+import { IMAGES } from '../constants/images';
+import { ALL_PRODUCTS } from '../constants/products';
 
 export default function Outer() {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedSubCategory, setSelectedSubCategory] = useState('전체');
   const [sortBy, setSortBy] = useState('최신순');
-  const itemsPerPage = 8;
+  const itemsPerPage = 12;
 
   const subCategories = [
     { name: '전체', icon: ICONS.all },
-    { name: '자켓', icon: ICONS.jacket },
-    { name: '코트', icon: ICONS.coat },
-    { name: '점퍼', icon: ICONS.jumper },
-    { name: '가디건', icon: ICONS.cardigan },
+    { name: '자켓', icon: ICONS.jacket || '🧥' },
+    { name: '코트', icon: ICONS.coat || '🧥' },
+    { name: '점퍼', icon: ICONS.jumper || '🧥' },
+    { name: '가디건', icon: ICONS.cardigan || '🧥' },
   ];
 
-  // 아우터 세부 상품 데이터 생성
+  // 모든 가용 이미지들을 모아 중복 없는 풍성한 이미지 풀 생성
+  const allAvailableImages = useMemo(() => {
+    const images = [
+      // 직접 올리신 로컬 이미지 (18개)
+      IMAGES.best1, IMAGES.best2, IMAGES.best3, IMAGES.best4, IMAGES.best5, 
+      IMAGES.best6, IMAGES.best7, IMAGES.best8, IMAGES.best9, IMAGES.best10,
+      IMAGES.best11, IMAGES.best12, IMAGES.best13, IMAGES.best14, IMAGES.best15,
+      IMAGES.best16, IMAGES.best17, IMAGES.best18,
+      
+      // 프로젝트 내 기존 유효 이미지 에셋
+      IMAGES.newJacket, IMAGES.newScarf, IMAGES.newSkirt, IMAGES.newBag,
+      IMAGES.productLinenShirt, IMAGES.productSlacks, IMAGES.productBlouse, IMAGES.productDress,
+      IMAGES.bestItem1, IMAGES.bestItem2, IMAGES.recItem1, IMAGES.recItem2,
+      IMAGES.hero1, IMAGES.hero2, IMAGES.hero3, IMAGES.hero4, IMAGES.hero5, IMAGES.hero6,
+      
+      // 검증된 고화질 추가 이미지 (Unsplash)
+      'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1434389677669-e08b4cac3105?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1521223890158-f9f7c3d5d504?q=80&w=800&auto=format&fit=crop'
+    ];
+    // 중복 제거 및 undefined/null 값 필터링
+    return Array.from(new Set(images)).filter(Boolean);
+  }, []);
+
   const generateOuterProducts = () => {
     const products = [];
     const subData = {
-      '자켓': {
-        names: ['클래식 테일러드 울 자켓', '코튼 린넨 믹스 크롭 재킷', '오버핏 실루엣 블레이저', '에코 레더 미니멀 무스탕', '트위드 노카라 자켓', '체크 패턴 울 자켓'],
-        images: [
-          'https://images.unsplash.com/photo-1539109136881-3be0616acf4b',
-          'https://images.unsplash.com/photo-1591047139829-d91aecb6caea',
-          'https://images.unsplash.com/photo-1544022613-e87ca75a784a',
-          'https://images.unsplash.com/photo-1551028719-00167b16eac5'
-        ]
-      },
-      '코트': {
-        names: ['헤리티지 더블 트렌치 코트', '벨티드 핸드메이드 롱 코트', '더블 브레스트 코트', '울 블렌디드 코트', '캐시미어 맥 코트', '오버사이즈 발마칸 코트'],
-        images: [
-          'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f',
-          'https://images.unsplash.com/photo-1539109136881-3be0616acf4b',
-          'https://images.unsplash.com/photo-1544022613-e87ca75a784a'
-        ]
-      },
-      '점퍼': {
-        names: ['에센셜 구스다운 경량 점퍼', '퀼팅 다이아몬드 점퍼', '필드 밀리터리 자켓', '바람막이 아노락 점퍼', '플리스 하이넥 점퍼', '봄버 에어 자켓'],
-        images: [
-          'https://images.unsplash.com/photo-1591047139829-d91aecb6caea',
-          'https://images.unsplash.com/photo-1551028719-00167b16eac5'
-        ]
-      },
-      '가디건': {
-        names: ['소프트 캐시미어 하이넥 가디건', '벌룬 소매 울 가디건', '배색 라인 브이넥 가디건', '케이블 꽈배기 가디건', '모헤어 오버핏 가디건', '부클레 텍스처 가디건'],
-        images: [
-          'https://images.unsplash.com/photo-1434389677669-e08b4cac3105',
-          'https://images.unsplash.com/photo-1521223890158-f9f7c3d5d504'
-        ]
-      }
+      '자켓': ['클래식 테일러드 울 자켓', '린넨 믹스 크롭 재킷', '오버핏 실루엣 블레이저', '미니멀 무스탕', '트위드 노카라 자켓'],
+      '코트': ['헤리티지 트렌치 코트', '벨티드 핸드메이드 롱 코트', '더블 브레스트 코트', '울 블렌디드 코트', '캐시미어 맥 코트'],
+      '점퍼': ['에센셜 구스다운 점퍼', '퀼팅 다이아몬드 점퍼', '필드 밀리터리 자켓', '바람막이 아노락 점퍼', '플리스 하이넥 점퍼'],
+      '가디건': ['캐시미어 하이넥 가디건', '벌룬 소매 울 가디건', '배색 라인 브이넥 가디건', '케이블 꽈배기 가디건', '모헤어 오버핏 가디건']
     };
 
     let idCount = 1;
     Object.keys(subData).forEach(subName => {
-      const data = subData[subName];
-      for (let i = 1; i <= 32; i++) {
-        const nameIdx = (i - 1) % data.names.length;
-        const imgIdx = (i - 1) % data.images.length;
+      const names = subData[subName];
+      for (let i = 1; i <= 30; i++) {
+        const nameIdx = (i - 1) % names.length;
+        const imgIdx = (idCount - 1) % allAvailableImages.length;
         const basePrice = 120000 + (Math.floor(Math.random() * 30) * 10000);
-        const discPrice = Math.floor(basePrice * 0.95);
+        const isNewItem = i % 5 === 0;
+        const discPrice = isNewItem ? Math.floor(basePrice * 0.95) : basePrice;
         
         products.push({
-          id: `outer-${idCount++}`,
+          id: `outer-gen-${idCount++}`,
           subCategory: subName,
-          name: data.names[nameIdx],
-          originalPrice: `${basePrice.toLocaleString()}원`,
+          category: 'outer',
+          name: names[nameIdx],
           price: `${discPrice.toLocaleString()}원`,
-          isNew: i % 5 === 0,
+          originalPrice: isNewItem ? `${basePrice.toLocaleString()}원` : null,
+          discount: isNewItem ? "5%" : null,
+          isNew: isNewItem,
           isBest: i % 7 === 0,
-          image: `${data.images[imgIdx]}?q=80&w=800&auto=format&fit=crop`
+          reviews: Math.floor(Math.random() * 150 + 5),
+          image: allAvailableImages[imgIdx]
         });
       }
     });
@@ -79,54 +83,29 @@ export default function Outer() {
     return products;
   };
 
-  const allOuterProducts = useMemo(() => generateOuterProducts(), []);
+  const allOuterProducts = useMemo(() => {
+    const realOuterItems = ALL_PRODUCTS.filter(p => p.category === 'outer');
+    return [...realOuterItems, ...generateOuterProducts()];
+  }, [allAvailableImages]);
 
   const filteredProducts = useMemo(() => {
     let result = selectedSubCategory === '전체' 
       ? [...allOuterProducts] 
       : allOuterProducts.filter(p => p.subCategory === selectedSubCategory);
 
-    // Sorting logic
-    switch (sortBy) {
-      case '인기순':
-        result.sort((a, b) => {
-          const idA = parseInt(a.id.split('-')[1]);
-          const idB = parseInt(b.id.split('-')[1]);
-          return (idA % 7) - (idB % 7);
-        });
-        break;
-      case '낮은가격순':
-        result.sort((a, b) => {
-          const priceA = parseInt(a.price.replace(/[^0-9]/g, ''));
-          const priceB = parseInt(b.price.replace(/[^0-9]/g, ''));
-          return priceA - priceB;
-        });
-        break;
-      case '높은가격순':
-        result.sort((a, b) => {
-          const priceA = parseInt(a.price.replace(/[^0-9]/g, ''));
-          const priceB = parseInt(b.price.replace(/[^0-9]/g, ''));
-          return priceB - priceA;
-        });
-        break;
-      case '최신순':
-      default:
-        result.sort((a, b) => {
-          const idA = parseInt(a.id.split('-')[1]);
-          const idB = parseInt(b.id.split('-')[1]);
-          return idB - idA;
-        });
-        break;
+    if (sortBy === '낮은가격순') {
+      result.sort((a, b) => parseInt(a.price.replace(/[^0-9]/g, '')) - parseInt(b.price.replace(/[^0-9]/g, '')));
+    } else if (sortBy === '높은가격순') {
+      result.sort((a, b) => parseInt(b.price.replace(/[^0-9]/g, '')) - parseInt(a.price.replace(/[^0-9]/g, '')));
+    } else {
+      // 최신순/인기순 등 기본 정렬
     }
 
     return result;
   }, [selectedSubCategory, allOuterProducts, sortBy]);
 
   const currentProducts = useMemo(() => {
-    return filteredProducts.slice(
-      (currentPage - 1) * itemsPerPage,
-      currentPage * itemsPerPage
-    );
+    return filteredProducts.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
   }, [filteredProducts, currentPage]);
 
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
@@ -169,7 +148,7 @@ export default function Outer() {
                 className={`flex items-center gap-4 text-[16px] font-medium transition-colors group text-left ${selectedSubCategory === sub.name ? 'text-[#dc2626]' : 'text-[#737373] hover:text-[#dc2626]'}`}
               >
                 <span className={`w-5 h-5 flex items-center justify-center transition-all ${selectedSubCategory === sub.name ? 'grayscale-0 opacity-100' : 'grayscale group-hover:grayscale-0 opacity-50 group-hover:opacity-100'}`}>
-                  <sub.icon className="text-[20px]" />
+                  {typeof sub.icon === 'string' ? <span className="text-lg">{sub.icon}</span> : <sub.icon className="text-[20px]" />}
                 </span>
                 {sub.name}
               </button>
@@ -186,30 +165,9 @@ export default function Outer() {
               {selectedSubCategory !== '전체' && <span className="text-xl md:text-2xl font-medium text-[#737373] ml-4 font-hei font-normal">/ {selectedSubCategory}</span>}
             </h1>
             <div className="flex items-center gap-6 text-[13px] md:text-[14px] font-medium text-[#a3a3a3]">
-              <button 
-                onClick={() => { setSortBy('최신순'); setCurrentPage(1); }}
-                className={sortBy === '최신순' ? 'text-[#171717]' : 'hover:text-black transition-colors'}
-              >
-                최신순
-              </button>
-              <button 
-                onClick={() => { setSortBy('인기순'); setCurrentPage(1); }}
-                className={sortBy === '인기순' ? 'text-[#171717]' : 'hover:text-black transition-colors'}
-              >
-                인기순
-              </button>
-              <button 
-                onClick={() => { setSortBy('낮은가격순'); setCurrentPage(1); }}
-                className={sortBy === '낮은가격순' ? 'text-[#171717]' : 'hover:text-black transition-colors'}
-              >
-                낮은가격순
-              </button>
-              <button 
-                onClick={() => { setSortBy('높은가격순'); setCurrentPage(1); }}
-                className={sortBy === '높은가격순' ? 'text-[#171717]' : 'hover:text-black transition-colors'}
-              >
-                높은가격순
-              </button>
+              {['최신순', '인기순', '낮은가격순', '높은가격순'].map((sort) => (
+                <button key={sort} onClick={() => { setSortBy(sort); setCurrentPage(1); }} className={`transition-colors ${sortBy === sort ? 'text-[#171717]' : 'hover:text-black'}`}>{sort}</button>
+              ))}
             </div>
           </div>
 

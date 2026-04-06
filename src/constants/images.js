@@ -1,5 +1,42 @@
+import b1 from '../assets/images/products/best/b1.jpg';
+import b2 from '../assets/images/products/best/b2.png';
+import b3 from '../assets/images/products/best/b3.png';
+import b4 from '../assets/images/products/best/b4.png';
+import b5 from '../assets/images/products/best/b5.jpg';
+import b6 from '../assets/images/products/best/b6.png';
+import b7 from '../assets/images/products/best/b7.png';
+import b8 from '../assets/images/products/best/b8.png';
+import b9 from '../assets/images/products/best/b9.png';
+import b10 from '../assets/images/products/best/b10.png';
+import b11 from '../assets/images/products/best/b11.png';
+import b12 from '../assets/images/products/best/b12.png';
+import b13 from '../assets/images/products/best/b13.png';
+import b14 from '../assets/images/products/best/b14.png';
+import b15 from '../assets/images/products/best/b15.png';
+import b16 from '../assets/images/products/best/b16.png';
+import b17 from '../assets/images/products/best/b17.png';
+import b18 from '../assets/images/products/best/b18.png';
+
 export const IMAGES = {
-  hero1: "https://www.figma.com/api/mcp/asset/48736150-72d6-43fb-abe5-31706241be02",
+  best1: b1,
+  best2: b2,
+  best3: b3,
+  best4: b4,
+  best5: b5,
+  best6: b6,
+  best7: b7,
+  best8: b8,
+  best9: b9,
+  best10: b10,
+  best11: b11,
+  best12: b12,
+  best13: b13,
+  best14: b14,
+  best15: b15,
+  best16: b16,
+  best17: b17,
+  best18: b18,
+  hero1: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=2000&auto=format&fit=crop",
   hero2: "https://www.figma.com/api/mcp/asset/490c0efc-055b-4be9-948c-1e7b3c66b754",
   hero3: "https://www.figma.com/api/mcp/asset/6f0639b7-563d-4b64-80c5-4cacc8668b16",
   hero4: "https://www.figma.com/api/mcp/asset/386c58f2-f8fa-4431-8d15-77b47cef0db3",
