@@ -11,9 +11,10 @@ export default {
         secondary: "#fafafa",
       },
       fontFamily: {
-        serif: ["Liberation Serif", "Georgia", "serif"],
-        sans: ["Plus Jakarta Sans", "Noto Sans KR", "sans-serif"],
-        hei: ["WenQuanYi Zen Hei", "sans-serif"],
+        logo: ["Plus Jakarta Sans", "Pretendard Variable", "sans-serif"],
+        serif: ["Pretendard Variable", "Pretendard", "serif"],
+        sans: ["Pretendard Variable", "Pretendard", "sans-serif"],
+        hei: ["Pretendard Variable", "Pretendard", "sans-serif"],
       },
     },
   },

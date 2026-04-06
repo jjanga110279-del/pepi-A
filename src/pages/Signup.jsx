@@ -132,7 +132,7 @@ export default function Signup() {
           <div className="w-full max-w-[448px] flex flex-col gap-10">
             {/* Header */}
             <div className="flex flex-col gap-2">
-              <h2 className="text-[36px] font-black text-[#1B1D0E] font-serif leading-tight">회원가입</h2>
+              <h2 className="text-[36px] font-black text-[#1B1D0E] font-hei leading-tight">회원가입</h2>
               <p className="text-[14px] text-[#9CA3AF] font-hei">새로운 늘:pepi-i 경험을 시작해보세요.</p>
             </div>
 
@@ -387,7 +387,7 @@ export default function Signup() {
 
             {/* Footer Text */}
             <p className="text-[14px] text-[#9CA3AF] font-hei text-center">
-              이미 계정이 있으신가요? <Link to="/login" className="text-black font-bold border-b border-black">로그인</Link>
+              이미 계정이 있으신가요? <Link to="/login" className="text-black font-bold border-b border-black font-hei">로그인</Link>
             </p>
           </div>
         </div>

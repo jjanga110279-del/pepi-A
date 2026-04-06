@@ -78,7 +78,7 @@ export default function Header() {
 
             {/* Center: Logo */}
             <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2">
-              <Link to="/" className={`font-serif font-bold italic transition-all duration-300 tracking-tighter ${isScrolled ? 'text-2xl md:text-3xl opacity-90' : 'text-4xl md:text-5xl'}`}>늘:pepi-i</Link>
+              <Link to="/" className={`font-logo font-black italic transition-all duration-300 tracking-tighter ${isScrolled ? 'text-2xl md:text-3xl opacity-90' : 'text-4xl md:text-5xl'}`}>늘:pepi-i</Link>
             </div>
 
             {/* Right: Icons & Login */}

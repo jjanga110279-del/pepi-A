@@ -22,5 +22,7 @@
         - **BEST Pricing**: 베스트(BEST) 상품은 가격 변동 없이 **정가만 굵게** 표시합니다.
     - **Branding Consistency**: 
         - 브랜드 이름은 항상 `늘:pepi-i`로 표기합니다. `pepi-i` 단독 표기나 `Atelier`, `아뜰리에` 명칭은 사용하지 않으며, 발견 시 `늘:pepi-i`로 교체합니다.
+        - **Logo Style**: 로고(`늘:pepi-i`)는 캐주얼한 브랜드 정체성을 위해 `font-logo`, `font-black`(두께 900), `italic`(기울임) 스타일을 고정적으로 사용합니다.
+    - **Typography Consistency**: 사이트 전체의 서체는 **Pretendard**로 통일합니다. 본문, 메뉴, 버튼 등 모든 UI 요소에 적용하여 현대적이고 깔끔한 가독성을 유지합니다.
     - **Precision Edits**: 파일 수정 시 전체를 교체하는 대신 `replace` 툴을 사용하여 정밀한 부분 수정을 우선합니다.
 - **Strict Compliance**: 사용자가 요청한 사항만 정확히 수행하며, 불필요한 추가 작업이나 설명은 지양합니다.

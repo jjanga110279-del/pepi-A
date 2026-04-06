@@ -76,7 +76,7 @@ export default function Login() {
           <div className="w-full max-w-[448px] flex flex-col gap-10">
             {/* Header */}
             <div className="flex flex-col gap-2">
-              <h2 className="text-[36px] font-black text-[#1B1D0E] font-serif leading-tight">로그인</h2>
+              <h2 className="text-[36px] font-black text-[#1B1D0E] font-hei leading-tight">로그인</h2>
               <p className="text-[14px] text-[#9CA3AF] font-hei">늘:pepi-i의 새로운 컬렉션을 만나보세요.</p>
             </div>
 
@@ -172,7 +172,7 @@ export default function Login() {
 
             {/* Footer Text */}
             <p className="text-[14px] text-[#9CA3AF] font-hei text-center">
-              아직 계정이 없으신가요? <Link to="/signup" className="text-black font-bold border-b border-black">회원가입</Link>
+              아직 계정이 없으신가요? <Link to="/signup" className="text-black font-bold border-b border-black font-hei">회원가입</Link>
             </p>
           </div>
         </div>
