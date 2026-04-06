@@ -136,13 +136,13 @@ export default function OrderSuccess() {
               <div className="flex flex-col gap-3">
                 <Link 
                   to={`/order-detail/${order.id}`}
-                  className="w-full h-16 bg-[#9C3F00] text-white rounded-full flex items-center justify-center gap-2 text-[16px] font-bold hover:bg-[#853600] transition-all shadow-[0_10px_20px_rgba(156,63,0,0.2)] active:translate-y-0.5"
+                  className="w-full h-[66px] rounded-full border border-[#9C3F00] text-[#9C3F00] text-base font-bold font-hei hover:bg-[#9C3F00]/5 flex items-center justify-center gap-2 transition-all active:translate-y-0.5"
                 >
                   주문 상세 보기 <ChevronRight size={18} />
                 </Link>
                 <button 
                   onClick={() => navigate('/')}
-                  className="w-full h-16 bg-white border border-black/10 text-black/60 rounded-full text-[16px] font-bold hover:bg-gray-50 transition-all active:translate-y-0.5"
+                  className="w-full h-[66px] bg-white border border-[#9C3F00] text-[#9C3F00] rounded-full text-[16px] font-bold hover:bg-[#9C3F00]/5 transition-all active:translate-y-0.5 font-hei"
                 >
                   쇼핑 계속하기
                 </button>

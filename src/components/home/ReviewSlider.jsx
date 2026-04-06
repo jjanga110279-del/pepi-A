@@ -6,6 +6,7 @@ import { ICONS } from '../../constants/icons';
 const reviews = [
   {
     id: 1,
+    productId: 1,
     title: "핏이 너무 예뻐요!",
     content: "생각했던 것보다 소재도 탄탄하고 색감도 너무 고급스러워요. 데일리로 입기 딱 좋습니다.",
     image: IMAGES.reviewer1,
@@ -13,6 +14,7 @@ const reviews = [
   },
   {
     id: 2,
+    productId: 2,
     title: "재구매 의사 100%",
     content: "배송도 빠르고 포장도 정성스러워서 감동받았어요. 옷 퀄리티는 말할 것도 없네요.",
     image: IMAGES.reviewer2,
@@ -20,6 +22,7 @@ const reviews = [
   },
   {
     id: 3,
+    productId: 3,
     title: "인생 셔츠를 만났어요",
     content: "리넨 소재인데도 까슬거림 전혀 없고 핏이 예술입니다. 다른 색상도 구매할 예정이에요.",
     image: IMAGES.bestItem1,
@@ -27,6 +30,7 @@ const reviews = [
   },
   {
     id: 4,
+    productId: 4,
     title: "고민은 배송만 늦출 뿐",
     content: "디자인이 너무 세련되어서 어디에나 잘 어울려요. 친구들이 다 어디서 샀냐고 물어보네요.",
     image: IMAGES.bestItem2,
@@ -34,6 +38,7 @@ const reviews = [
   },
   {
     id: 5,
+    productId: 5,
     title: "가성비 최고입니다",
     content: "이 가격에 이런 퀄리티라니 믿기지 않아요. 마감 처리도 깔끔하고 아주 만족스럽습니다.",
     image: IMAGES.newJacket,
@@ -56,7 +61,8 @@ export default function ReviewSlider() {
         <div className="flex gap-8 animate-infinite-scroll hover:[animation-play-state:paused]">
           {scrollReviews.map((review, index) => (
             <Link 
-              to="/" 
+              to={`/product/${review.productId}`}
+              state={{ tab: 'review' }}
               key={`${review.id}-${index}`} 
               className="min-w-[400px] bg-white p-6 rounded-2xl flex gap-4 shadow-sm hover:shadow-md transition-shadow cursor-pointer"
             >

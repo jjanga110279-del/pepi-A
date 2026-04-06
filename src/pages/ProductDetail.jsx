@@ -4,13 +4,16 @@ import Layout from '../components/common/Layout';
 import { ICONS } from '../constants/icons';
 import { ALL_PRODUCTS, getProductById } from '../constants/products';
 import { useCart } from '../context/CartContext';
-import { Plus, Minus, X, ThumbsUp, ThumbsDown, Check } from 'lucide-react';
+import { useUser } from '../context/UserContext';
+import { Plus, Minus, X, ThumbsUp, ThumbsDown, Check, LogIn } from 'lucide-react';
 
 export default function ProductDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
   const { addToCart } = useCart();
+  const { user } = useUser();
+  const [showLoginModal, setShowLoginModal] = useState(false);
 
   const productFromState = location.state?.product;
 
@@ -48,6 +51,23 @@ export default function ProductDetail() {
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [currentTab, setCurrentTab] = useState('detail');
   const [sortBy, setSortBy] = useState('recommended');
+
+  // Handle initial tab from navigation state
+  React.useEffect(() => {
+    if (location.state?.tab === 'review') {
+      setCurrentTab('review');
+      // Delay scroll to ensure content is rendered
+      setTimeout(() => {
+        if (tabRef.current) {
+          const yOffset = -120;
+          const element = tabRef.current;
+          const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+          window.scrollTo({ top: y, behavior: 'smooth' });
+        }
+      }, 100);
+    }
+  }, [location.state]);
+
   const [photoOnly, setPhotoOnly] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
@@ -79,7 +99,7 @@ export default function ProductDetail() {
         '데이트 룩으로 최고예요. 남친이 너무 예쁘다고 칭찬해줬어요.'
       ],
       top: [
-        '기본 템으로 최고예요. 촉감이 너무 부드러워서 피부에 닿는 느낌이 좋아요.',
+        '기본 템으로 최고예요. 촉감이 너무 부드럽어서 피부에 닿는 느낌이 좋아요.',
         '깔별로 쟁여두고 싶은 아이템입니다. 청바지, 스커트 어디든 잘 어울려요.',
         '세탁 후에도 변형이 거의 없어서 놀랐어요. 퀄리티 대박입니다.',
         '사이즈가 정사이즈라 편하게 잘 맞아요. 가성비 최고의 선택이었습니다.'
@@ -269,7 +289,22 @@ export default function ProductDetail() {
     }
   };
 
+  const checkLoginAndProceed = (action) => {
+    // 임시로 user가 'Elena Kim'이면 로그인된 것으로 간주하지만, 
+    // 팝업 테스트를 위해 실제로는 로그인이 필요한 상황을 시뮬레이션해야 할 수도 있습니다.
+    // 여기서는 user가 null이거나 특정 조건일 때 팝업을 띄우는 로직을 추가합니다.
+    // 사용자가 요청한 '로그인 후 진행' 시나리오를 위해 강제로 로그인이 필요한 상태를 체크합니다.
+    
+    if (!user || user.name === 'Guest' || !user.email) {
+      setShowLoginModal(true);
+      return false;
+    }
+    return true;
+  };
+
   const handleAddToCart = () => {
+    if (!checkLoginAndProceed()) return;
+
     if (selectedOptions.length === 0) {
       alert('옵션을 선택해주세요.');
       return;
@@ -292,6 +327,8 @@ export default function ProductDetail() {
   };
 
   const handleBuyNow = () => {
+    if (!checkLoginAndProceed()) return;
+
     if (selectedOptions.length === 0) {
       alert('옵션을 선택해주세요.');
       return;
@@ -312,6 +349,49 @@ export default function ProductDetail() {
 
   return (
     <Layout>
+      {/* Login Requirement Modal */}
+      {showLoginModal && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center px-4">
+          <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setShowLoginModal(false)} />
+          <div className="bg-white w-full max-w-[448px] rounded-[32px] p-10 md:p-12 relative z-10 animate-scaleUp shadow-2xl">
+            <button 
+              onClick={() => setShowLoginModal(false)}
+              className="absolute right-8 top-8 text-black/20 hover:text-black transition-colors"
+            >
+              <X size={24} />
+            </button>
+            
+            <div className="flex flex-col gap-8">
+              <div className="w-16 h-16 bg-[#F9FAFB] rounded-2xl flex items-center justify-center mx-auto mb-2">
+                <LogIn size={28} className="text-[#9C3F00]" />
+              </div>
+              
+              <div className="flex flex-col gap-3 text-center">
+                <h3 className="text-[24px] font-bold text-[#1B1D0E] font-hei">로그인이 필요합니다</h3>
+                <p className="text-[15px] text-[#9CA3AF] font-hei leading-relaxed">
+                  요청하신 기능을 이용하시려면<br />로그인이 필요합니다.
+                </p>
+              </div>
+
+              <div className="flex flex-col gap-3 mt-4">
+                <Link 
+                  to="/login"
+                  className="w-full h-16 bg-[#F9FAFB] border border-black/5 text-[#1B1D0E] rounded-full text-[16px] font-bold hover:bg-gray-200 transition-all shadow-[6px_6px_15px_rgba(0,0,0,0.1)] active:translate-y-0.5 active:shadow-inner flex items-center justify-center"
+                >
+                  로그인하러 가기
+                </Link>
+                <button 
+                  onClick={() => setShowLoginModal(false)}
+                  className="w-full h-14 text-[14px] font-bold text-black/30 hover:text-black/60 transition-colors"
+                >
+                  나중에 하기
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="max-w-[1280px] mx-auto px-4 md:px-8 pt-8 pb-32">
         {/* Main Selection Area */}
         <div className="flex flex-col lg:flex-row gap-10 xl:gap-20 mb-32">

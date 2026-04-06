@@ -25,7 +25,7 @@ export default function Cart() {
           </p>
           <Link 
             to="/" 
-            className="px-10 py-4 bg-black text-white rounded-full text-[15px] font-bold hover:bg-black/80 transition-all shadow-xl shadow-black/10"
+            className="w-full max-w-[280px] h-[66px] bg-white border border-[#9C3F00] text-[#9C3F00] rounded-full flex items-center justify-center text-[16px] font-bold hover:bg-[#9C3F00]/5 transition-all active:translate-y-0.5 font-hei"
           >
             쇼핑하러 가기
           </Link>
