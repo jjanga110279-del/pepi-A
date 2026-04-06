@@ -3,10 +3,13 @@ import React, { createContext, useContext, useState } from 'react';
 const UserContext = createContext();
 
 export function UserProvider({ children }) {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(() => {
+    const savedUser = localStorage.getItem('pepi_user');
+    return savedUser ? JSON.parse(savedUser) : null;
+  });
 
   const login = (email) => {
-    setUser({
+    const userData = {
       name: '짱아',
       email: email || 'elena.kim@atelier.com',
       phone: '010-1234-5678',
@@ -15,7 +18,9 @@ export function UserProvider({ children }) {
       detailAddress: '아뜰리에 빌딩 3층',
       profileImage: 'https://images.unsplash.com/photo-1434389677669-e08b4cac3105?q=80&w=400&auto=format&fit=crop',
       rank: 'VIP GOLD'
-    });
+    };
+    setUser(userData);
+    localStorage.setItem('pepi_user', JSON.stringify(userData));
   };
 
   const logout = () => {
