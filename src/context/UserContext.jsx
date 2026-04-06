@@ -20,6 +20,9 @@ export function UserProvider({ children }) {
 
   const logout = () => {
     setUser(null);
+    localStorage.removeItem('pepi_user');
+    localStorage.removeItem('pepi_wishlist');
+    alert('로그아웃 되었습니다.');
   };
 
   // 쿠폰 상태 관리

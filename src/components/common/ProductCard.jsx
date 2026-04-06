@@ -1,15 +1,30 @@
 import React from 'react';
-import { useNavigate } from 'react-router';
+import { useNavigate, useLocation } from 'react-router';
 import { ICONS } from '../../constants/icons';
+import { useUser } from '../../context/UserContext';
 
 export default function ProductCard({ product, hideNewBadge = false, hideBestBadge = false, hideSaleBadge = false, isWishlistPage = false, onRemove }) {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { user } = useUser();
   
   // Initialize state from localStorage to persist across pages
+  // Only show as liked if a user is logged in
   const [isLiked, setIsLiked] = React.useState(() => {
+    if (!user || !localStorage.getItem('pepi_wishlist')) return false;
     const wishlist = JSON.parse(localStorage.getItem('pepi_wishlist') || '[]');
     return wishlist.some(item => item.id === product.id);
   });
+
+  // Sync isLiked state when user changes (e.g., login/logout) or product.id changes
+  React.useEffect(() => {
+    if (!user) {
+      setIsLiked(false);
+      return;
+    }
+    const wishlist = JSON.parse(localStorage.getItem('pepi_wishlist') || '[]');
+    setIsLiked(wishlist.some(item => item.id === product.id));
+  }, [user, product.id]);
 
   // Determine pricing style based on flags
   const isNew = product.isNew;
@@ -23,6 +38,13 @@ export default function ProductCard({ product, hideNewBadge = false, hideBestBad
 
   const handleLike = (e) => {
     e.stopPropagation();
+
+    if (!user) {
+      if (confirm('찜하기 기능은 로그인 후 이용 가능합니다.\n로그인 페이지로 이동하시겠습니까?')) {
+        navigate('/login', { state: { from: location.pathname } });
+      }
+      return;
+    }
     
     const wishlist = JSON.parse(localStorage.getItem('pepi_wishlist') || '[]');
     let newWishlist;
