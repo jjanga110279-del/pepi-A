@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import Layout from '../components/common/Layout';
 import { 
   User, 
@@ -22,6 +22,7 @@ import {
 } from 'lucide-react';
 
 export default function Settings() {
+  const navigate = useNavigate();
   const [notifications, setNotifications] = useState({
     push: true,
     sms: false,
@@ -130,14 +131,14 @@ export default function Settings() {
             
             <div className="flex flex-col gap-4">
               {[
-                { icon: Lock, label: '비밀번호 변경', path: '/edit-profile#password' },
-                { icon: Smartphone, label: '휴대폰 번호 변경', path: '/edit-profile#phone' },
-                { icon: User, label: '회원 정보 수정', path: '/edit-profile' }
+                { icon: Lock, label: '비밀번호 변경', target: 'password' },
+                { icon: Smartphone, label: '휴대폰 번호 변경', target: 'phone' },
+                { icon: User, label: '회원 정보 수정', target: 'profile' }
               ].map((item, idx) => (
-                <Link 
+                <button 
                   key={idx} 
-                  to={item.path}
-                  className="flex items-center justify-between p-6 bg-white border border-black/10 rounded-2xl hover:border-black/20 transition-all group"
+                  onClick={() => navigate('/edit-profile', { state: { scrollTo: item.target } })}
+                  className="flex items-center justify-between p-6 bg-white border border-black/10 rounded-2xl hover:border-black/20 transition-all group w-full"
                 >
                   <div className="flex items-center gap-4">
                     <div className="w-10 h-10 bg-gray-50 rounded-full flex items-center justify-center text-black/40 group-hover:bg-[#9C3F00]/5 group-hover:text-[#9C3F00] transition-colors">
@@ -146,7 +147,7 @@ export default function Settings() {
                     <span className="text-[15px] font-bold text-black font-hei">{item.label}</span>
                   </div>
                   <ChevronRight size={18} className="text-black/20" />
-                </Link>
+                </button>
               ))}
             </div>
           </section>

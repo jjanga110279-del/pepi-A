@@ -55,15 +55,23 @@ export default function EditProfile() {
   }, [user, navigate]);
 
   useEffect(() => {
-    if (location.hash) {
-      const id = location.hash.replace('#', '');
-      if (id === 'password') setIsChangingPassword(true);
-      setTimeout(() => {
-        const element = document.getElementById(id);
-        if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 150);
+    const scrollToTarget = location.state?.scrollTo || location.hash.replace('#', '');
+    if (scrollToTarget) {
+      if (scrollToTarget === 'password') setIsChangingPassword(true);
+      
+      // Ensure rendering is complete before scrolling
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          const element = document.getElementById(scrollToTarget);
+          if (element) {
+            const yOffset = -120; // Header offset
+            const y = element.getBoundingClientRect().top + window.scrollY + yOffset;
+            window.scrollTo({ top: y, behavior: 'smooth' });
+          }
+        }, 100);
+      });
     }
-  }, [location.hash]);
+  }, [location.state, location.hash]);
 
   const allMockAddresses = [
     { zip: '06035', base: '서울특별시 강남구 가로수길 15 (신사동)' },
