@@ -51,10 +51,10 @@ const scrollReviews = [...reviews, ...reviews];
 
 export default function ReviewSlider() {
   return (
-    <section className="bg-[#f8f8f8] py-24 overflow-hidden">
-      <div className="max-w-[1280px] mx-auto px-8 mb-16 text-center">
-        <h2 className="text-4xl font-serif mb-2">Best Reviews</h2>
-        <p className="text-sm text-black/60 font-hei">고객님들이 전하는 생생한 착용 후기</p>
+    <section className="bg-[#f8f8f8] py-32 overflow-hidden">
+      <div className="flex flex-col items-center mb-16">
+        <h2 className="text-4xl font-bold font-logo italic tracking-tight text-[#1b1d0e]">Best Reviews</h2>
+        <div className="w-12 h-[2px] bg-[#dc2626] mt-4" />
       </div>
 
       <div className="relative flex">
