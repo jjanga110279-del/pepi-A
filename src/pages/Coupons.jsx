@@ -148,26 +148,26 @@ export default function Coupons() {
               const isDownloaded = downloadedIds.includes(coupon.id);
               return (
                 <div key={coupon.id} className="relative group overflow-hidden">
-                  <div className={`bg-white border border-black/10 rounded-2xl p-8 flex justify-between items-center transition-all shadow-sm ${isDownloaded ? 'opacity-60' : 'hover:border-black/20'}`}>
-                    <div className="flex flex-col gap-2">
-                      <span className="text-[11px] font-bold text-[#9C3F00] font-sans tracking-widest uppercase">{coupon.type}</span>
-                      <h3 className="text-[20px] font-bold text-black font-hei leading-tight">{coupon.title}</h3>
-                      <p className="text-[13px] text-black/40 font-sans mt-1">{coupon.condition}</p>
-                      <span className="text-[12px] font-medium text-black/60 font-sans mt-2">{coupon.expiry}</span>
+                  <div className={`bg-white border border-black/10 rounded-2xl p-5 md:p-8 flex justify-between items-center transition-all shadow-sm ${isDownloaded ? 'opacity-60' : 'hover:border-black/20'}`}>
+                    <div className="flex flex-col gap-1.5 md:gap-2 pr-2">
+                      <span className="text-[10px] md:text-[11px] font-bold text-[#9C3F00] font-sans tracking-widest uppercase">{coupon.type}</span>
+                      <h3 className="text-[16px] md:text-[20px] font-bold text-black font-hei leading-tight">{coupon.title}</h3>
+                      <p className="text-[12px] md:text-[13px] text-black/40 font-sans mt-0.5">{coupon.condition}</p>
+                      <span className="text-[11px] md:text-[12px] font-medium text-black/60 font-sans mt-1">{coupon.expiry}</span>
                     </div>
-                    <div className="text-right flex flex-col items-end gap-4">
-                      <span className="text-[36px] font-bold text-black font-sans leading-none">{coupon.discount}</span>
+                    <div className="text-right flex flex-col items-end gap-3 md:gap-4 shrink-0">
+                      <span className="text-[28px] md:text-[36px] font-bold text-black font-sans leading-none whitespace-nowrap">{coupon.discount}</span>
                       {isDownloaded ? (
-                        <div className="flex items-center gap-1.5 px-5 py-2.5 bg-gray-50 text-black/40 rounded-full text-[13px] font-bold font-hei">
-                          <Check size={14} />
+                        <div className="flex items-center gap-1 px-3 md:px-5 py-2 md:py-2.5 bg-gray-50 text-black/40 rounded-full text-[11px] md:text-[13px] font-bold font-hei whitespace-nowrap">
+                          <Check size={12} className="md:w-3.5 md:h-3.5" />
                           다운로드 완료
                         </div>
                       ) : (
                         <button 
                           onClick={() => handleDownload(coupon.id)}
-                          className="flex items-center gap-2 px-5 py-2.5 bg-gray-100 rounded-full text-[13px] font-bold text-black hover:bg-black hover:text-white transition-all font-hei"
+                          className="flex items-center gap-1.5 px-4 md:px-5 py-2 md:py-2.5 bg-gray-100 rounded-full text-[11px] md:text-[13px] font-bold text-black hover:bg-black hover:text-white transition-all font-hei whitespace-nowrap"
                         >
-                          <Download size={14} />
+                          <Download size={14} className="md:w-4 md:h-4" />
                           다운로드
                         </button>
                       )}
@@ -182,16 +182,16 @@ export default function Coupons() {
             {/* Available Coupons Rendering */}
             {currentTab === '사용 가능' && allDownloadableCoupons.filter(c => downloadedIds.includes(c.id)).map((coupon) => (
               <div key={coupon.id} className="relative group overflow-hidden">
-                <div className="bg-white border border-black/10 rounded-2xl p-8 flex justify-between items-center hover:border-black/20 transition-all shadow-sm border-l-4 border-l-[#9C3F00]">
-                  <div className="flex flex-col gap-2">
-                    <span className="text-[11px] font-bold text-[#9C3F00] font-sans tracking-widest uppercase">{coupon.type}</span>
-                    <h3 className="text-[20px] font-bold text-black font-hei leading-tight">{coupon.title}</h3>
-                    <p className="text-[13px] text-black/40 font-sans mt-1">{coupon.condition}</p>
-                    <span className="text-[12px] font-medium text-black/60 font-sans mt-2">{coupon.expiry}</span>
+                <div className="bg-white border border-black/10 rounded-2xl p-5 md:p-8 flex justify-between items-center hover:border-black/20 transition-all shadow-sm border-l-4 border-l-[#9C3F00]">
+                  <div className="flex flex-col gap-1.5 md:gap-2 pr-2">
+                    <span className="text-[10px] md:text-[11px] font-bold text-[#9C3F00] font-sans tracking-widest uppercase">{coupon.type}</span>
+                    <h3 className="text-[16px] md:text-[20px] font-bold text-black font-hei leading-tight">{coupon.title}</h3>
+                    <p className="text-[12px] md:text-[13px] text-black/40 font-sans mt-0.5">{coupon.condition}</p>
+                    <span className="text-[11px] md:text-[12px] font-medium text-black/60 font-sans mt-1">{coupon.expiry}</span>
                   </div>
-                  <div className="text-right flex flex-col items-end gap-4">
-                    <span className="text-[36px] font-bold text-black font-sans leading-none">{coupon.discount}</span>
-                    <button className="px-5 py-2 border border-black/10 rounded-full text-[12px] font-bold text-black hover:bg-black hover:text-white transition-all font-hei">
+                  <div className="text-right flex flex-col items-end gap-3 md:gap-4 shrink-0">
+                    <span className="text-[28px] md:text-[36px] font-bold text-black font-sans leading-none whitespace-nowrap">{coupon.discount}</span>
+                    <button className="px-4 md:px-5 py-2 md:py-2.5 border border-black/10 rounded-full text-[11px] md:text-[12px] font-bold text-black hover:bg-black hover:text-white transition-all font-hei whitespace-nowrap">
                       상품보기
                     </button>
                   </div>
@@ -204,14 +204,14 @@ export default function Coupons() {
             {/* Used/Expired Rendering */}
             {(currentTab === '사용 완료' || currentTab === '기간 만료') && (currentTab === '사용 완료' ? usedCoupons : expiredCoupons).map((coupon) => (
               <div key={coupon.id} className="relative group overflow-hidden grayscale opacity-60">
-                <div className="bg-gray-50 border border-black/5 rounded-2xl p-8 flex justify-between items-center">
-                  <div className="flex flex-col gap-2">
-                    <span className="text-[11px] font-bold text-black/40 font-sans tracking-widest uppercase">{coupon.type}</span>
-                    <h3 className="text-[20px] font-bold text-black/40 font-hei leading-tight">{coupon.title}</h3>
-                    <span className="text-[12px] font-medium text-black/40 font-sans mt-2">{coupon.date}</span>
+                <div className="bg-gray-50 border border-black/5 rounded-2xl p-5 md:p-8 flex justify-between items-center">
+                  <div className="flex flex-col gap-1.5 md:gap-2 pr-2">
+                    <span className="text-[10px] md:text-[11px] font-bold text-black/40 font-sans tracking-widest uppercase">{coupon.type}</span>
+                    <h3 className="text-[16px] md:text-[20px] font-bold text-black/40 font-hei leading-tight">{coupon.title}</h3>
+                    <span className="text-[11px] md:text-[12px] font-medium text-black/40 font-sans mt-1">{coupon.date}</span>
                   </div>
-                  <div className="text-right">
-                    <span className="text-[36px] font-bold text-black/20 font-sans leading-none">{coupon.discount}</span>
+                  <div className="text-right shrink-0">
+                    <span className="text-[28px] md:text-[36px] font-bold text-black/20 font-sans leading-none whitespace-nowrap">{coupon.discount}</span>
                   </div>
                 </div>
                 <div className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 w-4 h-4 bg-white rounded-full border border-black/10 z-10 hidden lg:block" />
