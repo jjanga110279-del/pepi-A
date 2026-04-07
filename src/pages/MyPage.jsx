@@ -204,6 +204,9 @@ export default function MyPage() {
                     <p className="text-[10px] md:text-[12px] font-bold text-black/40 mb-0.5 md:mb-1 font-hei break-keep">{item.label}</p>
                     <p className="text-base md:text-xl font-bold font-sans">{item.count}</p>
                   </div>
+                  {idx === 3 && (
+                    <button className="mt-1 md:mt-2 px-3 py-1 md:px-6 md:py-1.5 bg-white border border-black/10 rounded-full text-[9px] md:text-[11px] font-bold font-hei text-black hover:bg-gray-200 transition-all shadow-sm whitespace-nowrap">구매확정</button>
+                  )}
                 </div>
               ))}
             </div>
