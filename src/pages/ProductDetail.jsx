@@ -402,7 +402,8 @@ export default function ProductDetail() {
         {/* Main Selection Area */}
         <div className="flex flex-col lg:flex-row gap-10 xl:gap-20 mb-32">
           {/* Left: Gallery */}
-          <div className="lg:w-[683px] flex gap-4 h-fit sticky top-40">
+          <div className="lg:w-[683px] flex flex-col md:flex-row gap-4 h-fit lg:sticky lg:top-40">
+            {/* Desktop Vertical Thumbnails */}
             <div className="hidden md:flex flex-col gap-4 w-20 max-h-[800px] overflow-y-auto no-scrollbar pb-10">
               {productImages.map((img, i) => (
                 <div 
@@ -414,8 +415,23 @@ export default function ProductDetail() {
                 </div>
               ))}
             </div>
-            <div className="flex-grow aspect-[3/4] rounded-2xl overflow-hidden bg-[#fafafa] transition-all duration-500">
+
+            {/* Main Large Image */}
+            <div className="flex-grow aspect-[3/4] rounded-2xl overflow-hidden bg-[#fafafa] transition-all duration-500 shadow-sm">
               <img src={mainImage} alt={product.name} className="w-full h-full object-cover" />
+            </div>
+
+            {/* Mobile Horizontal Thumbnails */}
+            <div className="flex md:hidden gap-3 overflow-x-auto no-scrollbar py-2 -mx-4 px-4 mt-2">
+              {productImages.map((img, i) => (
+                <div 
+                  key={i} 
+                  onClick={() => setMainImage(img)}
+                  className={`w-20 aspect-[3/4] rounded-xl overflow-hidden bg-[#fafafa] cursor-pointer border-2 transition-all flex-shrink-0 ${mainImage === img ? 'border-[#9C3F00] shadow-md' : 'border-transparent opacity-60'}`}
+                >
+                  <img src={img} alt="" className="w-full h-full object-cover" />
+                </div>
+              ))}
             </div>
           </div>
 
