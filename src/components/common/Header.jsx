@@ -89,11 +89,10 @@ export default function Header() {
                    <ICONS.home className="text-[22px] md:text-[26px]" />
                  </Link>
                  {isDetailPage && (
-                   <button onClick={() => navigate(-1)} className="hover:opacity-60 transition-opacity p-1.5 flex items-center justify-center">
+                   <button onClick={() => navigate(-1)} className="hidden md:flex hover:opacity-60 transition-opacity p-1.5 items-center justify-center">
                      <ICONS.backArrow className="text-[18px] md:text-[20px]" />
                    </button>
-                 )}
-              </div>
+                 )}              </div>
             </div>
 
             {/* Center: Logo */}
