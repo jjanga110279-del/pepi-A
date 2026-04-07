@@ -100,6 +100,7 @@ export default function EditProfile() {
     { name: '주문/결재 내역', path: '/order-history', icon: ShoppingBag, active: false },
     { name: '주소록 관리', path: '/address-book', icon: MapPin, active: false },
     { name: '관심 상품', path: '/wishlist', icon: Heart, active: false },
+    { name: '내 리뷰관리', path: '/my-reviews', icon: ClipboardList, active: false },
     { name: '쿠폰', path: '/coupons', icon: Ticket, active: false },
     { name: '포인트', path: '/points', icon: Coins, active: false },
     { name: '설정', path: '/settings', icon: Settings, active: false },
@@ -186,6 +187,22 @@ export default function EditProfile() {
 
         {/* Main Content */}
         <div className="flex-grow max-w-2xl mx-auto md:mx-0 w-full">
+          {/* Mobile MyPage Navigation */}
+          <div className="md:hidden overflow-x-auto no-scrollbar -mx-4 px-4 mb-8">
+            <div className="flex gap-2 pb-2">
+              {sideMenu.map((sub, idx) => (
+                <Link 
+                  key={idx} 
+                  to={sub.path}
+                  className={`flex items-center gap-2 whitespace-nowrap px-4 py-2 rounded-full text-[13px] font-bold transition-all ${sub.active ? 'bg-[#1b1d0e] text-white shadow-md' : 'bg-gray-100 text-black/40'}`}
+                >
+                  <sub.icon size={14} />
+                  {sub.name}
+                </Link>
+              ))}
+            </div>
+          </div>
+
           <div className="flex flex-col gap-2 mb-12">
             <h1 className="text-[28px] md:text-[36px] font-bold text-[#000000] font-hei">회원 정보 수정</h1>
             <p className="text-[14px] text-black/40 font-hei">늘:pepi-i와 함께하는 회원님의 정보를 소중하게 관리합니다.</p>

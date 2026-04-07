@@ -99,6 +99,22 @@ export default function MyPage() {
 
         {/* Main Content */}
         <div className="flex-grow">
+          {/* Mobile MyPage Navigation */}
+          <div className="md:hidden overflow-x-auto no-scrollbar -mx-4 px-4 mb-8">
+            <div className="flex gap-2 pb-2">
+              {sideMenu.map((sub, idx) => (
+                <Link 
+                  key={idx} 
+                  to={sub.path}
+                  className={`flex items-center gap-2 whitespace-nowrap px-4 py-2 rounded-full text-[13px] font-bold transition-all ${sub.active ? 'bg-[#1b1d0e] text-white shadow-md' : 'bg-gray-100 text-black/40'}`}
+                >
+                  <sub.icon size={14} />
+                  {sub.name}
+                </Link>
+              ))}
+            </div>
+          </div>
+
           {/* Section: User Summary & My Wallet */}
           <section className="flex flex-col xl:flex-row justify-between items-start border-b border-black/5 pb-16 mb-16 gap-12">
             <div className="flex items-center gap-8 py-[69px]">
