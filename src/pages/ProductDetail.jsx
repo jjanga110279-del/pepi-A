@@ -73,6 +73,32 @@ export default function ProductDetail() {
   const [currentPage, setCurrentPage] = useState(1);
   const reviewsPerPage = 5;
   const tabRef = React.useRef(null);
+  const scrollAnchorRef = React.useRef(null); // New stable anchor for scrolling
+
+  // 정밀 스크롤 함수
+  const scrollToAnchor = () => {
+    if (scrollAnchorRef.current) {
+      const yOffset = -90; // Header height offset
+      const element = scrollAnchorRef.current;
+      const y = element.getBoundingClientRect().top + window.scrollY + yOffset;
+      
+      // 즉시 이동 (auto)으로 위치 고정
+      window.scrollTo({ top: y, behavior: 'auto' });
+      
+      // 모바일 브라우저의 렌더링 지연을 위해 한 번 더 실행 (이중 확인)
+      requestAnimationFrame(() => {
+        window.scrollTo({ top: y, behavior: 'auto' });
+      });
+    }
+  };
+
+  // 상태 변경 감지 시 자동 스크롤
+  React.useEffect(() => {
+    // 초기 로딩 제외, 데이터 변경 시에만 작동
+    if (currentPage > 1 || sortBy !== 'recommended' || selectedUser || currentTab !== 'detail') {
+      scrollToAnchor();
+    }
+  }, [currentPage, sortBy, selectedUser, currentTab]);
 
   // 제품별 맞춤 리뷰 데이터 생성 헬퍼 함수
   const generateReviews = (count, category) => {
