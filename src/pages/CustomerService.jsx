@@ -119,8 +119,8 @@ export default function CustomerService() {
                     {React.cloneElement(topic.icon, { size: 20, className: "text-black/20 group-hover:text-[#dc2626] transition-colors md:w-7 md:h-7" })}
                   </div>
                   <div className="flex flex-col gap-1 md:gap-3">
-                    <h3 className="text-[13px] md:text-xl font-bold text-[#1b1d0e] font-hei break-keep">{topic.title}</h3>
-                    <p className="hidden md:block text-base text-[#78716c] leading-relaxed font-hei">{topic.desc}</p>
+                    <h3 className="text-[12px] md:text-xl font-bold text-[#1b1d0e] font-hei break-keep">{topic.title}</h3>
+                    <p className="text-[10px] md:text-base text-[#78716c] leading-tight md:leading-relaxed font-hei line-clamp-2 md:line-clamp-none">{topic.desc}</p>
                   </div>
                 </div>
               ))}
