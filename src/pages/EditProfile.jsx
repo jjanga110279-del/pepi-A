@@ -186,7 +186,7 @@ export default function EditProfile() {
               <label className="text-[11px] font-bold text-black/40 uppercase tracking-widest ml-1">Phone Number</label>
               <div className="flex gap-3">
                 <input type="text" value={formData.phone} onChange={(e) => setFormData({...formData, phone: e.target.value})} className="flex-grow h-14 px-6 bg-[#FAFAFA] border border-black/5 rounded-2xl text-[16px] font-bold focus:outline-none" />
-                <button onClick={() => alert('번호가 변경되었습니다.')} className="px-6 bg-white border border-black/10 rounded-2xl text-[13px] font-bold text-black hover:bg-gray-50 transition-all">변경</button>
+                <button onClick={() => alert('번호가 변경되었습니다.')} className="px-6 bg-white border border-black/10 rounded-2xl text-[13px] font-bold text-black hover:bg-gray-200 transition-all whitespace-nowrap">변경</button>
               </div>
             </div>
 
