@@ -189,103 +189,32 @@ export default function ProductDetail() {
 
   const scrollToTabs = () => {
     if (tabRef.current) {
-      const yOffset = -80; // Adjusted for mobile/scrolled header
-      const element = tabRef.current;
-      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
-      window.scrollTo({ top: y, behavior: 'smooth' });
+      const yOffset = -100; // Adjusted for header
+      const y = tabRef.current.getBoundingClientRect().top + window.scrollY + yOffset;
+      window.scrollTo({ top: y, behavior: 'auto' });
     }
   };
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
-    setTimeout(scrollToTabs, 10);
+    scrollToTabs();
   };
 
   const handleUserClick = (userName) => {
     setSelectedUser(userName);
     setCurrentPage(1);
-    setTimeout(scrollToTabs, 10);
-  };
-
-  // 장바구니에서 '옵션 변경'으로 들어왔을 때 초기 데이터 설정
-  React.useEffect(() => {
-    if (location.state?.editItem) {
-      const item = location.state.editItem;
-      setSelectedOptions([{
-        optionId: `${item.color}-${item.size}`,
-        color: item.color,
-        size: item.size,
-        quantity: item.quantity
-      }]);
-    }
-  }, [location.state]);
-
-  const handleOptionSelect = (type, value) => {
-    let newColor = selectedColor;
-    let newSize = selectedSize;
-
-    if (type === 'color') {
-      newColor = value;
-      setSelectedColor(value);
-    } else {
-      newSize = value;
-      setSelectedSize(value);
-    }
-
-    if (newColor && newSize) {
-      const optionId = `${newColor}-${newSize}`;
-      const exists = selectedOptions.find(opt => opt.optionId === optionId);
-      
-      if (!exists) {
-        setSelectedOptions([...selectedOptions, {
-          optionId,
-          color: newColor,
-          size: newSize,
-          quantity: 1
-        }]);
-      }
-      setSelectedColor('');
-      setSelectedSize('');
-    }
-  };
-
-  const updateOptionQuantity = (optionId, delta) => {
-    setSelectedOptions(prev => prev.map(opt => 
-      opt.optionId === optionId 
-        ? { ...opt, quantity: Math.max(1, opt.quantity + delta) } 
-        : opt
-    ));
-  };
-
-  const removeOption = (optionId) => {
-    setSelectedOptions(prev => prev.filter(opt => opt.optionId !== optionId));
-  };
-
-  const numericPrice = typeof product.price === 'string' 
-    ? parseInt(product.price.replace(/[^0-9]/g, '')) 
-    : product.price;
-
-  const totalPrice = selectedOptions.reduce((acc, opt) => acc + (numericPrice * opt.quantity), 0);
-
-  const handleTabClick = (tabId) => {
-    setCurrentTab(tabId);
-    if (tabRef.current) {
-      const yOffset = -120; // Header height and buffer
-      const element = tabRef.current;
-      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
-      window.scrollTo({ top: y, behavior: 'smooth' });
-    }
+    scrollToTabs();
   };
 
   const handleSortChange = (newSort) => {
     setSortBy(newSort);
-    // Optional: scroll back to review top when sort changes
-    if (tabRef.current) {
-      const yOffset = -120;
-      const element = tabRef.current;
-      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
-      window.scrollTo({ top: y, behavior: 'smooth' });
-    }
+    setCurrentPage(1);
+    scrollToTabs();
+  };
+
+  const handleTabClick = (tabId) => {
+    setCurrentTab(tabId);
+    scrollToTabs();
   };
 
   const checkLoginAndProceed = (action) => {
