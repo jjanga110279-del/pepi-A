@@ -177,13 +177,13 @@ export default function ReviewEdit() {
               <button 
                 type="button"
                 onClick={() => navigate(-1)}
-                className="flex-1 h-16 rounded-full border border-black/10 text-[16px] font-bold font-hei hover:bg-[#FAFAFA] transition-all"
+                className="flex-1 h-16 rounded-full border border-black/10 text-[16px] font-bold font-hei hover:bg-gray-50 transition-all"
               >
                 취소
               </button>
               <button 
                 type="submit"
-                className="flex-[2] h-16 rounded-full bg-[#1b1d0e] text-white text-[16px] font-bold font-hei hover:bg-black transition-all shadow-lg shadow-black/10"
+                className="flex-[2] h-16 rounded-full bg-gray-100 text-black text-[16px] font-bold font-hei hover:bg-gray-200 transition-all shadow-sm"
               >
                 수정 완료
               </button>

@@ -186,23 +186,23 @@ export default function EditProfile() {
               <label className="text-[11px] font-bold text-black/40 uppercase tracking-widest ml-1">Phone Number</label>
               <div className="flex gap-3">
                 <input type="text" value={formData.phone} onChange={(e) => setFormData({...formData, phone: e.target.value})} className="flex-grow h-14 px-6 bg-[#FAFAFA] border border-black/5 rounded-2xl text-[16px] font-bold focus:outline-none" />
-                <button onClick={() => alert('번호가 변경되었습니다.')} className="px-6 bg-white border border-black/10 rounded-2xl text-[13px] font-bold text-black">변경</button>
+                <button onClick={() => alert('번호가 변경되었습니다.')} className="px-6 bg-white border border-black/10 rounded-2xl text-[13px] font-bold text-black hover:bg-gray-50 transition-all">변경</button>
               </div>
             </div>
 
             <div id="password" className="flex flex-col gap-3 scroll-mt-32">
               <label className="text-[11px] font-bold text-black/40 uppercase tracking-widest ml-1">Password</label>
               {!isChangingPassword ? (
-                <button onClick={() => setIsChangingPassword(true)} className="w-full h-14 px-6 flex items-center justify-between bg-white border border-black/10 rounded-2xl hover:bg-gray-200 transition-all">
+                <button onClick={() => setIsChangingPassword(true)} className="w-full h-14 px-6 flex items-center justify-between bg-white border border-black/10 rounded-2xl hover:bg-gray-50 transition-all group">
                   <span className="text-[15px] font-bold text-black">비밀번호 변경하기</span>
-                  <ChevronRight size={18} className="text-black/20" />
+                  <ChevronRight size={18} className="text-black/20 group-hover:translate-x-1 transition-transform" />
                 </button>
               ) : (
                 <div className="bg-[#FAFAFA] border border-black/5 rounded-2xl p-6 flex flex-col gap-4">
-                  <div className="flex justify-between items-center"><span className="text-[14px] font-bold text-black">새 비밀번호 설정</span><button onClick={() => setIsChangingPassword(false)}><X size={18}/></button></div>
+                  <div className="flex justify-between items-center"><span className="text-[14px] font-bold text-black">새 비밀번호 설정</span><button onClick={() => setIsChangingPassword(false)} className="hover:text-black text-black/20 transition-colors"><X size={18}/></button></div>
                   <input type="password" placeholder="현재 비밀번호" className="h-12 px-4 bg-white border border-black/10 rounded-xl" />
                   <input type="password" placeholder="새 비밀번호" className="h-12 px-4 bg-white border border-black/10 rounded-xl" />
-                  <button onClick={() => setIsChangingPassword(false)} className="h-12 bg-black text-white rounded-xl text-[13px] font-bold">비밀번호 저장</button>
+                  <button onClick={() => setIsChangingPassword(false)} className="h-12 bg-gray-100 hover:bg-gray-200 text-black rounded-xl text-[13px] font-bold transition-all">비밀번호 저장</button>
                 </div>
               )}
             </div>
@@ -211,7 +211,7 @@ export default function EditProfile() {
               <label className="text-[11px] font-bold text-black/40 uppercase tracking-widest ml-1">Address</label>
               <div className="flex gap-3">
                 <input type="text" placeholder="우편번호" value={formData.zipcode} readOnly className="w-32 h-14 px-6 bg-[#FAFAFA] border border-black/5 rounded-2xl text-[16px] font-bold" />
-                <button onClick={() => setShowAddressSearch(true)} className="px-6 bg-white border border-black/10 rounded-2xl text-[13px] font-bold text-black">주소 검색</button>
+                <button onClick={() => setShowAddressSearch(true)} className="px-6 bg-white border border-black/10 rounded-2xl text-[13px] font-bold text-black hover:bg-gray-50 transition-all">주소 검색</button>
               </div>
               <input type="text" placeholder="기본 주소" value={formData.address} readOnly className="w-full h-14 px-6 bg-[#FAFAFA] border border-black/5 rounded-2xl text-[16px] font-bold" />
               <input type="text" placeholder="상세 주소" value={formData.detailAddress} onChange={(e) => setFormData({...formData, detailAddress: e.target.value})} className="w-full h-14 px-6 bg-white border border-black/10 rounded-2xl text-[16px] font-medium focus:outline-none" />

@@ -1,11 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router';
 import Layout from '../components/common/Layout';
 import { useUser } from '../context/UserContext';
+import { ICONS } from '../constants/icons';
 import { 
   User, 
   ShoppingBag, 
-  Heart, 
+  Heart as LucideHeart, 
   Ticket, 
   Coins, 
   Settings, 
@@ -21,12 +22,37 @@ import {
 export default function MyPage() {
   const { user, orders } = useUser();
   const navigate = useNavigate();
+  
+  // Recent products like state
+  const [likedItems, setLikedItems] = useState({});
+
+  const toggleLike = (id, e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setLikedItems(prev => ({ ...prev, [id]: !prev[id] }));
+  };
 
   useEffect(() => {
     if (!user) {
       navigate('/login', { state: { from: '/mypage' } });
     }
   }, [user, navigate]);
+
+  useEffect(() => {
+    if (location.hash === '#delivery-status') {
+      const scrollToSection = () => {
+        const element = document.getElementById('delivery-status');
+        if (element) {
+          const yOffset = -150; // Extra offset to position it lower than the header
+          const y = element.getBoundingClientRect().top + window.scrollY + yOffset;
+          window.scrollTo({ top: y, behavior: 'smooth' });
+        }
+      };
+      // Try twice to ensure layout is ready
+      setTimeout(scrollToSection, 100);
+      setTimeout(scrollToSection, 500);
+    }
+  }, [location]);
 
   if (!user) return null;
 
@@ -50,7 +76,7 @@ export default function MyPage() {
     { name: '프로필', path: '/mypage', icon: User, active: true },
     { name: '주문/결재 내역', path: '/order-history', icon: ShoppingBag, active: false },
     { name: '주소록 관리', path: '/address-book', icon: MapPin, active: false },
-    { name: '관심 상품', path: '/wishlist', icon: Heart, active: false },
+    { name: '관심 상품', path: '/wishlist', icon: LucideHeart, active: false },
     { name: '내 리뷰관리', path: '/my-reviews', icon: ClipboardList, active: false },
     { name: '쿠폰', path: '/coupons', icon: Ticket, active: false },
     { name: '포인트', path: '/points', icon: Coins, active: false },
@@ -155,7 +181,7 @@ export default function MyPage() {
           </section>
 
           {/* Section: Order Status Dashboard */}
-          <section className="border-b border-black/5 pb-16 mb-16">
+          <section id="delivery-status" className="border-b border-black/5 pb-16 mb-16 scroll-mt-40">
             <div className="flex items-center justify-between mb-10">
               <h3 className="text-[18px] font-bold text-black font-hei">주문/배송조회</h3>
               <Link to="/order-history" className="flex items-center gap-1 text-black/40 hover:text-black transition-colors group">
@@ -185,9 +211,8 @@ export default function MyPage() {
                   <p className="text-[12px] font-bold text-black/40 mb-1 font-hei">배송 완료</p>
                   <p className="text-xl font-bold font-sans">{orderStats.delivered}</p>
                 </div>
-                <div className="flex gap-2">
-                  <button onClick={() => navigate('/order-history')} className="px-4 py-1.5 bg-white border border-black/10 rounded-full text-[11px] font-bold font-hei text-black hover:bg-gray-200 transition-all">배송조회</button>
-                  <button className="px-4 py-1.5 bg-white border border-black/10 rounded-full text-[11px] font-bold font-hei text-black hover:bg-gray-200 transition-all">구매확정</button>
+                <div className="flex justify-center">
+                  <button className="px-8 py-2 bg-white border border-black/10 rounded-full text-[12px] font-bold font-hei text-black hover:bg-gray-200 transition-all shadow-sm">구매확정</button>
                 </div>
               </div>
             </div>
@@ -205,8 +230,15 @@ export default function MyPage() {
                 <div key={product.id} className="flex flex-col gap-4 group cursor-pointer">
                   <div className="w-full aspect-[3/4] bg-[#FAFAFA] rounded-[48px] overflow-hidden relative">
                     <img src={product.image} alt={product.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-                    <button className="absolute top-6 right-6">
-                      <Heart size={20} className="text-black/20 hover:text-[#dc2626] transition-colors" />
+                    <button 
+                      onClick={(e) => toggleLike(product.id, e)}
+                      className="absolute top-6 right-6 z-20 hover:scale-110 transition-transform drop-shadow-md"
+                    >
+                      {likedItems[product.id] ? (
+                        <ICONS.heartFilled className="text-[#dc2626] text-[24px]" />
+                      ) : (
+                        <ICONS.heart className="text-white text-[24px] brightness-0 invert" />
+                      )}
                     </button>
                   </div>
                   <div className="flex flex-col gap-1 px-4">

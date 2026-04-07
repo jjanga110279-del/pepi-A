@@ -196,6 +196,53 @@ export default function ProductDetail() {
     ));
   };
 
+  const handleOptionSelect = (type, value) => {
+    let newColor = selectedColor;
+    let newSize = selectedSize;
+
+    if (type === 'color') {
+      newColor = value;
+      setSelectedColor(value);
+    } else {
+      newSize = value;
+      setSelectedSize(value);
+    }
+
+    if (newColor && newSize) {
+      const optionId = `${newColor}-${newSize}`;
+      const exists = selectedOptions.find(opt => opt.optionId === optionId);
+      
+      if (!exists) {
+        setSelectedOptions([...selectedOptions, {
+          optionId,
+          color: newColor,
+          size: newSize,
+          quantity: 1
+        }]);
+      }
+      setSelectedColor('');
+      setSelectedSize('');
+    }
+  };
+
+  const updateOptionQuantity = (optionId, delta) => {
+    setSelectedOptions(prev => prev.map(opt => 
+      opt.optionId === optionId 
+        ? { ...opt, quantity: Math.max(1, opt.quantity + delta) } 
+        : opt
+    ));
+  };
+
+  const removeOption = (optionId) => {
+    setSelectedOptions(prev => prev.filter(opt => opt.optionId !== optionId));
+  };
+
+  const numericPrice = typeof product.price === 'string' 
+    ? parseInt(product.price.replace(/[^0-9]/g, '')) 
+    : product.price;
+
+  const totalPrice = selectedOptions.reduce((acc, opt) => acc + (numericPrice * opt.quantity), 0);
+
   const filteredReviews = reviews
     .filter(rev => !photoOnly || rev.images.length > 0)
     .filter(rev => !selectedUser || rev.user === selectedUser)

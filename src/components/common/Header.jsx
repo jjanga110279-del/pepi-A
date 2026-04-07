@@ -108,6 +108,10 @@ export default function Header() {
                 <button onClick={goToSearch} className="hover:opacity-70 transition-opacity p-1.5">
                   <ICONS.search className="text-[18px] md:text-[20px]" />
                 </button>
+                {/* Wishlist Icon */}
+                <button onClick={(e) => handleProtectedNavigation('/wishlist', e)} className="hover:opacity-70 transition-opacity p-1.5">
+                  <ICONS.wishlist className="text-[20px] md:text-[22px]" />
+                </button>
                 <button onClick={(e) => handleProtectedNavigation('/mypage', e)} className="hover:opacity-70 transition-opacity p-1.5">
                   <ICONS.user className="text-[20px] md:text-[22px]" />
                 </button>
