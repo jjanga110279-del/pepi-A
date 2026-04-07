@@ -51,15 +51,6 @@ export default function FloatingMenu() {
         <ICONS.kakaoPay className="text-[24px] text-black" />
       </a>
 
-      {/* 1:1 Inquiry Button */}
-      <button
-        onClick={() => navigate('/customer-service')}
-        className="w-12 h-12 bg-white/90 backdrop-blur shadow-lg rounded-full flex items-center justify-center border border-black/5 hover:bg-white transition-all transform active:scale-95 text-black/70 flex flex-col items-center justify-center pt-0.5"
-      >
-        <span className="text-[10px] font-black leading-none">1:1</span>
-        <span className="text-[8px] font-bold leading-none mt-0.5">문의</span>
-      </button>
-
       {/* Top Button - Only visible after scrolling */}
       {isVisible && (
         <button
