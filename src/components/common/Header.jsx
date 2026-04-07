@@ -79,20 +79,26 @@ export default function Header() {
       <header className={`fixed top-0 left-0 w-full z-[60] transition-all duration-300 border-b border-black/5 ${isScrolled ? 'py-3 bg-white/95 backdrop-blur-md' : 'py-5 md:py-6 bg-white'}`}>
         <div className="max-w-[1920px] mx-auto px-4 md:px-10">
           <div className="flex items-center justify-between relative h-12 md:h-14">
-            {/* Left: Mobile Menu & Home/Back */}
-            <div className="flex items-center gap-0.5 md:gap-6 z-10 shrink-0">
+            {/* Left: Mobile Menu & Search */}
+            <div className="flex items-center gap-1 md:gap-6 z-10 shrink-0">
               <button className="lg:hidden p-1.5" onClick={toggleMobileMenu}>
                 <Menu size={24} className="text-black" />
               </button>
-              <div className="flex items-center gap-0.5 md:gap-4 text-black/80">
+              <button onClick={goToSearch} className="lg:hidden hover:opacity-70 transition-opacity p-1.5">
+                <ICONS.search className="text-[20px]" />
+              </button>
+              
+              {/* Desktop Home/Back */}
+              <div className="hidden lg:flex items-center gap-4 text-black/80">
                  <Link to="/" className="hover:opacity-60 transition-opacity p-1.5 flex items-center justify-center">
-                   <ICONS.home className="text-[22px] md:text-[26px]" />
+                   <ICONS.home className="text-[26px]" />
                  </Link>
                  {isDetailPage && (
-                   <button onClick={() => navigate(-1)} className="hidden md:flex hover:opacity-60 transition-opacity p-1.5 items-center justify-center">
-                     <ICONS.backArrow className="text-[18px] md:text-[20px]" />
+                   <button onClick={() => navigate(-1)} className="hover:opacity-60 transition-opacity p-1.5 flex items-center justify-center">
+                     <ICONS.backArrow className="text-[20px]" />
                    </button>
-                 )}              </div>
+                 )}
+              </div>
             </div>
 
             {/* Center: Logo */}
@@ -103,25 +109,27 @@ export default function Header() {
             </div>
 
             {/* Right: Icons & Login */}
-            <div className="flex items-center gap-0.5 md:gap-8 z-10 shrink-0">
-              <div className="flex items-center gap-0 md:gap-7 text-black/80">
+            <div className="flex items-center gap-1 md:gap-8 z-10 shrink-0">
+              {/* Desktop Icons */}
+              <div className="hidden lg:flex items-center gap-7 text-black/80">
                 <button onClick={goToSearch} className="hover:opacity-70 transition-opacity p-1.5">
-                  <ICONS.search className="text-[18px] md:text-[20px]" />
+                  <ICONS.search className="text-[20px]" />
                 </button>
-                {/* Wishlist Icon */}
                 <button onClick={(e) => handleProtectedNavigation('/wishlist', e)} className="hover:opacity-70 transition-opacity p-1.5">
-                  <ICONS.wishlist className="text-[20px] md:text-[22px]" />
+                  <ICONS.wishlist className="text-[22px]" />
                 </button>
                 <button onClick={(e) => handleProtectedNavigation('/mypage', e)} className="hover:opacity-70 transition-opacity p-1.5">
-                  <ICONS.user className="text-[20px] md:text-[22px]" />
-                </button>
-                <button onClick={(e) => handleProtectedNavigation('/cart', e)} className="relative cursor-pointer hover:opacity-70 transition-opacity flex items-center p-1.5">
-                  <ICONS.cart className="text-[22px]" />
-                  {user && totalCount > 0 && (
-                    <span className="absolute top-0.5 right-0.5 bg-red-600 text-white text-[9px] md:text-[11px] font-bold rounded-full w-3.5 h-3.5 md:w-5 md:h-5 flex items-center justify-center border border-white">{totalCount}</span>
-                  )}
+                  <ICONS.user className="text-[22px]" />
                 </button>
               </div>
+
+              {/* Cart Icon (Mobile & Desktop) */}
+              <button onClick={(e) => handleProtectedNavigation('/cart', e)} className="relative cursor-pointer hover:opacity-70 transition-opacity flex items-center p-1.5 text-black/80">
+                <ICONS.cart className="text-[22px] md:text-[24px]" />
+                {user && totalCount > 0 && (
+                  <span className="absolute top-0.5 right-0.5 bg-red-600 text-white text-[9px] md:text-[11px] font-bold rounded-full w-3.5 h-3.5 md:w-5 md:h-5 flex items-center justify-center border border-white">{totalCount}</span>
+                )}
+              </button>
               
               <div className="w-px h-5 bg-black/10 hidden lg:block mx-3" />
               {user ? (
