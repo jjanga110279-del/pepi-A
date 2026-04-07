@@ -41,25 +41,23 @@ export default function FloatingMenu() {
 
   return (
     <div className="lg:hidden fixed bottom-24 right-4 flex flex-col gap-2.5 z-[45]">
-      {/* Wishlist Button */}
-      <button
-        onClick={(e) => handleProtectedNavigation('/wishlist', e)}
-        className="w-12 h-12 bg-white/90 backdrop-blur shadow-lg rounded-full flex items-center justify-center border border-black/5 hover:bg-white transition-all transform active:scale-95"
+      {/* KakaoTalk Button */}
+      <a
+        href="https://pf.kakao.com" // Replace with actual KakaoTalk channel URL
+        target="_blank"
+        rel="noopener noreferrer"
+        className="w-12 h-12 bg-[#FEE500] shadow-lg rounded-full flex items-center justify-center border border-black/5 transition-all transform active:scale-95"
       >
-        <ICONS.wishlist className="text-[20px] text-black/70" />
-      </button>
+        <ICONS.kakaoPay className="text-[24px] text-black" />
+      </a>
 
-      {/* Cart Button */}
+      {/* 1:1 Inquiry Button */}
       <button
-        onClick={(e) => handleProtectedNavigation('/cart', e)}
-        className="w-12 h-12 bg-white/90 backdrop-blur shadow-lg rounded-full flex items-center justify-center border border-black/5 hover:bg-white transition-all transform active:scale-95 relative"
+        onClick={() => navigate('/customer-service')}
+        className="w-12 h-12 bg-white/90 backdrop-blur shadow-lg rounded-full flex items-center justify-center border border-black/5 hover:bg-white transition-all transform active:scale-95 text-black/70 flex flex-col items-center justify-center pt-0.5"
       >
-        <ICONS.cart className="text-[20px] text-black/70" />
-        {user && totalCount > 0 && (
-          <span className="absolute top-0 right-0 bg-[#dc2626] text-white text-[9px] font-bold rounded-full w-4 h-4 flex items-center justify-center border border-white">
-            {totalCount}
-          </span>
-        )}
+        <span className="text-[10px] font-black leading-none">1:1</span>
+        <span className="text-[8px] font-bold leading-none mt-0.5">문의</span>
       </button>
 
       {/* Top Button - Only visible after scrolling */}

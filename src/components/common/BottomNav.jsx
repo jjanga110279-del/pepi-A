@@ -19,8 +19,8 @@ export default function BottomNav() {
   };
 
   const menuItems = [
-    { icon: ICONS.home, label: '홈', path: '/' },
     { icon: ICONS.wishlist, label: '찜', path: '/wishlist', protected: true },
+    { icon: ICONS.home, label: '홈', path: '/' },
     { icon: ICONS.user, label: '마이', path: '/mypage', protected: true }
   ];
 
