@@ -355,9 +355,9 @@ export default function Checkout() {
                     </div>
                     <div className="flex flex-col gap-3">
                       <label className="text-[12px] font-bold text-black/40 uppercase tracking-widest font-hei ml-1">포인트 사용</label>
-                      <div className="flex gap-3">
-                        <input type="number" value={formData.usePoint || ''} onChange={(e) => setFormData({...formData, usePoint: e.target.value})} className="flex-grow h-14 px-6 bg-[#FAFAFA] rounded-2xl border-none focus:ring-2 focus:ring-black/5 font-sans font-bold" placeholder="0" />
-                        <button type="button" onClick={() => setFormData({...formData, usePoint: 12450})} className="px-6 bg-white border border-black/10 rounded-2xl text-[13px] font-bold hover:bg-gray-200 transition-all font-hei">전액 사용</button>
+                      <div className="flex gap-2 md:gap-3">
+                        <input type="number" value={formData.usePoint || ''} onChange={(e) => setFormData({...formData, usePoint: e.target.value})} className="flex-grow h-14 px-4 md:px-6 bg-[#FAFAFA] rounded-2xl border-none focus:ring-2 focus:ring-black/5 font-sans font-bold text-[14px] md:text-base" placeholder="0" />
+                        <button type="button" onClick={() => setFormData({...formData, usePoint: 12450})} className="px-4 md:px-6 bg-white border border-black/10 rounded-2xl text-[12px] md:text-[13px] font-bold hover:bg-gray-200 transition-all font-hei whitespace-nowrap shrink-0">전액 사용</button>
                       </div>
                       <p className="text-[12px] text-black/40 font-hei ml-1">보유 포인트: <strong className="text-black/80">12,450 P</strong></p>
                     </div>
@@ -367,18 +367,18 @@ export default function Checkout() {
                 {/* 4. Payment Method */}
                 <section className="flex flex-col gap-8">
                   <div className="border-b border-black/5 pb-4"><h2 className="text-[20px] font-bold text-[#1B1D0E] font-serif">결제 수단</h2></div>
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
                     {[
-                      { id: 'card', label: '신용/체크카드', icon: <CreditCard size={20}/> },
-                      { id: 'kakao', label: '카카오페이', icon: <div className="w-6 h-6 bg-[#FEE500] rounded-[6px] flex items-center justify-center text-[10px] font-black text-black">K</div> },
-                      { id: 'naver', label: '네이버페이', icon: <div className="w-6 h-6 bg-[#03C75A] rounded-[6px] flex items-center justify-center text-[10px] font-black text-white">N</div> },
-                      { id: 'vbank', label: '무통장입금', icon: <Banknote size={20}/> },
-                      { id: 'transfer', label: '실시간 계좌이체', icon: <Building2 size={20}/> },
-                      { id: 'etc', label: '기타 결제', icon: <Smartphone size={20}/> }
+                      { id: 'card', label: '신용/체크카드', icon: <CreditCard size={18} md:size={20}/> },
+                      { id: 'kakao', label: '카카오페이', icon: <div className="w-5 h-5 md:w-6 md:h-6 bg-[#FEE500] rounded-[6px] flex items-center justify-center text-[10px] font-black text-black">K</div> },
+                      { id: 'naver', label: '네이버페이', icon: <div className="w-5 h-5 md:w-6 md:h-6 bg-[#03C75A] rounded-[6px] flex items-center justify-center text-[10px] font-black text-white">N</div> },
+                      { id: 'vbank', label: '무통장입금', icon: <Banknote size={18} md:size={20}/> },
+                      { id: 'transfer', label: '실시간 계좌이체', icon: <Building2 size={18} md:size={20}/> },
+                      { id: 'etc', label: '기타 결제', icon: <Smartphone size={18} md:size={20}/> }
                     ].map((method) => (
-                      <button key={method.id} type="button" onClick={() => setFormData({...formData, paymentMethod: method.id})} className={`flex flex-col items-center justify-center gap-2 h-24 rounded-2xl border transition-all ${formData.paymentMethod === method.id ? 'border-[#9C3F00] bg-[#9C3F00]/5 shadow-sm' : 'border-black/5 bg-white hover:border-black/10'}`}>
+                      <button key={method.id} type="button" onClick={() => setFormData({...formData, paymentMethod: method.id})} className={`flex flex-col items-center justify-center gap-1.5 md:gap-2 h-20 md:h-24 rounded-2xl border transition-all ${formData.paymentMethod === method.id ? 'border-[#9C3F00] bg-[#9C3F00]/5 shadow-sm' : 'border-black/5 bg-white hover:border-black/10'}`}>
                         <span className={formData.paymentMethod === method.id ? 'text-[#9C3F00]' : 'text-black/20'}>{method.icon}</span>
-                        <span className={`text-[13px] font-bold ${formData.paymentMethod === method.id ? 'text-black' : 'text-black/40'}`}>{method.label}</span>
+                        <span className={`text-[12px] md:text-[13px] font-bold ${formData.paymentMethod === method.id ? 'text-black' : 'text-black/40'} break-keep`}>{method.label}</span>
                       </button>
                     ))}
                   </div>
