@@ -181,10 +181,26 @@ export default function Sets() {
         <div className="flex-grow">
           {/* Title & Filter Header */}
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
-            <h1 className="text-4xl md:text-5xl font-bold text-[#1b1d0e] font-sans tracking-tight">
-              세트
-              {selectedSubCategory !== '전체' && <span className="text-xl md:text-2xl font-medium text-[#737373] ml-4 font-hei font-normal">/ {selectedSubCategory}</span>}
-            </h1>
+            <div>
+              <h1 className="text-4xl md:text-5xl font-bold text-[#1b1d0e] font-sans tracking-tight mb-6 md:mb-0">
+                세트
+                {selectedSubCategory !== '전체' && <span className="text-xl md:text-2xl font-medium text-[#737373] ml-4 font-hei font-normal">/ {selectedSubCategory}</span>}
+              </h1>
+
+              {/* Mobile Sub Categories - Horizontal Scroll */}
+              <div className="flex md:hidden overflow-x-auto pb-4 gap-2 no-scrollbar -mx-4 px-4">
+                {subCategories.map((sub, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => handleSubCategoryChange(sub.name)}
+                    className={`whitespace-nowrap px-5 py-2 rounded-full text-[14px] font-bold transition-all ${selectedSubCategory === sub.name ? 'bg-[#1b1d0e] text-white shadow-lg' : 'bg-gray-100 text-[#737373]'}`}
+                  >
+                    {sub.name}
+                  </button>
+                ))}
+              </div>
+            </div>
+
             <div className="flex items-center gap-6 text-[13px] md:text-[14px] font-medium text-[#a3a3a3]">
               {['최신순', '인기순', '낮은가격순', '높은가격순'].map((sort) => (
                 <button
