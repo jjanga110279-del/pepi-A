@@ -16,7 +16,8 @@ import {
   Camera,
   X,
   Search as SearchIcon,
-  Loader2
+  Loader2,
+  MapPin // Added missing import
 } from 'lucide-react';
 
 export default function EditProfile() {
@@ -32,38 +33,38 @@ export default function EditProfile() {
   const [isSearching, setIsSearching] = useState(false);
   const [focusedIndex, setFocusedIndex] = useState(-1);
   
+  // Safe initial state with user existence check
   const [formData, setFormData] = useState({
-    name: user.name,
-    email: user.email,
-    phone: user.phone,
-    zipcode: user.zipcode,
-    address: user.address,
-    detailAddress: user.detailAddress,
-    profileImage: user.profileImage
+    name: user?.name || '',
+    email: user?.email || '',
+    phone: user?.phone || '',
+    zipcode: user?.zipcode || '',
+    address: user?.address || '',
+    detailAddress: user?.detailAddress || '',
+    profileImage: user?.profileImage || "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=200&auto=format&fit=crop"
   });
 
   const [initialData] = useState({ ...formData });
 
-  // 특정 섹션으로 이동 및 처리 (설정 페이지 연동)
+  // Handle unauthorized access
+  useEffect(() => {
+    if (!user) {
+      alert('로그인이 필요한 페이지입니다.');
+      navigate('/login');
+    }
+  }, [user, navigate]);
+
   useEffect(() => {
     if (location.hash) {
       const id = location.hash.replace('#', '');
-      
-      if (id === 'password') {
-        setIsChangingPassword(true);
-      }
-
-      // 렌더링 후 이동하도록 약간의 지연시간 부여
+      if (id === 'password') setIsChangingPassword(true);
       setTimeout(() => {
         const element = document.getElementById(id);
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
+        if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }, 150);
     }
   }, [location.hash]);
 
-  // 확장된 리얼 주소 시뮬레이션 데이터
   const allMockAddresses = [
     { zip: '06035', base: '서울특별시 강남구 가로수길 15 (신사동)' },
     { zip: '04524', base: '서울특별시 중구 세종대로 110 (태평로1가, 서울특별시청)' },
@@ -74,7 +75,6 @@ export default function EditProfile() {
     { zip: '16514', base: '경기도 수원시 영통구 광교중앙로 140 (이의동, 경기도청)' }
   ];
 
-  // 실시간 주소 검색
   useEffect(() => {
     if (addressSearchQuery.length > 0) {
       setIsSearching(true);
@@ -145,25 +145,6 @@ export default function EditProfile() {
     setFocusedIndex(-1);
   };
 
-  const handleKeyDown = (e) => {
-    if (!showAddressSearch || searchResults.length === 0) return;
-
-    if (e.key === 'ArrowDown') {
-      e.preventDefault();
-      setFocusedIndex(prev => (prev < searchResults.length - 1 ? prev + 1 : prev));
-    } else if (e.key === 'ArrowUp') {
-      e.preventDefault();
-      setFocusedIndex(prev => (prev > 0 ? prev - 1 : 0));
-    } else if (e.key === 'Enter') {
-      e.preventDefault();
-      if (focusedIndex >= 0 && focusedIndex < searchResults.length) {
-        selectAddress(searchResults[focusedIndex]);
-      }
-    } else if (e.key === 'Escape') {
-      setShowAddressSearch(false);
-    }
-  };
-
   const handlePasswordSave = () => {
     alert('비밀번호가 성공적으로 변경되었습니다.');
     setIsChangingPassword(false);
@@ -179,10 +160,12 @@ export default function EditProfile() {
     navigate('/mypage');
   };
 
+  if (!user) return null; // Prevent flicker while redirecting
+
   return (
     <Layout>
-      <div className="max-w-[1920px] mx-auto px-4 md:px-12 py-10 md:py-20 flex flex-col md:flex-row gap-12 relative">
-        {/* Sidebar */}
+      <div className="max-w-[1280px] mx-auto px-4 md:px-12 py-10 md:py-20 flex flex-col md:flex-row gap-12 relative">
+        {/* Sidebar - Fixed width for desktop, hidden on mobile */}
         <aside className="w-full md:w-[260px] shrink-0 border-r border-black/5 pr-12 hidden md:block">
           <h2 className="text-2xl font-bold text-[#1b1d0e] font-serif mb-10 lowercase tracking-tight">my page categories</h2>
           <nav className="flex flex-col gap-6">
@@ -202,20 +185,23 @@ export default function EditProfile() {
         </aside>
 
         {/* Main Content */}
-        <div className="flex-grow max-w-3xl">
-          <h1 className="text-[36px] font-bold text-[#000000] font-hei mb-10">회원 정보 수정</h1>
+        <div className="flex-grow max-w-2xl mx-auto md:mx-0 w-full">
+          <div className="flex flex-col gap-2 mb-12">
+            <h1 className="text-[28px] md:text-[36px] font-bold text-[#000000] font-hei">회원 정보 수정</h1>
+            <p className="text-[14px] text-black/40 font-hei">늘:pepi-i와 함께하는 회원님의 정보를 소중하게 관리합니다.</p>
+          </div>
 
           {/* Profile Image Section */}
-          <div className="flex flex-col items-center mb-16 pt-8">
+          <div className="flex flex-col items-center mb-16 pt-4">
             <div className="relative group cursor-pointer" onClick={handleImageClick}>
-              <div className="w-32 h-32 rounded-full overflow-hidden border border-black/5 shadow-inner bg-gray-50">
+              <div className="w-28 h-28 md:w-32 md:h-32 rounded-full overflow-hidden border border-black/5 shadow-inner bg-gray-50">
                 <img src={formData.profileImage} alt="Profile" className="w-full h-full object-cover" />
               </div>
               <div className="absolute inset-0 bg-black/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                 <Camera size={24} className="text-white" />
               </div>
-              <button className="absolute bottom-0 right-0 w-10 h-10 bg-white border border-black/10 rounded-full flex items-center justify-center shadow-lg hover:bg-gray-200 transition-all">
-                <Camera size={18} className="text-black/60" />
+              <button className="absolute bottom-0 right-0 w-9 h-9 md:w-10 md:h-10 bg-white border border-black/10 rounded-full flex items-center justify-center shadow-lg hover:bg-gray-200 transition-all">
+                <Camera size={16} className="text-black/60" />
               </button>
               <input 
                 type="file" 
@@ -229,49 +215,49 @@ export default function EditProfile() {
           </div>
 
           {/* Form Fields */}
-          <div className="flex flex-col gap-10">
+          <div className="flex flex-col gap-8 md:gap-10">
             {/* Name */}
             <div className="flex flex-col gap-3">
-              <label className="text-[12px] font-bold text-black/40 font-hei uppercase tracking-widest ml-1">Name</label>
+              <label className="text-[11px] md:text-[12px] font-bold text-black/40 font-hei uppercase tracking-widest ml-1">Name</label>
               <input 
                 type="text" 
                 value={formData.name}
                 onChange={(e) => setFormData({...formData, name: e.target.value})}
                 onFocus={(e) => handleFocus(e, 'name')}
                 onBlur={(e) => handleBlur(e, 'name')}
-                className="w-full h-14 px-6 bg-[#FAFAFA] border border-black/5 rounded-2xl text-[16px] font-bold focus:outline-none focus:border-black/10 transition-all font-hei"
+                className="w-full h-14 px-6 bg-[#FAFAFA] border border-black/5 rounded-2xl text-[15px] md:text-[16px] font-bold focus:outline-none focus:border-black/10 transition-all font-hei"
               />
             </div>
 
             {/* Email */}
             <div className="flex flex-col gap-3">
-              <label className="text-[12px] font-bold text-black/40 font-hei uppercase tracking-widest ml-1">Email</label>
+              <label className="text-[11px] md:text-[12px] font-bold text-black/40 font-hei uppercase tracking-widest ml-1">Email</label>
               <div className="relative">
                 <input 
                   type="email" 
                   value={formData.email}
                   disabled
-                  className="w-full h-14 px-6 bg-[#FAFAFA] border border-black/5 rounded-2xl text-[16px] font-bold text-black/30 font-sans cursor-not-allowed"
+                  className="w-full h-14 px-6 bg-[#FAFAFA] border border-black/5 rounded-2xl text-[15px] md:text-[16px] font-bold text-black/20 font-sans cursor-not-allowed"
                 />
-                <span className="absolute right-6 top-1/2 -translate-y-1/2 text-[11px] font-bold text-black/20 font-hei">이메일은 변경할 수 없습니다</span>
+                <span className="absolute right-6 top-1/2 -translate-y-1/2 text-[10px] md:text-[11px] font-bold text-black/20 font-hei hidden sm:block">이메일은 변경할 수 없습니다</span>
               </div>
             </div>
 
             {/* Phone */}
             <div id="phone" className="flex flex-col gap-3 scroll-mt-32">
-              <label className="text-[12px] font-bold text-black/40 font-hei uppercase tracking-widest ml-1">Phone Number</label>
-              <div className="flex gap-3">
+              <label className="text-[11px] md:text-[12px] font-bold text-black/40 font-hei uppercase tracking-widest ml-1">Phone Number</label>
+              <div className="flex flex-col sm:flex-row gap-3">
                 <input 
                   type="text" 
                   value={formData.phone}
                   onChange={(e) => setFormData({...formData, phone: e.target.value})}
                   onFocus={(e) => handleFocus(e, 'phone')}
                   onBlur={(e) => handleBlur(e, 'phone')}
-                  className="flex-grow h-14 px-6 bg-[#FAFAFA] border border-black/5 rounded-2xl text-[16px] font-bold focus:outline-none focus:border-black/10 transition-all font-sans"
+                  className="flex-grow h-14 px-6 bg-[#FAFAFA] border border-black/5 rounded-2xl text-[15px] md:text-[16px] font-bold focus:outline-none focus:border-black/10 transition-all font-sans"
                 />
                 <button 
                   onClick={handlePhoneChange}
-                  className="px-6 bg-white border border-black/10 rounded-2xl text-[13px] font-bold text-black hover:bg-gray-200 transition-all font-hei shrink-0"
+                  className="h-14 sm:h-auto px-6 bg-white border border-black/10 rounded-2xl text-[13px] font-bold text-black hover:bg-gray-200 transition-all font-hei shrink-0"
                 >
                   번호 변경
                 </button>
@@ -280,13 +266,13 @@ export default function EditProfile() {
 
             {/* Password */}
             <div id="password" className="flex flex-col gap-3 scroll-mt-32">
-              <label className="text-[12px] font-bold text-black/40 font-hei uppercase tracking-widest ml-1">Password</label>
+              <label className="text-[11px] md:text-[12px] font-bold text-black/40 font-hei uppercase tracking-widest ml-1">Password</label>
               {!isChangingPassword ? (
                 <button 
                   onClick={() => setIsChangingPassword(true)}
                   className="w-full h-14 px-6 flex items-center justify-between bg-white border border-black/10 rounded-2xl hover:bg-gray-200 transition-all group"
                 >
-                  <span className="text-[15px] font-bold text-black font-hei">비밀번호 변경하기</span>
+                  <span className="text-[14px] md:text-[15px] font-bold text-black font-hei">비밀번호 변경하기</span>
                   <ChevronRight size={18} className="text-black/20 group-hover:translate-x-1 transition-transform" />
                 </button>
               ) : (
@@ -310,14 +296,14 @@ export default function EditProfile() {
 
             {/* Address */}
             <div id="address" className="flex flex-col gap-4 pt-4 relative scroll-mt-32">
-              <label className="text-[12px] font-bold text-black/40 font-hei uppercase tracking-widest ml-1">Address</label>
+              <label className="text-[11px] md:text-[12px] font-bold text-black/40 font-hei uppercase tracking-widest ml-1">Address</label>
               <div className="flex gap-3">
                 <input 
                   type="text" 
                   placeholder="우편번호"
                   value={formData.zipcode}
                   readOnly
-                  className="w-32 h-14 px-6 bg-[#FAFAFA] border border-black/5 rounded-2xl text-[16px] font-bold font-sans"
+                  className="w-28 md:w-32 h-14 px-6 bg-[#FAFAFA] border border-black/5 rounded-2xl text-[15px] md:text-[16px] font-bold font-sans"
                 />
                 <button 
                   onClick={() => {
@@ -334,7 +320,7 @@ export default function EditProfile() {
                 placeholder="기본 주소"
                 value={formData.address}
                 readOnly
-                className="w-full h-14 px-6 bg-[#FAFAFA] border border-black/5 rounded-2xl text-[16px] font-bold font-hei"
+                className="w-full h-14 px-6 bg-[#FAFAFA] border border-black/5 rounded-2xl text-[15px] md:text-[16px] font-bold font-hei"
               />
               <input 
                 type="text" 
@@ -343,10 +329,10 @@ export default function EditProfile() {
                 onChange={(e) => setFormData({...formData, detailAddress: e.target.value})}
                 onFocus={(e) => handleFocus(e, 'detailAddress')}
                 onBlur={(e) => handleBlur(e, 'detailAddress')}
-                className="w-full h-14 px-6 bg-white border border-black/10 rounded-2xl text-[16px] font-medium focus:outline-none focus:border-black/20 transition-all font-hei"
+                className="w-full h-14 px-6 bg-white border border-black/10 rounded-2xl text-[15px] md:text-[16px] font-medium focus:outline-none focus:border-black/20 transition-all font-hei"
               />
 
-              {/* Real-feel Address Search Modal - NOW APPEARING ABOVE */}
+              {/* Address Search Modal */}
               {showAddressSearch && (
                 <div className="absolute left-0 bottom-full mb-2 w-full bg-white border border-black/10 rounded-3xl shadow-[0_-20px_50px_rgba(0,0,0,0.15)] z-50 p-6 animate-in slide-in-from-bottom-2 duration-200">
                   <div className="flex justify-between items-center mb-6">
@@ -363,52 +349,28 @@ export default function EditProfile() {
                       type="text" 
                       value={addressSearchQuery}
                       onChange={(e) => setAddressSearchQuery(e.target.value)}
-                      onKeyDown={handleKeyDown}
-                      placeholder="주소 키워드 입력 (예: 서울, 강남, 춘천...)" 
+                      placeholder="주소 키워드 입력 (예: 서울, 강남...)" 
                       className="w-full h-12 pl-10 pr-4 bg-gray-50 border-none rounded-xl text-[14px] focus:ring-2 focus:ring-[#9C3F00]/20 font-hei" 
                     />
                     <div className="absolute left-3 top-1/2 -translate-y-1/2 text-black/20">
-                      {isSearching ? <SearchIcon size={18} className="animate-spin text-[#9C3F00]" /> : <SearchIcon size={18} />}
+                      {isSearching ? <Loader2 size={18} className="animate-spin text-[#dc2626]" /> : <SearchIcon size={18} />}
                     </div>
                   </div>
-                  <div className="flex flex-col gap-2 max-h-[300px] overflow-y-auto pr-2 custom-scrollbar">
-                    {addressSearchQuery.length === 0 ? (
-                      <div className="py-10 text-center">
-                        <p className="text-[13px] text-black/40 font-hei">찾으시는 도로명 주소 또는 지번을 입력하세요.</p>
-                      </div>
-                    ) : searchResults.length > 0 ? (
-                      <>
-                        <p className="text-[11px] font-bold text-black/30 uppercase tracking-wider mb-2 px-2">검색 결과 ({searchResults.length})</p>
-                        {searchResults.map((addr, i) => (
-                          <button 
-                            key={i} 
-                            type="button"
-                            onClick={() => selectAddress(addr)}
-                            onMouseEnter={() => setFocusedIndex(i)}
-                            className={`flex flex-col items-start p-4 rounded-2xl transition-all border border-transparent text-left w-full group ${focusedIndex === i ? 'bg-[#9C3F00]/5 border-[#9C3F00]/10' : 'hover:bg-gray-50'}`}
-                          >
-                            <span className={`text-[14px] font-bold mb-1 transition-colors font-hei ${focusedIndex === i ? 'text-[#9C3F00]' : 'text-black group-hover:text-[#9C3F00]'}`}>{addr.base}</span>
-                            <span className={`text-[12px] font-sans ${focusedIndex === i ? 'text-[#9C3F00]/60' : 'text-black/40'}`}>우편번호: {addr.zip}</span>
-                          </button>
-                        ))}
-                      </>
-                    ) : !isSearching && (
-                      <div className="py-16 text-center flex flex-col items-center gap-4">
-                        <div className="w-12 h-12 bg-gray-50 rounded-full flex items-center justify-center text-black/20">
-                          <SearchIcon size={24} />
-                        </div>
-                        <div className="flex flex-col gap-1">
-                          <p className="text-[15px] font-bold text-black/60 font-hei">검색 결과가 없습니다.</p>
-                          <p className="text-[12px] text-black/30 font-hei">정확한 주소 또는 키워드로 다시 검색해 주세요.</p>
-                        </div>
+                  <div className="flex flex-col gap-2 max-h-[250px] overflow-y-auto pr-2 custom-scrollbar">
+                    {searchResults.length > 0 ? (
+                      searchResults.map((addr, i) => (
                         <button 
+                          key={i} 
                           type="button"
-                          onClick={() => setAddressSearchQuery('')}
-                          className="mt-2 px-6 py-2 bg-gray-100 hover:bg-gray-200 rounded-full text-[12px] font-bold text-black/60 transition-all"
+                          onClick={() => selectAddress(addr)}
+                          className="flex flex-col items-start p-4 rounded-2xl hover:bg-gray-50 text-left w-full border border-transparent hover:border-black/5 transition-all"
                         >
-                          검색어 초기화
+                          <span className="text-[14px] font-bold mb-1 text-black font-hei">{addr.base}</span>
+                          <span className="text-[12px] font-sans text-black/40">우편번호: {addr.zip}</span>
                         </button>
-                      </div>
+                      ))
+                    ) : addressSearchQuery && !isSearching && (
+                      <p className="py-10 text-center text-sm text-black/40 font-hei">검색 결과가 없습니다.</p>
                     )}
                   </div>
                 </div>
@@ -416,16 +378,16 @@ export default function EditProfile() {
             </div>
 
             {/* Actions */}
-            <div className="flex gap-4 mt-12 pt-12 border-t border-black/5">
+            <div className="flex gap-4 mt-8 md:mt-12 pt-8 md:pt-12 border-t border-black/5">
               <button 
                 onClick={() => navigate('/mypage')}
-                className="flex-1 h-16 bg-white border border-black/10 rounded-full text-[16px] font-bold text-black hover:bg-gray-200 transition-all font-hei"
+                className="flex-1 h-14 md:h-16 bg-white border border-black/10 rounded-full text-[15px] md:text-[16px] font-bold text-black hover:bg-gray-200 transition-all font-hei"
               >
                 취소
               </button>
               <button 
                 onClick={handleSave}
-                className="flex-[2] h-16 bg-white border border-black/10 rounded-full text-[16px] font-bold text-black hover:bg-gray-200 transition-all font-hei shadow-xl shadow-black/5"
+                className="flex-[2] h-14 md:h-16 bg-black text-white rounded-full text-[15px] md:text-[16px] font-bold hover:bg-black/80 transition-all font-hei shadow-xl shadow-black/10"
               >
                 저장하기
               </button>
