@@ -93,8 +93,8 @@ export default function Coupons() {
         <div className="flex-grow">
           <h1 className="text-[36px] font-bold text-[#000000] font-hei mb-10">쿠폰함</h1>
 
-          {/* Tabs */}
-          <nav className="flex gap-10 border-b border-black/5 mb-10">
+          {/* Tabs - Added horizontal scroll for mobile */}
+          <nav className="flex gap-6 md:gap-10 border-b border-black/5 mb-10 overflow-x-auto no-scrollbar -mx-4 px-4 md:mx-0 md:px-0">
             {['쿠폰 존', '사용 가능', '사용 완료', '기간 만료'].map((tab) => {
               let count = 0;
               if (tab === '쿠폰 존') count = allDownloadableCoupons.length;
@@ -106,7 +106,7 @@ export default function Coupons() {
                 <button 
                   key={tab}
                   onClick={() => setCurrentTab(tab)}
-                  className={`pb-4 text-[18px] transition-all ${currentTab === tab ? 'font-bold text-[#9C3F00] border-b-2 border-[#9C3F00]' : 'font-medium text-black/40 hover:text-black'}`}
+                  className={`pb-4 text-[15px] md:text-[18px] transition-all whitespace-nowrap shrink-0 ${currentTab === tab ? 'font-bold text-[#9C3F00] border-b-2 border-[#9C3F00]' : 'font-medium text-black/40 hover:text-black'}`}
                 >
                   {tab} ({count})
                 </button>
