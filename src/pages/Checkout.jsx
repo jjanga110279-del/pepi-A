@@ -367,18 +367,18 @@ export default function Checkout() {
                 {/* 4. Payment Method */}
                 <section className="flex flex-col gap-8">
                   <div className="border-b border-black/5 pb-4"><h2 className="text-[20px] font-bold text-[#1B1D0E] font-serif">결제 수단</h2></div>
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
+                  <div className="grid grid-cols-3 md:grid-cols-3 gap-2 md:gap-4">
                     {[
-                      { id: 'card', label: '신용/체크카드', icon: <CreditCard size={18} md:size={20}/> },
-                      { id: 'kakao', label: '카카오페이', icon: <div className="w-5 h-5 md:w-6 md:h-6 bg-[#FEE500] rounded-[6px] flex items-center justify-center text-[10px] font-black text-black">K</div> },
-                      { id: 'naver', label: '네이버페이', icon: <div className="w-5 h-5 md:w-6 md:h-6 bg-[#03C75A] rounded-[6px] flex items-center justify-center text-[10px] font-black text-white">N</div> },
-                      { id: 'vbank', label: '무통장입금', icon: <Banknote size={18} md:size={20}/> },
-                      { id: 'transfer', label: '실시간 계좌이체', icon: <Building2 size={18} md:size={20}/> },
-                      { id: 'etc', label: '기타 결제', icon: <Smartphone size={18} md:size={20}/> }
+                      { id: 'card', label: '신용카드', icon: <CreditCard size={18} md:size={20}/> },
+                      { id: 'kakao', label: '카카오', icon: <div className="w-5 h-5 md:w-6 md:h-6 bg-[#FEE500] rounded-[6px] flex items-center justify-center text-[10px] font-black text-black">K</div> },
+                      { id: 'naver', label: '네이버', icon: <div className="w-5 h-5 md:w-6 md:h-6 bg-[#03C75A] rounded-[6px] flex items-center justify-center text-[10px] font-black text-white">N</div> },
+                      { id: 'vbank', label: '무통장', icon: <Banknote size={18} md:size={20}/> },
+                      { id: 'transfer', label: '계좌이체', icon: <Building2 size={18} md:size={20}/> },
+                      { id: 'etc', label: '기타결제', icon: <Smartphone size={18} md:size={20}/> }
                     ].map((method) => (
                       <button key={method.id} type="button" onClick={() => setFormData({...formData, paymentMethod: method.id})} className={`flex flex-col items-center justify-center gap-1.5 md:gap-2 h-20 md:h-24 rounded-2xl border transition-all ${formData.paymentMethod === method.id ? 'border-[#9C3F00] bg-[#9C3F00]/5 shadow-sm' : 'border-black/5 bg-white hover:border-black/10'}`}>
                         <span className={formData.paymentMethod === method.id ? 'text-[#9C3F00]' : 'text-black/20'}>{method.icon}</span>
-                        <span className={`text-[12px] md:text-[13px] font-bold ${formData.paymentMethod === method.id ? 'text-black' : 'text-black/40'} break-keep`}>{method.label}</span>
+                        <span className={`text-[11px] md:text-[13px] font-bold ${formData.paymentMethod === method.id ? 'text-black' : 'text-black/40'} break-keep text-center`}>{method.label}</span>
                       </button>
                     ))}
                   </div>

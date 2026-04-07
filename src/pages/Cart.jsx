@@ -48,8 +48,8 @@ export default function Cart() {
             </div>
 
             <div className="flex flex-col xl:flex-row gap-10 xl:gap-16 items-start">
-              {/* Cart Items List */}
-              <div className="flex-grow flex flex-col gap-6 md:gap-8 w-full order-2 xl:order-1">
+              {/* Cart Items List - Comes first on mobile (order-1) */}
+              <div className="flex-grow flex flex-col gap-6 md:gap-8 w-full order-1 xl:order-1">
                 {cartItems.map((item) => (
                   <div key={`${item.id}-${item.color}-${item.size}`} className="flex gap-4 md:gap-10 py-2 border-b border-black/5 last:border-0 pb-6 md:pb-8 last:pb-0 group relative">
                     {/* Product Image */}
