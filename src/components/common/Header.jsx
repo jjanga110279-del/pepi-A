@@ -346,59 +346,88 @@ export default function Header() {
 
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
-        <div className="fixed inset-0 z-[100] bg-white lg:hidden animate-fadeIn flex flex-col">
-          <div className="p-6 flex-grow">
-            <div className="flex justify-between items-center mb-12">
-              <h2 className="text-xl font-serif font-bold italic">늘:pepi-i</h2>
-              <button onClick={toggleMobileMenu}><X size={24} /></button>
+        <div className="fixed inset-0 z-[100] bg-white lg:hidden flex flex-col overflow-hidden animate-fadeIn">
+          {/* White Box Container for Menu Content */}
+          <div className="flex-grow flex flex-col bg-white">
+            <div className="p-6 md:p-8 flex justify-between items-center border-b border-black/5 bg-white sticky top-0 z-10">
+              <h2 className="text-xl md:text-2xl font-serif font-bold italic text-[#1b1d0e]">늘:pepi-i</h2>
+              <button 
+                onClick={toggleMobileMenu} 
+                className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+              >
+                <X size={26} className="text-black/80" />
+              </button>
             </div>
-            <nav className="flex flex-col gap-6">
-              <Link to="/best50" className="text-lg font-bold tracking-widest font-hei text-[#7c2d12] hover:text-[#dc2626] transition-colors" onClick={toggleMobileMenu}>BEST 50</Link>
-              {['NEW IN 5%', 'OUTER', 'TOP', 'BOTTOM', 'DRESS', 'SET', 'ACC', 'SALE', 'EVENT'].map((item) => {
-                const isNewIn = item === 'NEW IN 5%';
-                const isOuter = item === 'OUTER';
-                const isTop = item === 'TOP';
-                const isBottom = item === 'BOTTOM';
-                const isDress = item === 'DRESS';
-                const isSets = item === 'SET';
-                const isAcc = item === 'ACC';
-                const isSale = item === 'SALE';
-                const isEvents = item === 'EVENT';
-                return isNewIn ? (
-                  <Link key={item} to="/new-5" className="text-lg font-bold tracking-widest font-hei text-black/80 hover:text-[#dc2626] transition-colors" onClick={toggleMobileMenu}>{item}</Link>
-                ) : isOuter ? (
-                  <Link key={item} to="/outer" className="text-lg font-bold tracking-widest font-hei text-black/80 hover:text-[#dc2626] transition-colors" onClick={toggleMobileMenu}>{item}</Link>
-                ) : isTop ? (
-                  <Link key={item} to="/top" className="text-lg font-bold tracking-widest font-hei text-black/80 hover:text-[#dc2626] transition-colors" onClick={toggleMobileMenu}>{item}</Link>
-                ) : isBottom ? (
-                  <Link key={item} to="/bottom" className="text-lg font-bold tracking-widest font-hei text-black/80 hover:text-[#dc2626] transition-colors" onClick={toggleMobileMenu}>{item}</Link>
-                ) : isDress ? (
-                  <Link key={item} to="/dress" className="text-lg font-bold tracking-widest font-hei text-black/80 hover:text-[#dc2626] transition-colors" onClick={toggleMobileMenu}>{item}</Link>
-                ) : isSets ? (
-                  <Link key={item} to="/sets" className="text-lg font-bold tracking-widest font-hei text-black/80 hover:text-[#dc2626] transition-colors" onClick={toggleMobileMenu}>{item}</Link>
-                ) : isAcc ? (
-                  <Link key={item} to="/accessory" className="text-lg font-bold tracking-widest font-hei text-black/80 hover:text-[#dc2626] transition-colors" onClick={toggleMobileMenu}>{item}</Link>
-                ) : isSale ? (
-                  <Link key={item} to="/sale" className="text-lg font-bold tracking-widest font-hei text-black/80 hover:text-[#dc2626] transition-colors" onClick={toggleMobileMenu}>{item}</Link>
-                ) : isEvents ? (
-                  <Link key={item} to="/events" className="text-lg font-bold tracking-widest font-hei text-black/80 hover:text-[#dc2626] transition-colors" onClick={toggleMobileMenu}>{item}</Link>
-                ) : (
-                  <a key={item} href="#" className="text-lg font-bold tracking-widest font-hei text-black/80 hover:text-[#dc2626] transition-colors" onClick={toggleMobileMenu}>{item}</a>
-                );
-              })}
-            </nav>
-          </div>
-          <div className="p-6 pt-12 border-t border-black/5 flex flex-col gap-4 mt-auto">
-            <div className="flex items-center gap-2 text-sm font-hei text-left tracking-tight">
-              <Link to="/login" className="hover:text-[#dc2626] transition-colors" onClick={toggleMobileMenu}>로그인</Link>
-              <span className="text-black/20">/</span>
-              <Link to="/signup" className="hover:text-[#dc2626] transition-colors" onClick={toggleMobileMenu}>회원가입</Link>
+
+            <div className="flex-grow overflow-y-auto px-6 py-8 bg-white">
+              <nav className="flex flex-col gap-1">
+                <Link 
+                  to="/best50" 
+                  className="group flex items-center justify-between p-4 rounded-2xl hover:bg-gray-50 transition-all"
+                  onClick={toggleMobileMenu}
+                >
+                  <span className="text-xl font-bold tracking-widest font-hei text-[#dc2626]">BEST 50</span>
+                  <div className="w-1.5 h-1.5 bg-[#dc2626] rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
+                </Link>
+                {['NEW IN 5%', 'OUTER', 'TOP', 'BOTTOM', 'DRESS', 'SET', 'ACC', 'SALE', 'EVENT'].map((item) => {
+                  const isNewIn = item === 'NEW IN 5%';
+                  const isOuter = item === 'OUTER';
+                  const isTop = item === 'TOP';
+                  const isBottom = item === 'BOTTOM';
+                  const isDress = item === 'DRESS';
+                  const isSets = item === 'SET';
+                  const isAcc = item === 'ACC';
+                  const isSale = item === 'SALE';
+                  const isEvents = item === 'EVENT';
+
+                  const path = isNewIn ? '/new-5' : isOuter ? '/outer' : isTop ? '/top' : isBottom ? '/bottom' : isDress ? '/dress' : isSets ? '/sets' : isAcc ? '/accessory' : isSale ? '/sale' : isEvents ? '/events' : '#';
+
+                  return (
+                    <Link 
+                      key={item} 
+                      to={path} 
+                      className="group flex items-center justify-between p-4 rounded-2xl hover:bg-gray-50 transition-all" 
+                      onClick={toggleMobileMenu}
+                    >
+                      <span className="text-lg md:text-xl font-bold tracking-widest font-hei text-black/80 group-hover:text-[#dc2626] transition-colors">{item}</span>
+                      <div className="w-1.5 h-1.5 bg-[#dc2626] rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
+                    </Link>
+                  );
+                })}
+              </nav>
             </div>
-            <button className="text-sm font-hei text-left hover:text-[#dc2626] transition-colors">마이페이지</button>
-            <button className="text-sm font-hei text-left hover:text-[#dc2626] transition-colors">고객센터</button>
+
+            <div className="p-8 bg-[#f9fafb] border-t border-black/5 mt-auto">
+              <div className="flex flex-col gap-6">
+                <div className="flex items-center gap-2 text-[15px] font-bold font-hei text-black/90 tracking-tight">
+                  {user ? (
+                    <>
+                      <span className="text-[#dc2626]">{user.name}님</span>
+                      <span className="text-black/10">|</span>
+                      <button onClick={() => { handleLogout(); toggleMobileMenu(); }} className="text-black/40">로그아웃</button>
+                    </>
+                  ) : (
+                    <>
+                      <Link to="/login" className="hover:text-[#dc2626] transition-colors" onClick={toggleMobileMenu}>로그인</Link>
+                      <span className="text-black/20 font-normal">/</span>
+                      <Link to="/signup" className="hover:text-[#dc2626] transition-colors" onClick={toggleMobileMenu}>회원가입</Link>
+                    </>
+                  )}
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <button 
+                    onClick={(e) => { handleProtectedNavigation('/mypage', e); toggleMobileMenu(); }}
+                    className="h-12 flex items-center justify-center bg-white border border-black/5 rounded-xl text-[14px] font-bold font-hei text-black/70 shadow-sm"
+                  >마이페이지</button>
+                  <button 
+                    onClick={() => { navigate('/customer-service'); toggleMobileMenu(); }}
+                    className="h-12 flex items-center justify-center bg-white border border-black/5 rounded-xl text-[14px] font-bold font-hei text-black/70 shadow-sm"
+                  >고객센터</button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      )}
-    </header>
+      )}    </header>
   );
 }
