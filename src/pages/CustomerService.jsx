@@ -112,15 +112,15 @@ export default function CustomerService() {
             </div>
 
             {/* Featured Topics Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-3 lg:grid-cols-3 gap-3 md:gap-8">
               {featuredTopics.map((topic, idx) => (
-                <div key={idx} className="border border-gray-100 rounded-[40px] p-10 flex flex-col gap-8 hover:shadow-2xl hover:shadow-gray-100 transition-all group cursor-pointer">
-                  <div className="w-16 h-14 bg-[#f9fafb] rounded-full flex items-center justify-center group-hover:bg-[#dc2626]/5 transition-colors">
-                    {React.cloneElement(topic.icon, { size: 28, className: "text-black/20 group-hover:text-[#dc2626] transition-colors" })}
+                <div key={idx} className="border border-gray-100 rounded-2xl md:rounded-[40px] p-3 md:p-10 flex flex-col items-center md:items-start text-center md:text-left gap-2 md:gap-8 hover:shadow-2xl hover:shadow-gray-100 transition-all group cursor-pointer">
+                  <div className="w-10 h-10 md:w-16 md:h-14 bg-[#f9fafb] rounded-full flex items-center justify-center group-hover:bg-[#dc2626]/5 transition-colors">
+                    {React.cloneElement(topic.icon, { size: 20, className: "text-black/20 group-hover:text-[#dc2626] transition-colors md:w-7 md:h-7" })}
                   </div>
-                  <div className="flex flex-col gap-3">
-                    <h3 className="text-xl font-bold text-[#1b1d0e] font-hei">{topic.title}</h3>
-                    <p className="text-base text-[#78716c] leading-relaxed font-hei">{topic.desc}</p>
+                  <div className="flex flex-col gap-1 md:gap-3">
+                    <h3 className="text-[13px] md:text-xl font-bold text-[#1b1d0e] font-hei break-keep">{topic.title}</h3>
+                    <p className="hidden md:block text-base text-[#78716c] leading-relaxed font-hei">{topic.desc}</p>
                   </div>
                 </div>
               ))}
