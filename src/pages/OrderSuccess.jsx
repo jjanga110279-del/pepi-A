@@ -45,7 +45,7 @@ export default function OrderSuccess() {
             <div className="px-2 py-0.5 md:px-4 md:py-1.5 bg-[#FFDAD3] text-[#9F402D] text-[10px] md:text-[14px] font-bold rounded-full uppercase tracking-wider font-sans">
               Success
             </div>
-            <h1 className="text-xl md:text-[60px] font-bold text-[#1B1D0E] font-serif leading-tight tracking-tight">
+            <h1 className="text-2xl md:text-[60px] font-bold text-[#1B1D0E] font-serif leading-tight tracking-tight">
               주문이 완료되었습니다.
             </h1>
             <p className="hidden md:block text-[18px] text-[#564338] font-hei leading-relaxed opacity-80">
