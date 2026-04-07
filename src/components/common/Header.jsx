@@ -51,18 +51,15 @@ export default function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close mobile menu on route change
   useEffect(() => {
     setIsMobileMenuOpen(false);
   }, [location.pathname]);
 
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
 
-  // Scroll Lock when mobile menu is open
   useEffect(() => {
     if (isMobileMenuOpen) {
       document.body.style.overflow = 'hidden';
-      // iOS Safari handles overflow: hidden differently, sometimes needing extra care
       document.body.style.touchAction = 'none';
     } else {
       document.body.style.overflow = 'unset';
@@ -83,31 +80,60 @@ export default function Header() {
   const MobileMenuOverlay = () => (
     <div className="fixed inset-0 z-[100] bg-white lg:hidden flex flex-col overflow-hidden animate-fadeIn">
       <div className="flex-grow flex flex-col bg-white">
+        {/* Header inside Menu */}
         <div className="p-6 md:p-8 flex justify-between items-center border-b border-black/5 bg-white sticky top-0 z-10">
           <h2 className="text-xl md:text-2xl font-serif font-bold italic text-[#1b1d0e]">늘:pepi-i</h2>
-          <button 
-            onClick={toggleMobileMenu} 
-            className="p-2 hover:bg-gray-100 rounded-full transition-colors"
-          >
+          <button onClick={toggleMobileMenu} className="p-2 hover:bg-gray-100 rounded-full transition-colors">
             <X size={26} className="text-black/80" />
           </button>
         </div>
 
-        <div className="flex-grow overflow-y-auto px-6 py-8 bg-white">
-          <nav className="flex flex-col gap-1">
-            <Link 
-              to="/best50" 
-              className="group flex items-center justify-between p-4 rounded-2xl hover:bg-gray-50 transition-all"
-            >
+        <div className="flex-grow overflow-y-auto bg-white">
+          {/* User Account Section - Now at the Top */}
+          <div className="px-6 py-10 bg-[#f9fafb] border-b border-black/5">
+            <div className="flex flex-col gap-6">
+              <div className="flex items-center gap-3 text-[18px] font-bold font-hei text-black/90 tracking-tight">
+                {user ? (
+                  <>
+                    <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center border border-black/5 shadow-sm">
+                      <ICONS.user className="text-[18px] text-[#dc2626]" />
+                    </div>
+                    <span className="text-[#dc2626]">{user.name}님 반가워요!</span>
+                  </>
+                ) : (
+                  <>
+                    <Link to="/login" className="px-6 py-2.5 bg-black text-white rounded-full text-[14px] hover:bg-black/80 transition-all shadow-md">로그인</Link>
+                    <Link to="/signup" className="px-6 py-2.5 bg-white border border-black/10 text-black rounded-full text-[14px] hover:bg-gray-50 transition-all shadow-sm">회원가입</Link>
+                  </>
+                )}
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <button 
+                  onClick={(e) => handleProtectedNavigation('/mypage', e)}
+                  className="h-14 flex flex-col items-center justify-center bg-white border border-black/5 rounded-2xl text-[13px] font-bold font-hei text-black/70 shadow-sm gap-1"
+                >
+                  <ICONS.user className="text-[18px]" />
+                  마이페이지
+                </button>
+                <button 
+                  onClick={() => navigate('/customer-service')}
+                  className="h-14 flex flex-col items-center justify-center bg-white border border-black/5 rounded-2xl text-[13px] font-bold font-hei text-black/70 shadow-sm gap-1"
+                >
+                  <ICONS.customerService className="text-[18px]" />
+                  고객센터
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Category Navigation */}
+          <nav className="flex flex-col gap-1 p-6">
+            <Link to="/best50" className="group flex items-center justify-between p-4 rounded-2xl hover:bg-gray-50 transition-all">
               <span className="text-xl font-bold tracking-widest font-hei text-[#dc2626]">BEST 50</span>
               <div className="w-1.5 h-1.5 bg-[#dc2626] rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
             </Link>
             {categories.map((cat) => (
-              <Link 
-                key={cat.name} 
-                to={cat.path} 
-                className="group flex items-center justify-between p-4 rounded-2xl hover:bg-gray-50 transition-all"
-              >
+              <Link key={cat.name} to={cat.path} className="group flex items-center justify-between p-4 rounded-2xl hover:bg-gray-50 transition-all">
                 <span className="text-lg md:text-xl font-bold tracking-widest font-hei text-black/80 group-hover:text-[#dc2626] transition-colors">{cat.mobileName}</span>
                 <div className="w-1.5 h-1.5 bg-[#dc2626] rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
               </Link>
@@ -115,35 +141,12 @@ export default function Header() {
           </nav>
         </div>
 
-        <div className="p-8 bg-[#f9fafb] border-t border-black/5 mt-auto">
-          <div className="flex flex-col gap-6">
-            <div className="flex items-center gap-2 text-[15px] font-bold font-hei text-black/90 tracking-tight">
-              {user ? (
-                <>
-                  <span className="text-[#dc2626]">{user.name}님</span>
-                  <span className="text-black/10">|</span>
-                  <button onClick={handleLogout} className="text-black/40">로그아웃</button>
-                </>
-              ) : (
-                <>
-                  <Link to="/login" className="hover:text-[#dc2626] transition-colors">로그인</Link>
-                  <span className="text-black/20 font-normal">/</span>
-                  <Link to="/signup" className="hover:text-[#dc2626] transition-colors">회원가입</Link>
-                </>
-              )}
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              <button 
-                onClick={(e) => handleProtectedNavigation('/mypage', e)}
-                className="h-12 flex items-center justify-center bg-white border border-black/5 rounded-xl text-[14px] font-bold font-hei text-black/70 shadow-sm"
-              >마이페이지</button>
-              <button 
-                onClick={() => navigate('/customer-service')}
-                className="h-12 flex items-center justify-center bg-white border border-black/5 rounded-xl text-[14px] font-bold font-hei text-black/70 shadow-sm"
-              >고객센터</button>
-            </div>
+        {/* Logout at the very bottom if logged in */}
+        {user && (
+          <div className="p-6 border-t border-black/5 bg-white text-center">
+            <button onClick={handleLogout} className="text-[13px] font-medium text-black/30 underline decoration-black/10">로그아웃</button>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );
@@ -177,23 +180,19 @@ export default function Header() {
           </div>
 
           {/* Right: Icons & Login */}
-          <div className="flex items-center gap-4 md:gap-8 z-10">
-            <div className="flex items-center gap-4 md:gap-7 text-black/80">
+          <div className="flex items-center gap-3 md:gap-8 z-10">
+            <div className="flex items-center gap-3 md:gap-7 text-black/80">
               <button onClick={goToSearch} className="hover:opacity-70 transition-opacity p-1">
                 <ICONS.search className="text-[18px] md:text-[20px]" />
               </button>
-              <div className="hidden lg:flex items-center gap-7">
-                <button onClick={(e) => handleProtectedNavigation('/wishlist', e)} className="hover:opacity-70 transition-opacity">
-                  <ICONS.wishlist className="text-[22px]" />
-                </button>
-                <button onClick={(e) => handleProtectedNavigation('/mypage', e)} className="hover:opacity-70 transition-opacity">
-                  <ICONS.user className="text-[20px]" />
-                </button>
-              </div>
-              <button onClick={(e) => handleProtectedNavigation('/cart', e)} className="relative cursor-pointer hover:opacity-70 transition-opacity flex items-center">
+              {/* Show MyPage icon on mobile too */}
+              <button onClick={(e) => handleProtectedNavigation('/mypage', e)} className="hover:opacity-70 transition-opacity p-1">
+                <ICONS.user className="text-[20px] md:text-[22px]" />
+              </button>
+              <button onClick={(e) => handleProtectedNavigation('/cart', e)} className="relative cursor-pointer hover:opacity-70 transition-opacity flex items-center p-1">
                 <ICONS.cart className="text-[22px]" />
                 {user && totalCount > 0 && (
-                  <span className="absolute -top-1.5 -right-1.5 bg-red-600 text-white text-[10px] md:text-[11px] font-bold rounded-full w-4 h-4 md:w-5 md:h-5 flex items-center justify-center border-2 border-white">{totalCount}</span>
+                  <span className="absolute -top-0.5 -right-0.5 bg-red-600 text-white text-[9px] md:text-[11px] font-bold rounded-full w-3.5 h-3.5 md:w-5 md:h-5 flex items-center justify-center border border-white">{totalCount}</span>
                 )}
               </button>
             </div>
