@@ -169,10 +169,26 @@ export default function NewIn() {
         <div className="flex-grow">
           {/* Header */}
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
-            <h1 className="text-4xl md:text-5xl font-bold text-[#1b1d0e] font-sans tracking-tight">
-              신상 <span className="text-[#dc2626]">5%</span>
-              {selectedCategory !== '전체' && <span className="text-xl md:text-2xl font-medium text-[#737373] ml-4 font-hei font-normal">/ {selectedCategory}</span>}
-            </h1>
+            <div>
+              <h1 className="text-4xl md:text-5xl font-bold text-[#1b1d0e] font-sans tracking-tight mb-6 md:mb-0">
+                신상 <span className="text-[#dc2626]">5%</span>
+                {selectedCategory !== '전체' && <span className="text-xl md:text-2xl font-medium text-[#737373] ml-4 font-hei font-normal">/ {selectedCategory}</span>}
+              </h1>
+
+              {/* Mobile Sub Categories - Horizontal Scroll */}
+              <div className="flex md:hidden overflow-x-auto pb-4 gap-2 no-scrollbar -mx-4 px-4">
+                {categories.map((cat, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => { setSelectedCategory(cat.name); setCurrentPage(1); }}
+                    className={`whitespace-nowrap px-5 py-2 rounded-full text-[14px] font-bold transition-all ${selectedCategory === cat.name ? 'bg-[#1b1d0e] text-white shadow-lg' : 'bg-gray-100 text-[#737373]'}`}
+                  >
+                    {cat.name}
+                  </button>
+                ))}
+              </div>
+            </div>
+
             <div className="flex items-center gap-6 text-[13px] md:text-[14px] font-medium text-[#a3a3a3]">
               {['최신순', '인기순', '낮은가격순', '높은가격순'].map((sort) => (
                 <button key={sort} onClick={() => { setSortBy(sort); setCurrentPage(1); }} className={`transition-colors ${sortBy === sort ? 'text-[#171717]' : 'hover:text-black'}`}>{sort}</button>
