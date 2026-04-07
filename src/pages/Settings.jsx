@@ -131,15 +131,14 @@ export default function Settings() {
             
             <div className="flex flex-col gap-4">
               {[
-                { icon: Lock, label: '비밀번호 변경', target: 'password' },
-                { icon: Smartphone, label: '휴대폰 번호 변경', target: 'phone' },
-                { icon: User, label: '회원 정보 수정', target: 'profile' }
+                { icon: Lock, label: '비밀번호 변경', path: '/edit-profile#password' },
+                { icon: Smartphone, label: '휴대폰 번호 변경', path: '/edit-profile#phone' },
+                { icon: User, label: '회원 정보 수정', path: '/edit-profile#profile' }
               ].map((item, idx) => (
                 <Link 
                   key={idx} 
-                  to="/edit-profile"
-                  state={{ scrollTo: item.target }}
-                  className="flex items-center justify-between p-6 bg-white border border-black/10 rounded-2xl hover:border-black/20 transition-all group w-full"
+                  to={item.path}
+                  className="flex items-center justify-between p-6 bg-white border border-black/10 rounded-2xl hover:border-black/20 active:bg-gray-50 transition-all group w-full"
                 >
                   <div className="flex items-center gap-4">
                     <div className="w-10 h-10 bg-gray-50 rounded-full flex items-center justify-center text-black/40 group-hover:bg-[#9C3F00]/5 group-hover:text-[#9C3F00] transition-colors">
