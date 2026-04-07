@@ -187,25 +187,24 @@ export default function ProductDetail() {
     currentPage * reviewsPerPage
   );
 
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
+  const scrollToTabs = () => {
     if (tabRef.current) {
-      const yOffset = -120;
+      const yOffset = -80; // Adjusted for mobile/scrolled header
       const element = tabRef.current;
       const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
       window.scrollTo({ top: y, behavior: 'smooth' });
     }
   };
 
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    setTimeout(scrollToTabs, 10);
+  };
+
   const handleUserClick = (userName) => {
     setSelectedUser(userName);
     setCurrentPage(1);
-    if (tabRef.current) {
-      const yOffset = -120;
-      const element = tabRef.current;
-      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
-      window.scrollTo({ top: y, behavior: 'smooth' });
-    }
+    setTimeout(scrollToTabs, 10);
   };
 
   // 장바구니에서 '옵션 변경'으로 들어왔을 때 초기 데이터 설정
