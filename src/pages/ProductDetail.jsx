@@ -485,6 +485,9 @@ export default function ProductDetail() {
           </div>
         </div>
 
+        {/* Scroll Anchor for Tabs - Invisible but stable */}
+        <div ref={scrollAnchorRef} className="h-0 w-0 pointer-events-none" aria-hidden="true" />
+
         {/* Tab Navigation */}
         <div ref={tabRef} className="border-b border-[#F0F0F0] mb-20 flex justify-center sticky top-0 bg-white/95 backdrop-blur-sm z-30">
           <div className="flex gap-4 md:gap-12 px-4">
