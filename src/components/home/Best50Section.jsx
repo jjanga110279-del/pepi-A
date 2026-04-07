@@ -9,9 +9,9 @@ const products = ALL_PRODUCTS.filter(p => p.category === 'best').slice(0, 8);
 export default function Best50Section() {
   return (
     <section className="max-w-[1280px] mx-auto px-4 md:px-8 py-16 md:py-24">
-      <div className="flex flex-col items-center gap-2 mb-10 md:mb-16">
-        <h2 className="text-3xl md:text-4xl font-serif">Best 50</h2>
-        <div className="w-10 md:w-12 h-0.5 bg-primary" />
+      <div className="flex flex-col items-center mb-16">
+        <h2 className="text-4xl font-bold font-logo italic tracking-tight text-[#1b1d0e]">Best 50</h2>
+        <div className="w-12 h-[2px] bg-[#dc2626] mt-4" />
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-x-4 md:gap-x-6 gap-y-10 md:gap-y-16">

@@ -96,9 +96,9 @@ export default function NewInSlider() {
         </div>
       )}
 
-      <div className="max-w-[1280px] mx-auto px-8 mb-16 text-center">
-        <h2 className="text-4xl font-serif mb-2 text-[#1b1d0e]">New In</h2>
-        <p className="text-sm text-black/60 font-hei">금주의 새로운 아이템을 만나보세요</p>
+      <div className="flex flex-col items-center mb-16">
+        <h2 className="text-4xl font-bold font-logo italic tracking-tight text-[#1b1d0e]">New In</h2>
+        <div className="w-12 h-[2px] bg-[#dc2626] mt-4" />
       </div>
 
       <div className="relative flex">
