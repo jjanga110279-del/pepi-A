@@ -244,11 +244,11 @@ export default function Header() {
       <div className="max-w-[1920px] mx-auto px-4 md:px-10">
         <div className="flex items-center justify-between relative h-12 md:h-14">
           {/* Left: Mobile Menu & Home */}
-          <div className="flex items-center gap-4 md:gap-6 z-10">
+          <div className="flex items-center gap-1 md:gap-6 z-10">
             <button className="lg:hidden p-1.5" onClick={toggleMobileMenu}>
               <Menu size={24} />
             </button>
-            <div className="hidden md:flex items-center gap-6 text-black/80">
+            <div className="flex items-center gap-1 md:gap-6 text-black/80">
                <Link to="/" className="hover:opacity-60 transition-opacity p-1.5 flex items-center justify-center">
                  <ICONS.home className="text-[22px] md:text-[26px]" />
                </Link>
@@ -303,10 +303,6 @@ export default function Header() {
                 <Link to="/signup" className="hover:text-[#dc2626] transition-colors">회원가입</Link>
               </div>
             )}
-            
-            <button className="lg:hidden p-1.5 ml-1" onClick={toggleMobileMenu}>
-              <Menu size={26} />
-            </button>
           </div>
         </div>
 
