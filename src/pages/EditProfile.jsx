@@ -233,8 +233,8 @@ export default function EditProfile() {
             </div>
 
             <div className="flex gap-4 mt-8 pt-8 border-t border-black/5">
-              <button onClick={() => navigate('/mypage')} className="flex-1 h-14 bg-white border border-black/10 rounded-full font-bold">취소</button>
-              <button onClick={handleSave} className="flex-[2] h-14 bg-black text-white rounded-full font-bold">저장하기</button>
+              <button onClick={() => navigate('/mypage')} className="flex-1 h-14 bg-white border border-black/10 rounded-full font-bold text-black/60 hover:bg-gray-50 transition-all">취소</button>
+              <button onClick={handleSave} className="flex-[2] h-14 bg-gray-100 hover:bg-gray-200 text-black rounded-full font-bold transition-all shadow-sm">저장하기</button>
             </div>
           </div>
         </div>
