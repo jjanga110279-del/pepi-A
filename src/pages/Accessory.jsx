@@ -22,16 +22,18 @@ export default function Accessory() {
   // 모든 가용 이미지들을 모아 중복 없는 풍성한 이미지 풀 생성
   const allAvailableImages = useMemo(() => {
     const images = [
-      IMAGES.best4, IMAGES.best9, IMAGES.best10, IMAGES.best11, IMAGES.best23,
-      IMAGES.best1, IMAGES.best2, IMAGES.best3, IMAGES.best5, IMAGES.best6, 
-      IMAGES.best7, IMAGES.best8, IMAGES.best12, IMAGES.best13, IMAGES.best14, 
-      IMAGES.best15, IMAGES.best16, IMAGES.best17, IMAGES.best18,
-      IMAGES.newBag, IMAGES.newScarf, IMAGES.recItem1, IMAGES.hero4,
+      IMAGES.best1, IMAGES.best2, IMAGES.best3, IMAGES.best4, IMAGES.best5, 
+      IMAGES.best6, IMAGES.best7, IMAGES.best8, IMAGES.best9, IMAGES.best10, 
+      IMAGES.best11, IMAGES.best12, IMAGES.best13, IMAGES.best14, IMAGES.best15, 
+      IMAGES.best16, IMAGES.best17, IMAGES.best18,
       'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?q=80&w=800&auto=format&fit=crop',
       'https://images.unsplash.com/photo-1535633302723-99e3d3e426ec?q=80&w=800&auto=format&fit=crop',
       'https://images.unsplash.com/photo-1584917033794-c735e946b991?q=80&w=800&auto=format&fit=crop',
       'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?q=80&w=800&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1520903920243-00d872a2d1c9?q=80&w=800&auto=format&fit=crop'
+      'https://images.unsplash.com/photo-1520903920243-00d872a2d1c9?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1509319117193-57bab727e09d?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1512633017083-67231aba710d?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1531510483328-f0c858e4d9ca?q=80&w=800&auto=format&fit=crop'
     ];
     return Array.from(new Set(images)).filter(Boolean);
   }, []);

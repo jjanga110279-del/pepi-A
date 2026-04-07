@@ -12,7 +12,7 @@ export default function PopularRecommended() {
   return (
     <section className="max-w-[1280px] mx-auto px-8 py-24">
       <div className="flex flex-col items-center mb-16">
-        <h3 className="text-4xl font-bold font-logo italic tracking-tight">어나더 아이템</h3>
+        <h3 className="text-4xl font-bold font-logo italic tracking-tight">Another item</h3>
         <div className="w-12 h-[2px] bg-[#dc2626] mt-4"></div>
       </div>
       
