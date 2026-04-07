@@ -188,9 +188,9 @@ export default function Header() {
                   {user ? (
                     <span className="text-lg font-bold text-[#dc2626]">{user.name}님 반가워요!</span>
                   ) : (
-                    <div className="flex gap-3">
-                      <Link to="/login" className="px-6 py-2 bg-black text-white rounded-full text-sm font-bold">로그인</Link>
-                      <Link to="/signup" className="px-6 py-2 bg-white border border-black/10 text-black rounded-full text-sm font-bold">회원가입</Link>
+                    <div className="grid grid-cols-2 gap-4 w-full">
+                      <Link to="/login" className="h-12 bg-white border border-black/5 rounded-xl text-sm font-bold text-black flex items-center justify-center">로그인</Link>
+                      <Link to="/signup" className="h-12 bg-white border border-black/5 rounded-xl text-sm font-bold text-black flex items-center justify-center">회원가입</Link>
                     </div>
                   )}
                 </div>
