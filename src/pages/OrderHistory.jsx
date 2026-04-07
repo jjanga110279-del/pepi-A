@@ -113,31 +113,35 @@ export default function OrderHistory() {
               <div key={order.id} className="flex flex-col gap-4">
                 {order.items.map((product, pIdx) => (
                   <article key={`${order.id}-${pIdx}`} className="w-full border border-black/10 rounded-2xl overflow-hidden bg-white shadow-sm">
-                    <div className="bg-[#F9FAFB] h-12 px-4 flex items-center justify-between border-b border-black/5">
-                      <span className="text-[11px] font-medium text-black/60 font-sans whitespace-nowrap truncate mr-2">
-                        {order.date} <span className="mx-1.5 text-black/5">|</span> No. {order.id}
+                    <div className="bg-[#F9FAFB] h-12 md:h-14 px-4 md:px-6 flex items-center justify-between border-b border-black/5">
+                      <span className="text-[11px] md:text-[13px] font-medium text-black/60 font-sans whitespace-nowrap overflow-hidden text-ellipsis">
+                        {order.date} <span className="mx-1.5 text-black/5">|</span> 주문번호 {order.id}
                       </span>
-                      <Link to={`/order-detail/${order.id}`} className="text-[11px] font-bold text-black/40 whitespace-nowrap shrink-0">상세보기</Link>
+                      <Link to={`/order-detail/${order.id}`} className="text-[11px] md:text-[13px] font-bold text-black/40 whitespace-nowrap shrink-0">상세보기</Link>
                     </div>
-                    <div className="p-4 flex gap-4 items-center">
-                      <div className="w-[70px] h-[90px] rounded-lg overflow-hidden bg-[#F5F5F5] shrink-0 border border-black/5">
-                        <img src={product.image} alt="" className="w-full h-full object-cover" />
+                    
+                    <div className="p-4 md:p-8 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 md:gap-8">
+                      <div className="flex items-center gap-4 md:gap-8 flex-grow min-w-0">
+                        <div className="w-[70px] md:w-[100px] h-[90px] md:w-[130px] md:h-[170px] rounded-lg overflow-hidden bg-[#F5F5F5] shrink-0 border border-black/5">
+                          <img src={product.image} alt="" className="w-full h-full object-cover" />
+                        </div>
+                        <div className="flex-grow min-w-0 flex flex-col gap-1 md:gap-2">
+                          <span className="text-[12px] md:text-[14px] font-bold text-[#9C3F00] whitespace-nowrap">{product.status}</span>
+                          <h3 className="text-[15px] md:text-[20px] font-bold text-black truncate whitespace-nowrap">{product.name}</h3>
+                          <p className="text-[11px] md:text-[14px] font-medium text-black/40 whitespace-nowrap truncate">
+                            {product.color} / {product.size || product.option}
+                          </p>
+                          <span className="text-[15px] md:text-[22px] font-bold text-black whitespace-nowrap font-sans">₩{product.price.toLocaleString()}</span>
+                        </div>
                       </div>
-                      <div className="flex-grow min-w-0 flex flex-col gap-1">
-                        <span className="text-[12px] font-bold text-[#9C3F00] whitespace-nowrap">{product.status}</span>
-                        <h3 className="text-[15px] font-bold text-black truncate whitespace-nowrap">{product.name}</h3>
-                        <p className="text-[11px] font-medium text-black/40 whitespace-nowrap truncate">
-                          {product.color} / {product.size || product.option}
-                        </p>
-                        <span className="text-[15px] font-bold text-black whitespace-nowrap">₩{product.price.toLocaleString()}</span>
+                      
+                      <div className="flex flex-row lg:flex-col gap-2 w-full lg:w-auto shrink-0 border-t lg:border-t-0 border-black/5 pt-4 lg:pt-0">
+                        {product.status === '배송완료' && (
+                          <Link to={`/write-review/${product.id}`} state={{ product }} className="flex-1 lg:w-[160px] h-11 md:h-12 rounded-full text-[12px] md:text-[14px] font-bold border border-[#9C3F00] text-[#9C3F00] flex items-center justify-center whitespace-nowrap bg-white hover:bg-[#9C3F00]/5 transition-all">리뷰작성</Link>
+                        )}
+                        <Link to="/mypage" className="flex-1 lg:w-[160px] h-11 md:h-12 rounded-full text-[12px] md:text-[14px] font-bold border border-black/10 text-black flex items-center justify-center whitespace-nowrap hover:bg-gray-50 transition-all">배송조회</Link>
+                        <Link to={`/return-request/${order.id}/${product.id}`} className="flex-1 lg:w-[160px] h-11 md:h-12 rounded-full text-[12px] md:text-[14px] font-bold border border-black/10 text-black flex items-center justify-center whitespace-nowrap hover:bg-gray-50 transition-all">교환/반품</Link>
                       </div>
-                    </div>
-                    <div className="px-4 pb-4 flex gap-2">
-                      {product.status === '배송완료' && (
-                        <Link to={`/write-review/${product.id}`} state={{ product }} className="flex-1 h-10 rounded-full text-[12px] font-bold border border-[#9C3F00] text-[#9C3F00] flex items-center justify-center whitespace-nowrap">리뷰작성</Link>
-                      )}
-                      <Link to="/mypage" className="flex-1 h-10 rounded-full text-[12px] font-bold border border-black/10 text-black flex items-center justify-center whitespace-nowrap">배송조회</Link>
-                      <Link to={`/return-request/${order.id}/${product.id}`} className="flex-1 h-10 rounded-full text-[12px] font-bold border border-black/10 text-black flex items-center justify-center whitespace-nowrap">교환/반품</Link>
                     </div>
                   </article>
                 ))}
@@ -146,28 +150,31 @@ export default function OrderHistory() {
 
             {currentTab === '결제 내역' && orders.map((payment) => (
               <article key={payment.id} className="w-full border border-black/10 rounded-2xl overflow-hidden bg-white shadow-sm">
-                <div className="bg-[#F9FAFB] h-12 px-4 flex items-center justify-between border-b border-black/5">
-                  <span className="text-[11px] font-medium text-black/60 font-sans whitespace-nowrap truncate mr-2">
-                    결제: {payment.date} <span className="mx-1.5 text-black/5">|</span> No. {payment.id}
+                <div className="bg-[#F9FAFB] h-12 md:h-14 px-4 md:px-6 flex items-center justify-between border-b border-black/5">
+                  <span className="text-[11px] md:text-[13px] font-medium text-black/60 font-sans whitespace-nowrap truncate mr-2">
+                    결제일시: {payment.date} <span className="mx-1.5 text-black/5">|</span> 주문번호 {payment.id}
                   </span>
-                  <button className="text-[11px] font-bold text-[#9C3F00] whitespace-nowrap shrink-0">영수증</button>
+                  <button className="text-[11px] md:text-[13px] font-bold text-[#9C3F00] whitespace-nowrap shrink-0">영수증 보기</button>
                 </div>
-                <div className="p-4 flex items-center gap-4">
-                  <div className="w-[60px] h-[60px] rounded-xl overflow-hidden bg-[#F5F5F5] shrink-0 border border-black/5">
-                    <img src={payment.items[0].image} alt="" className="w-full h-full object-cover" />
-                  </div>
-                  <div className="flex-grow min-w-0">
-                    <h3 className="text-[15px] font-bold text-black truncate whitespace-nowrap">
-                      {payment.items[0].name} {payment.items.length > 1 ? `외 ${payment.items.length - 1}건` : ''}
-                    </h3>
-                    <div className="flex items-center gap-2 mt-0.5">
-                      <span className="text-[12px] text-black/40 whitespace-nowrap">{payment.paymentDetail}</span>
-                      <span className="text-[12px] font-bold text-[#9C3F00] whitespace-nowrap">결제완료</span>
+                <div className="p-4 md:p-8 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 md:gap-8">
+                  <div className="flex items-center gap-4 md:gap-8 flex-grow min-w-0">
+                    <div className="w-[60px] md:w-[80px] h-[60px] md:h-[80px] rounded-xl overflow-hidden bg-[#F5F5F5] shrink-0 border border-black/5">
+                      <img src={payment.items[0].image} alt="" className="w-full h-full object-cover" />
+                    </div>
+                    <div className="flex-grow min-w-0">
+                      <h3 className="text-[15px] md:text-[20px] font-bold text-black truncate whitespace-nowrap">
+                        {payment.items[0].name} {payment.items.length > 1 ? `외 ${payment.items.length - 1}건` : ''}
+                      </h3>
+                      <div className="flex items-center gap-2 mt-0.5 md:mt-1">
+                        <span className="text-[12px] md:text-[14px] text-black/40 whitespace-nowrap">{payment.paymentDetail}</span>
+                        <span className="w-px h-2 bg-black/10 mx-1 hidden md:block" />
+                        <span className="text-[12px] md:text-[14px] font-bold text-[#9C3F00] whitespace-nowrap">결제완료</span>
+                      </div>
                     </div>
                   </div>
-                  <div className="text-right shrink-0">
-                    <p className="text-[10px] text-black/30 font-bold leading-none mb-1">총 결제액</p>
-                    <span className="text-[16px] font-bold text-black whitespace-nowrap">₩{payment.totalPrice.toLocaleString()}</span>
+                  <div className="text-right shrink-0 w-full lg:w-auto border-t lg:border-t-0 border-black/5 pt-4 lg:pt-0 flex flex-row lg:flex-col items-center lg:items-end justify-between lg:justify-center">
+                    <p className="text-[10px] md:text-[12px] text-black/30 font-bold leading-none mb-1">총 결제금액</p>
+                    <span className="text-[18px] md:text-[28px] font-bold text-black whitespace-nowrap font-sans">₩{payment.totalPrice.toLocaleString()}</span>
                   </div>
                 </div>
               </article>
@@ -175,39 +182,41 @@ export default function OrderHistory() {
 
             {currentTab === '반품/교환 내역' && returnItems.map((ret) => (
               <article key={ret.id} className="w-full border border-black/10 rounded-2xl overflow-hidden bg-white shadow-sm">
-                <div className="bg-[#F9FAFB] h-12 px-4 flex items-center justify-between border-b border-black/5">
-                  <span className="text-[11px] font-medium text-black/60 font-sans whitespace-nowrap truncate mr-2">
-                    접수: {ret.date} <span className="mx-1.5 text-black/5">|</span> No. {ret.id}
+                <div className="bg-[#F9FAFB] h-12 md:h-14 px-4 md:px-6 flex items-center justify-between border-b border-black/5">
+                  <span className="text-[11px] md:text-[13px] font-medium text-black/60 font-sans whitespace-nowrap truncate mr-2">
+                    접수일자: {ret.date} <span className="mx-1.5 text-black/5">|</span> 주문번호 {ret.id}
                   </span>
-                  <button className="text-[11px] font-bold text-black/40 whitespace-nowrap shrink-0">진행상세</button>
+                  <button className="text-[11px] md:text-[13px] font-bold text-black/40 whitespace-nowrap shrink-0">진행상세</button>
                 </div>
-                <div className="p-4 flex gap-4 items-center">
-                  <div className="w-[70px] h-[90px] rounded-lg overflow-hidden bg-[#F5F5F5] shrink-0 border border-black/5">
-                    <img src={ret.image} alt="" className="w-full h-full object-cover" />
-                  </div>
-                  <div className="flex-grow min-w-0 flex flex-col gap-0.5">
-                    <div className="flex items-center gap-2">
-                      <span className="text-[12px] font-bold text-[#dc2626] whitespace-nowrap">{ret.status}</span>
-                      <span className="text-[11px] text-black/40 truncate whitespace-nowrap">/ {ret.reason}</span>
+                <div className="p-4 md:p-8 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 md:gap-8">
+                  <div className="flex items-start gap-4 md:gap-8 flex-grow min-w-0">
+                    <div className="w-[70px] md:w-[100px] h-[90px] md:h-[130px] rounded-lg overflow-hidden bg-[#F5F5F5] shrink-0 border border-black/5">
+                      <img src={ret.image} alt="" className="w-full h-full object-cover" />
                     </div>
-                    <h3 className="text-[15px] font-bold text-black truncate whitespace-nowrap">{ret.name}</h3>
-                    <p className="text-[11px] text-black/40 whitespace-nowrap truncate">
-                      {ret.color} / {ret.option} / {ret.quantity}개
-                    </p>
-                    <div className="flex items-center gap-3 mt-1 overflow-hidden">
-                      <span className="text-[10px] text-black/30 whitespace-nowrap">환불완료: {ret.refundDate}</span>
+                    <div className="flex-grow min-w-0 flex flex-col gap-1 md:gap-2">
+                      <div className="flex items-center gap-2">
+                        <span className="text-[12px] md:text-[14px] font-bold text-[#dc2626] whitespace-nowrap">{ret.status}</span>
+                        <span className="text-[11px] md:text-[13px] text-black/40 truncate whitespace-nowrap">/ {ret.reason}</span>
+                      </div>
+                      <h3 className="text-[15px] md:text-[20px] font-bold text-black truncate whitespace-nowrap">{ret.name}</h3>
+                      <p className="text-[11px] md:text-[14px] text-black/40 whitespace-nowrap truncate">
+                        {ret.color} / {ret.option} / {ret.quantity}개
+                      </p>
+                      <div className="flex items-center gap-3 mt-1 overflow-hidden">
+                        <span className="text-[10px] md:text-[12px] text-black/30 whitespace-nowrap">환불완료: {ret.refundDate}</span>
+                      </div>
                     </div>
                   </div>
-                  <div className="text-right shrink-0">
-                    <p className="text-[10px] text-black/30 font-bold leading-none mb-1">환불액</p>
-                    <span className="text-[16px] font-bold text-black whitespace-nowrap">{ret.price}</span>
+                  <div className="text-right shrink-0 w-full lg:w-auto border-t lg:border-t-0 border-black/5 pt-4 lg:pt-0 flex flex-row lg:flex-col items-center lg:items-end justify-between lg:justify-center">
+                    <p className="text-[10px] md:text-[12px] text-black/30 font-bold leading-none mb-1">환불 예정 금액</p>
+                    <span className="text-[18px] md:text-[24px] font-bold text-black whitespace-nowrap font-sans">{ret.price}</span>
                   </div>
                 </div>
               </article>
             ))}
 
             <div className="mt-8 flex justify-center pb-10">
-               <button className="px-10 py-3 rounded-full bg-gray-50 text-[13px] font-bold text-black/40 hover:bg-gray-100 transition-all border border-black/5">더보기</button>
+               <button className="px-10 py-3 rounded-full bg-gray-50 text-[13px] md:text-[14px] font-bold text-black/40 hover:bg-gray-100 transition-all border border-black/5">내역 더보기</button>
             </div>
           </div>
         </div>
