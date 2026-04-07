@@ -150,6 +150,15 @@ export default function NewInSlider() {
           })}
         </div>
       </div>
+
+      <div className="flex justify-center mt-20">
+        <Link 
+          to="/new-5" 
+          className="px-10 py-2.5 bg-gray-100 hover:bg-gray-200 rounded-full text-[13px] font-bold text-black/80 transition-all inline-block shadow-sm"
+        >
+          <span className="font-hei">더보기</span>
+        </Link>
+      </div>
     </section>
   );
 }
