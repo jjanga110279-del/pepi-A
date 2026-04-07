@@ -60,14 +60,11 @@ export default function Header() {
   useEffect(() => {
     if (isMobileMenuOpen) {
       document.body.style.overflow = 'hidden';
-      document.body.style.touchAction = 'none';
     } else {
       document.body.style.overflow = 'unset';
-      document.body.style.touchAction = 'auto';
     }
     return () => {
       document.body.style.overflow = 'unset';
-      document.body.style.touchAction = 'auto';
     };
   }, [isMobileMenuOpen]);
 
@@ -85,7 +82,7 @@ export default function Header() {
             {/* Left: Mobile Menu & Home/Back */}
             <div className="flex items-center gap-0.5 md:gap-6 z-10 shrink-0">
               <button className="lg:hidden p-1.5" onClick={toggleMobileMenu}>
-                <Menu size={24} />
+                <Menu size={24} className="text-black" />
               </button>
               <div className="flex items-center gap-0.5 md:gap-4 text-black/80">
                  <Link to="/" className="hover:opacity-60 transition-opacity p-1.5 flex items-center justify-center">
@@ -102,7 +99,7 @@ export default function Header() {
             {/* Center: Logo */}
             <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 z-0 w-max max-w-[40%] text-center">
               <Link to="/">
-                <h1 className={`font-logo font-black italic transition-all duration-300 tracking-tighter truncate ${isScrolled ? 'text-2xl md:text-3xl opacity-90' : 'text-3xl sm:text-4xl md:text-5xl'}`}>늘:pepi-i</h1>
+                <h1 className={`font-logo font-black italic transition-all duration-300 tracking-tighter truncate text-black ${isScrolled ? 'text-2xl md:text-3xl opacity-90' : 'text-3xl sm:text-4xl md:text-5xl'}`}>늘:pepi-i</h1>
               </Link>
             </div>
 
@@ -161,74 +158,60 @@ export default function Header() {
         </div>
       </header>
 
-      {/* Mobile Menu Overlay - Move outside of header for better visibility */}
+      {/* Mobile Menu Overlay - Forced visibility check */}
       {isMobileMenuOpen && (
-        <div className="fixed inset-0 z-[100] bg-white lg:hidden flex flex-col overflow-hidden animate-fadeIn">
-          <div className="flex-grow flex flex-col bg-white">
-            <div className="p-6 md:p-8 flex justify-between items-center border-b border-black/5 bg-white sticky top-0 z-10">
-              <h2 className="text-xl md:text-2xl font-serif font-bold italic text-[#1b1d0e]">늘:pepi-i</h2>
-              <button onClick={toggleMobileMenu} className="p-2 hover:bg-gray-100 rounded-full transition-colors">
-                <X size={26} className="text-black/80" />
-              </button>
-            </div>
+        <div className="fixed inset-0 z-[9999] bg-white lg:hidden flex flex-col overflow-hidden">
+          {/* Header inside Menu */}
+          <div className="p-6 flex justify-between items-center border-b border-black/5 bg-white">
+            <h2 className="text-xl font-serif font-bold italic text-black">늘:pepi-i</h2>
+            <button onClick={toggleMobileMenu} className="p-2 bg-gray-100 rounded-full">
+              <X size={26} className="text-black" />
+            </button>
+          </div>
 
-            <div className="flex-grow overflow-y-auto bg-white">
-              <div className="px-6 py-10 bg-[#f9fafb] border-b border-black/5">
-                <div className="flex flex-col gap-6">
-                  <div className="flex items-center gap-3 text-[18px] font-bold font-hei text-black/90 tracking-tight">
-                    {user ? (
-                      <>
-                        <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center border border-black/5 shadow-sm">
-                          <ICONS.user className="text-[18px] text-[#dc2626]" />
-                        </div>
-                        <span className="text-[#dc2626]">{user.name}님 반가워요!</span>
-                      </>
-                    ) : (
-                      <>
-                        <Link to="/login" className="px-6 py-2.5 bg-black text-white rounded-full text-[14px] font-bold hover:bg-black/80 transition-all shadow-md">로그인</Link>
-                        <Link to="/signup" className="px-6 py-2.5 bg-white border border-black/10 text-black rounded-full text-[14px] font-bold hover:bg-gray-50 transition-all shadow-sm">회원가입</Link>
-                      </>
-                    )}
-                  </div>
-                  <div className="grid grid-cols-2 gap-4">
-                    <button 
-                      onClick={(e) => handleProtectedNavigation('/mypage', e)}
-                      className="h-14 flex flex-col items-center justify-center bg-white border border-black/5 rounded-2xl text-[13px] font-bold font-hei text-black/70 shadow-sm gap-1"
-                    >
-                      <ICONS.user className="text-[18px]" />
-                      마이페이지
-                    </button>
-                    <button 
-                      onClick={() => navigate('/customer-service')}
-                      className="h-14 flex flex-col items-center justify-center bg-white border border-black/5 rounded-2xl text-[13px] font-bold font-hei text-black/70 shadow-sm gap-1"
-                    >
-                      <ICONS.customerService className="text-[18px]" />
-                      고객센터
-                    </button>
-                  </div>
+          <div className="flex-grow overflow-y-auto bg-white pb-20">
+            {/* User Account Section */}
+            <div className="px-6 py-10 bg-gray-50 border-b border-black/5">
+              <div className="flex flex-col gap-6">
+                <div className="flex items-center gap-3">
+                  {user ? (
+                    <span className="text-lg font-bold text-[#dc2626]">{user.name}님 반가워요!</span>
+                  ) : (
+                    <div className="flex gap-3">
+                      <Link to="/login" className="px-6 py-2 bg-black text-white rounded-full text-sm font-bold">로그인</Link>
+                      <Link to="/signup" className="px-6 py-2 bg-white border border-black/10 text-black rounded-full text-sm font-bold">회원가입</Link>
+                    </div>
+                  )}
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <button 
+                    onClick={(e) => handleProtectedNavigation('/mypage', e)}
+                    className="h-12 bg-white border border-black/5 rounded-xl text-sm font-bold text-black flex items-center justify-center"
+                  >마이페이지</button>
+                  <button 
+                    onClick={() => navigate('/customer-service')}
+                    className="h-12 bg-white border border-black/5 rounded-xl text-sm font-bold text-black flex items-center justify-center"
+                  >고객센터</button>
                 </div>
               </div>
-
-              <nav className="flex flex-col gap-1 p-6">
-                <Link to="/best50" className="group flex items-center justify-between p-4 rounded-2xl hover:bg-gray-50 transition-all">
-                  <span className="text-xl font-bold tracking-widest font-hei text-[#dc2626]">BEST 50</span>
-                  <div className="w-1.5 h-1.5 bg-[#dc2626] rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
-                </Link>
-                {categories.map((cat) => (
-                  <Link key={cat.name} to={cat.path} className="group flex items-center justify-between p-4 rounded-2xl hover:bg-gray-50 transition-all">
-                    <span className="text-lg md:text-xl font-bold tracking-widest font-hei text-black/80 group-hover:text-[#dc2626] transition-colors">{cat.mobileName}</span>
-                    <div className="w-1.5 h-1.5 bg-[#dc2626] rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </Link>
-                ))}
-              </nav>
             </div>
 
-            {user && (
-              <div className="p-6 border-t border-black/5 bg-white text-center mt-auto">
-                <button onClick={handleLogout} className="text-[13px] font-medium text-black/30 underline decoration-black/10">로그아웃</button>
-              </div>
-            )}
+            {/* Category Navigation */}
+            <nav className="flex flex-col p-4">
+              <Link to="/best50" className="p-4 text-xl font-bold text-[#dc2626] border-b border-black/5" onClick={toggleMobileMenu}>BEST 50</Link>
+              {categories.map((cat) => (
+                <Link key={cat.name} to={cat.path} className="p-4 text-lg font-bold text-black border-b border-black/5" onClick={toggleMobileMenu}>
+                  {cat.mobileName}
+                </Link>
+              ))}
+            </nav>
           </div>
+
+          {user && (
+            <div className="p-6 border-t border-black/5 bg-white text-center">
+              <button onClick={handleLogout} className="text-sm font-medium text-gray-400 underline">로그아웃</button>
+            </div>
+          )}
         </div>
       )}
     </>
