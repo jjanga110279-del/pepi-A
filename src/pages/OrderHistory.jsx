@@ -183,24 +183,24 @@ export default function OrderHistory() {
                   <div key={order.id} className="flex flex-col gap-4">
                     {order.items.map((product, pIdx) => (
                       <article key={`${order.id}-${pIdx}`} className="w-full border border-black/10 rounded-2xl overflow-hidden bg-white">
-                        <div className="bg-[#F9FAFB] h-14 px-6 flex items-center justify-between border-b border-black/5">
-                          <span className="text-[12px] font-medium text-black/60 font-sans">
-                            {order.date} <span className="mx-2 text-black/10">|</span> 주문번호 {order.id}
+                        <div className="bg-[#F9FAFB] h-12 md:h-14 px-4 md:px-6 flex items-center justify-between border-b border-black/5">
+                          <span className="text-[11px] md:text-[12px] font-medium text-black/60 font-sans whitespace-nowrap overflow-hidden text-ellipsis">
+                            {order.date} <span className="mx-1.5 md:mx-2 text-black/10">|</span> 주문번호 {order.id}
                           </span>
-                          <Link to={`/order-detail/${order.id}`} className="text-[12px] font-bold text-black/40 hover:text-black transition-colors font-hei">상세보기</Link>
+                          <Link to={`/order-detail/${order.id}`} className="text-[11px] md:text-[12px] font-bold text-black/40 hover:text-black transition-colors font-hei shrink-0 ml-2">상세보기</Link>
                         </div>
-                        <div className="p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-                          <div className="flex items-start gap-6 flex-grow">
-                            <div className="w-[96px] h-[128px] rounded-lg overflow-hidden bg-[#F5F5F5] shrink-0 border border-black/5">
+                        <div className="p-4 md:p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 md:gap-6">
+                          <div className="flex items-start gap-4 md:gap-6 flex-grow w-full">
+                            <div className="w-[80px] md:w-[96px] h-[106px] md:h-[128px] rounded-lg overflow-hidden bg-[#F5F5F5] shrink-0 border border-black/5">
                               <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
                             </div>
-                            <div className="flex flex-col gap-2 py-1">
-                              <span className="text-[14px] font-bold text-[#9C3F00] font-hei">{product.status}</span>
-                              <h3 className="text-[18px] font-bold text-black font-hei leading-tight">{product.name}</h3>
-                              <p className="text-[12px] font-bold text-black/40 font-sans uppercase tracking-tight">
-                                Color: {product.color} / Size: {product.size || product.option}
+                            <div className="flex flex-col gap-1 md:gap-2 py-0.5 md:py-1 min-w-0">
+                              <span className="text-[13px] md:text-[14px] font-bold text-[#9C3F00] font-hei">{product.status}</span>
+                              <h3 className="text-[16px] md:text-[18px] font-bold text-black font-hei leading-tight truncate">{product.name}</h3>
+                              <p className="text-[11px] md:text-[12px] font-bold text-black/40 font-sans uppercase tracking-tight whitespace-nowrap overflow-hidden text-ellipsis">
+                                {product.color} / {product.size || product.option}
                               </p>
-                              <span className="text-[18px] font-bold text-black font-sans mt-1">₩{product.price.toLocaleString()}</span>
+                              <span className="text-[16px] md:text-[18px] font-bold text-black font-sans mt-0.5 md:mt-1 whitespace-nowrap">₩{product.price.toLocaleString()}</span>
                             </div>
                           </div>
                           <div className="flex flex-row md:flex-col gap-2 w-full md:w-auto">
