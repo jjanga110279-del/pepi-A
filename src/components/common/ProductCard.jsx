@@ -22,12 +22,20 @@ export default function ProductCard({
 
   // Using 3 very distinct, high-quality images to ensure they all show up differently
   const slideImages = React.useMemo(() => {
+    const validImage = product.image && typeof product.image === 'string' && product.image.length > 0 
+      ? product.image 
+      : "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=800&q=80";
+
     return [
-      product.image, // Original product image
+      validImage, // Original product image or fallback
       "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=800&q=80", // Distinct fashion 1
       "https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=800&q=80"  // Distinct fashion 2
     ].filter(Boolean);
   }, [product.image]);
+
+  const handleImageError = (e) => {
+    e.target.src = "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=800&q=80";
+  };
 
   // Interval for image rotation - strictly within bounds of slideImages
   React.useEffect(() => {
@@ -117,12 +125,18 @@ export default function ProductCard({
                 key={idx}
                 src={img} 
                 alt={`${product.name} ${idx}`} 
+                onError={handleImageError}
                 className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ease-in-out ${currentImageIndex === idx ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
               />
             ))}
           </div>
         ) : (
-          <img src={product.image} alt={product.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+          <img 
+            src={product.image || "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=800&q=80"} 
+            alt={product.name} 
+            onError={handleImageError}
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+          />
         )}
         <button onClick={handleLike} className="absolute top-6 right-6 z-20 hover:scale-110 transition-transform drop-shadow-md">
           {isLiked ? <ICONS.heartFilled className="text-[#dc2626] text-[20px] md:text-[24px]" /> : <ICONS.heart className="text-white text-[20px] md:text-[24px] brightness-0 invert" />}

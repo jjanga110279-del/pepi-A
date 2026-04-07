@@ -36,21 +36,21 @@ export default function Events() {
       title: "프리미엄 레더 셀렉션",
       period: "2024.05.20 - 2024.06.20",
       status: "진행중",
-      image: "https://images.unsplash.com/photo-1584917033794-c735e946b991?q=80&w=800&auto=format&fit=crop"
+      image: "https://images.unsplash.com/photo-1521335629791-ce4aec67dd15?q=80&w=800&auto=format&fit=crop"
     },
     {
       id: 6,
       title: "베이직 아이템: 클래식의 힘",
       period: "2024.05.01 - 2024.05.31",
       status: "진행중",
-      image: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?q=80&w=800&auto=format&fit=crop"
+      image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?q=80&w=800&auto=format&fit=crop"
     },
     {
       id: 7,
       title: "늘:pepi-i 비하인드: 감도 높은 제안",
       period: "2024.05.12 - 2024.05.30",
       status: "진행중",
-      image: "https://images.unsplash.com/photo-1556906781-9a412961c28c?q=80&w=800&auto=format&fit=crop"
+      image: "https://images.unsplash.com/photo-1445205170230-053b830c6050?q=80&w=800&auto=format&fit=crop"
     },
     {
       id: 8,
@@ -60,6 +60,10 @@ export default function Events() {
       image: "https://images.unsplash.com/photo-1434389677669-e08b4cac3105?q=80&w=800&auto=format&fit=crop"
     }
   ];
+
+  const handleImageError = (e) => {
+    e.target.src = "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=800&auto=format&fit=crop";
+  };
 
   return (
     <Layout>
@@ -83,6 +87,7 @@ export default function Events() {
                 <img 
                   src={event.image} 
                   alt={event.title} 
+                  onError={handleImageError}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-black/5" />

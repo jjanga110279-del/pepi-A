@@ -68,7 +68,7 @@ export default function Accessory() {
           isNew: isNewItem,
           isBest: i % 7 === 0,
           reviews: Math.floor(Math.random() * 250 + 20),
-          image: allAvailableImages[imgIdx]
+          image: allAvailableImages[imgIdx] || IMAGES.best1 // Fallback image
         });
       }
     });
