@@ -96,15 +96,15 @@ export default function Header() {
             </div>
 
             {/* Center: Logo */}
-            <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 z-0 w-max max-w-[40%] text-center">
+            <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 z-0 w-max max-w-[35%] text-center">
               <Link to="/">
-                <h1 className={`font-logo font-black italic transition-all duration-300 tracking-tighter truncate text-black ${isScrolled ? 'text-2xl md:text-3xl opacity-90' : 'text-3xl sm:text-4xl md:text-5xl'}`}>늘:pepi-i</h1>
+                <h1 className={`font-logo font-black italic transition-all duration-300 tracking-tighter truncate text-black ${isScrolled ? 'text-2xl md:text-3xl opacity-90' : 'text-[26px] sm:text-4xl md:text-5xl'}`}>늘:pepi-i</h1>
               </Link>
             </div>
 
             {/* Right: Icons & Login */}
-            <div className="flex items-center gap-1 md:gap-8 z-10 shrink-0">
-              <div className="flex items-center gap-0.5 md:gap-7 text-black/80">
+            <div className="flex items-center gap-0.5 md:gap-8 z-10 shrink-0">
+              <div className="flex items-center gap-0 md:gap-7 text-black/80">
                 <button onClick={goToSearch} className="hover:opacity-70 transition-opacity p-1.5">
                   <ICONS.search className="text-[18px] md:text-[20px]" />
                 </button>
