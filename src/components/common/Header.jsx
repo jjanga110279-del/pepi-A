@@ -30,16 +30,18 @@ export default function Header() {
   };
 
   const isDetailPage = ['/about', '/terms', '/guide', '/privacy', '/customer-service', '/best50', '/new-5', '/outer', '/top', '/bottom', '/dress', '/sets', '/accessory', '/sale', '/events', '/search', '/wishlist', '/mypage', '/order-history', '/order-success', '/return-success', '/coupons', '/points', '/settings', '/edit-profile', '/login', '/signup', '/find-password', '/cart', '/checkout', '/address-book'].includes(location.pathname) || location.pathname.startsWith('/product/') || location.pathname.startsWith('/order-detail/') || location.pathname.startsWith('/return-request/') || location.pathname.startsWith('/write-review/');
-  const isBest50Page = location.pathname === '/best50';
-  const isNewInPage = location.pathname === '/new-5';
-  const isOuterPage = location.pathname === '/outer';
-  const isTopPage = location.pathname === '/top';
-  const isBottomPage = location.pathname === '/bottom';
-  const isDressPage = location.pathname === '/dress';
-  const isSetsPage = location.pathname === '/sets';
-  const isAccessoryPage = location.pathname === '/accessory';
-  const isSalePage = location.pathname === '/sale';
-  const isEventsPage = location.pathname === '/events';
+  
+  const categories = [
+    { name: '신상 5%', path: '/new-5', mobileName: 'NEW IN 5%' },
+    { name: '아우터', path: '/outer', mobileName: 'OUTER' },
+    { name: '상의', path: '/top', mobileName: 'TOP' },
+    { name: '하의', path: '/bottom', mobileName: 'BOTTOM' },
+    { name: '원피스', path: '/dress', mobileName: 'DRESS' },
+    { name: '세트', path: '/sets', mobileName: 'SET' },
+    { name: '액세서리', path: '/accessory', mobileName: 'ACC' },
+    { name: 'SALE', path: '/sale', mobileName: 'SALE' },
+    { name: '이벤트/기획전', path: '/events', mobileName: 'EVENT' }
+  ];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -49,6 +51,11 @@ export default function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Close mobile menu on route change
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [location.pathname]);
+
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
 
   const goToSearch = (e) => {
@@ -57,212 +64,103 @@ export default function Header() {
     navigate('/search');
   };
 
-  // Detail Page Header
-  if (isDetailPage) {
-    return (
-      <header className={`fixed top-0 left-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-black/5 transition-all duration-300 ${isScrolled ? 'py-3' : 'py-5 md:py-6'}`}>
-        <div className="max-w-[1920px] mx-auto px-4 md:px-10">
-          <div className="flex items-center justify-between relative h-12 md:h-14">
-            {/* Left: Home & Back */}
-            <div className="flex items-center gap-4 md:gap-6 z-10">
-              <Link to="/" className="hover:opacity-60 transition-opacity p-1.5 flex items-center justify-center">
-                <ICONS.home className="text-[22px] md:text-[26px] text-black/80" />
-              </Link>
-              <button 
-                onClick={() => navigate(-1)}
-                className="hover:opacity-60 transition-opacity p-1.5 flex items-center justify-center"
+  const MobileMenuOverlay = () => (
+    <div className="fixed inset-0 z-[100] bg-white lg:hidden flex flex-col overflow-hidden animate-fadeIn">
+      <div className="flex-grow flex flex-col bg-white">
+        <div className="p-6 md:p-8 flex justify-between items-center border-b border-black/5 bg-white sticky top-0 z-10">
+          <h2 className="text-xl md:text-2xl font-serif font-bold italic text-[#1b1d0e]">늘:pepi-i</h2>
+          <button 
+            onClick={toggleMobileMenu} 
+            className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+          >
+            <X size={26} className="text-black/80" />
+          </button>
+        </div>
+
+        <div className="flex-grow overflow-y-auto px-6 py-8 bg-white">
+          <nav className="flex flex-col gap-1">
+            <Link 
+              to="/best50" 
+              className="group flex items-center justify-between p-4 rounded-2xl hover:bg-gray-50 transition-all"
+            >
+              <span className="text-xl font-bold tracking-widest font-hei text-[#dc2626]">BEST 50</span>
+              <div className="w-1.5 h-1.5 bg-[#dc2626] rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
+            </Link>
+            {categories.map((cat) => (
+              <Link 
+                key={cat.name} 
+                to={cat.path} 
+                className="group flex items-center justify-between p-4 rounded-2xl hover:bg-gray-50 transition-all"
               >
-                <ICONS.backArrow className="text-[18px] md:text-[20px] text-black/80" />
-              </button>
-            </div>
+                <span className="text-lg md:text-xl font-bold tracking-widest font-hei text-black/80 group-hover:text-[#dc2626] transition-colors">{cat.mobileName}</span>
+                <div className="w-1.5 h-1.5 bg-[#dc2626] rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
+              </Link>
+            ))}
+          </nav>
+        </div>
 
-            {/* Center: Logo */}
-            <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2">
-              <Link to="/" className={`font-logo font-black italic transition-all duration-300 tracking-tighter ${isScrolled ? 'text-2xl md:text-3xl opacity-90' : 'text-4xl md:text-5xl'}`}>늘:pepi-i</Link>
-            </div>
-
-            {/* Right: Icons & Login */}
-            <div className="flex items-center gap-4 md:gap-8 z-10">
-              <div className="flex items-center gap-4 md:gap-7">
-                <button onClick={goToSearch} className="hover:opacity-70 transition-opacity text-black/80 p-1">
-                  <ICONS.search className="text-[18px] md:text-[20px]" />
-                </button>
-                <div className="hidden lg:flex items-center gap-7">
-                  <button onClick={(e) => handleProtectedNavigation('/wishlist', e)} className="hover:opacity-70 transition-opacity text-black/80">
-                    <ICONS.wishlist className="text-[22px]" />
-                  </button>
-                  <button onClick={(e) => handleProtectedNavigation('/mypage', e)} className="hover:opacity-70 transition-opacity text-black/80">
-                    <ICONS.user className="text-[20px]" title="마이페이지" />
-                  </button>
-                </div>
-                <button onClick={(e) => handleProtectedNavigation('/cart', e)} className="relative cursor-pointer hover:opacity-70 transition-opacity flex items-center">
-                  <ICONS.cart className="text-[22px] text-black/80" />
-                  {user && totalCount > 0 && (
-                    <span className="absolute -top-1.5 -right-1.5 bg-red-600 text-white text-[10px] md:text-[11px] font-bold rounded-full w-4 h-4 md:w-5 md:h-5 flex items-center justify-center border-2 border-white">{totalCount}</span>
-                  )}
-                </button>
-              </div>
-              
-              <div className="w-px h-5 bg-black/10 hidden lg:block mx-3" />
+        <div className="p-8 bg-[#f9fafb] border-t border-black/5 mt-auto">
+          <div className="flex flex-col gap-6">
+            <div className="flex items-center gap-2 text-[15px] font-bold font-hei text-black/90 tracking-tight">
               {user ? (
-                <div className="hidden sm:flex items-center gap-4 text-sm md:text-[16px] font-bold font-hei text-black/90 tracking-tight">
-                  <span className="text-[#9C3F00]">{user.name}님</span>
-                  <button 
-                    onClick={handleLogout}
-                    className="flex items-center gap-1 text-black/40 hover:text-black transition-colors"
-                  >
-                    <LogOut size={16} />
-                    <span className="text-[13px]">로그아웃</span>
-                  </button>
-                </div>
+                <>
+                  <span className="text-[#dc2626]">{user.name}님</span>
+                  <span className="text-black/10">|</span>
+                  <button onClick={handleLogout} className="text-black/40">로그아웃</button>
+                </>
               ) : (
-                <div className="hidden sm:flex items-center gap-2 text-sm md:text-[16px] font-bold font-hei text-black/90 tracking-tight">
+                <>
                   <Link to="/login" className="hover:text-[#dc2626] transition-colors">로그인</Link>
                   <span className="text-black/20 font-normal">/</span>
                   <Link to="/signup" className="hover:text-[#dc2626] transition-colors">회원가입</Link>
-                </div>
+                </>
               )}
-              
-              <button className="lg:hidden p-1.5 ml-1" onClick={toggleMobileMenu}>
-                <Menu size={26} />
-              </button>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <button 
+                onClick={(e) => handleProtectedNavigation('/mypage', e)}
+                className="h-12 flex items-center justify-center bg-white border border-black/5 rounded-xl text-[14px] font-bold font-hei text-black/70 shadow-sm"
+              >마이페이지</button>
+              <button 
+                onClick={() => navigate('/customer-service')}
+                className="h-12 flex items-center justify-center bg-white border border-black/5 rounded-xl text-[14px] font-bold font-hei text-black/70 shadow-sm"
+              >고객센터</button>
             </div>
           </div>
-
-          {/* Desktop Navigation */}
-          {(isBest50Page || isNewInPage || isOuterPage || isTopPage || isBottomPage || isDressPage || isSetsPage || isAccessoryPage || isSalePage || isEventsPage) && (
-            <nav className={`hidden lg:flex justify-center items-center gap-14 mt-10 pb-6 transition-all duration-300 ${isScrolled ? 'scale-95' : ''}`}>
-              <div className="relative group">
-                <Link to="/best50" className={`text-[17px] md:text-[18px] font-bold tracking-[2px] uppercase font-hei transition-colors ${isBest50Page ? 'text-[#dc2626]' : 'text-black/80 hover:text-[#dc2626]'}`}>베스트 50</Link>
-                {isBest50Page && <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-[#dc2626] rounded-full" />}
-              </div>
-              {['신상 5%', '아우터', '상의', '하의', '원피스', '세트', '액세서리', 'SALE', '이벤트/기획전'].map((item) => {
-                const isNewIn = item === '신상 5%';
-                const isOuter = item === '아우터';
-                const isTop = item === '상의';
-                const isBottom = item === '하의';
-                const isDress = item === '원피스';
-                const isSets = item === '세트';
-                const isAcc = item === '액세서리';
-                const isSale = item === 'SALE';
-                const isEvents = item === '이벤트/기획전';
-                const isActive = (isNewIn && isNewInPage) || (isOuter && isOuterPage) || (isTop && isTopPage) || (isBottom && isBottomPage) || (isDress && isDressPage) || (isSets && isSetsPage) || (isAcc && isAccessoryPage) || (isSale && isSalePage) || (isEvents && isEventsPage);
-                
-                return (
-                  <div key={item} className="relative group">
-                    {isNewIn ? (
-                      <Link to="/new-5" className={`text-[17px] md:text-[18px] font-bold tracking-[1.5px] font-hei transition-colors ${isActive ? 'text-[#dc2626]' : 'text-black/80 hover:text-[#dc2626]'}`}>{item}</Link>
-                    ) : isOuter ? (
-                      <Link to="/outer" className={`text-[17px] md:text-[18px] font-bold tracking-[1.5px] font-hei transition-colors ${isActive ? 'text-[#dc2626]' : 'text-black/80 hover:text-[#dc2626]'}`}>{item}</Link>
-                    ) : isTop ? (
-                      <Link to="/top" className={`text-[17px] md:text-[18px] font-bold tracking-[1.5px] font-hei transition-colors ${isActive ? 'text-[#dc2626]' : 'text-black/80 hover:text-[#dc2626]'}`}>{item}</Link>
-                    ) : isBottom ? (
-                      <Link to="/bottom" className={`text-[17px] md:text-[18px] font-bold tracking-[1.5px] font-hei transition-colors ${isActive ? 'text-[#dc2626]' : 'text-black/80 hover:text-[#dc2626]'}`}>{item}</Link>
-                    ) : isDress ? (
-                      <Link to="/dress" className={`text-[17px] md:text-[18px] font-bold tracking-[1.5px] font-hei transition-colors ${isActive ? 'text-[#dc2626]' : 'text-black/80 hover:text-[#dc2626]'}`}>{item}</Link>
-                    ) : isSets ? (
-                      <Link to="/sets" className={`text-[17px] md:text-[18px] font-bold tracking-[1.5px] font-hei transition-colors ${isActive ? 'text-[#dc2626]' : 'text-black/80 hover:text-[#dc2626]'}`}>{item}</Link>
-                    ) : isAcc ? (
-                      <Link to="/accessory" className={`text-[17px] md:text-[18px] font-bold tracking-[1.5px] font-hei transition-colors ${isActive ? 'text-[#dc2626]' : 'text-black/80 hover:text-[#dc2626]'}`}>{item}</Link>
-                    ) : isSale ? (
-                      <Link to="/sale" className={`text-[17px] md:text-[18px] font-bold tracking-[1.5px] font-hei transition-colors ${isActive ? 'text-[#dc2626]' : 'text-black/80 hover:text-[#dc2626]'}`}>{item}</Link>
-                    ) : isEvents ? (
-                      <Link to="/events" className={`text-[17px] md:text-[18px] font-bold tracking-[1.5px] font-hei transition-colors ${isActive ? 'text-[#dc2626]' : 'text-black/80 hover:text-[#dc2626]'}`}>{item}</Link>
-                    ) : (
-                      <a href="#" className="text-[17px] md:text-[18px] font-bold text-black/80 hover:text-[#dc2626] tracking-[1.5px] font-hei transition-colors">{item}</a>
-                    )}
-                    {isActive && <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-[#dc2626] rounded-full" />}
-                  </div>
-                );
-              })}
-            </nav>
-          )}
         </div>
+      </div>
+    </div>
+  );
 
-        {/* Mobile Menu Overlay */}
-        {isMobileMenuOpen && (
-          <div className="fixed inset-0 z-[100] bg-white lg:hidden animate-fadeIn flex flex-col">
-            <div className="p-6 flex-grow">
-              <div className="flex justify-between items-center mb-12">
-                <h2 className="text-xl font-serif font-bold italic">늘:pepi-i</h2>
-                <button onClick={toggleMobileMenu}><X size={24} /></button>
-              </div>
-              <nav className="flex flex-col gap-6">
-                <Link to="/best50" className="text-lg font-bold tracking-widest font-hei text-[#7c2d12] hover:text-[#dc2626] transition-colors" onClick={toggleMobileMenu}>BEST 50</Link>
-                {['NEW IN 5%', 'OUTER', 'TOP', 'BOTTOM', 'DRESS', 'SET', 'ACC', 'SALE', 'EVENT'].map((item) => {
-                  const isNewIn = item === 'NEW IN 5%';
-                  const isOuter = item === 'OUTER';
-                  const isTop = item === 'TOP';
-                  const isBottom = item === 'BOTTOM';
-                  const isDress = item === 'DRESS';
-                  const isSets = item === 'SET';
-                  const isAcc = item === 'ACC';
-                  const isSale = item === 'SALE';
-                  const isEvents = item === 'EVENT';
-                  return isNewIn ? (
-                    <Link key={item} to="/new-5" className="text-lg font-bold tracking-widest font-hei text-black/80 hover:text-[#dc2626] transition-colors" onClick={toggleMobileMenu}>{item}</Link>
-                  ) : isOuter ? (
-                    <Link key={item} to="/outer" className="text-lg font-bold tracking-widest font-hei text-black/80 hover:text-[#dc2626] transition-colors" onClick={toggleMobileMenu}>{item}</Link>
-                  ) : isTop ? (
-                    <Link key={item} to="/top" className="text-lg font-bold tracking-widest font-hei text-black/80 hover:text-[#dc2626] transition-colors" onClick={toggleMobileMenu}>{item}</Link>
-                  ) : isBottom ? (
-                    <Link key={item} to="/bottom" className="text-lg font-bold tracking-widest font-hei text-black/80 hover:text-[#dc2626] transition-colors" onClick={toggleMobileMenu}>{item}</Link>
-                  ) : isDress ? (
-                    <Link key={item} to="/dress" className="text-lg font-bold tracking-widest font-hei text-black/80 hover:text-[#dc2626] transition-colors" onClick={toggleMobileMenu}>{item}</Link>
-                  ) : isSets ? (
-                    <Link key={item} to="/sets" className="text-lg font-bold tracking-widest font-hei text-black/80 hover:text-[#dc2626] transition-colors" onClick={toggleMobileMenu}>{item}</Link>
-                  ) : isAcc ? (
-                    <Link key={item} to="/accessory" className="text-lg font-bold tracking-widest font-hei text-black/80 hover:text-[#dc2626] transition-colors" onClick={toggleMobileMenu}>{item}</Link>
-                  ) : isSale ? (
-                    <Link key={item} to="/sale" className="text-lg font-bold tracking-widest font-hei text-black/80 hover:text-[#dc2626] transition-colors" onClick={toggleMobileMenu}>{item}</Link>
-                  ) : isEvents ? (
-                    <Link key={item} to="/events" className="text-lg font-bold tracking-widest font-hei text-black/80 hover:text-[#dc2626] transition-colors" onClick={toggleMobileMenu}>{item}</Link>
-                  ) : (
-                    <a key={item} href="#" className="text-lg font-bold tracking-widest font-hei text-black/80 hover:text-[#dc2626] transition-colors" onClick={toggleMobileMenu}>{item}</a>
-                  );
-                })}
-              </nav>
-            </div>
-            <div className="p-6 pt-12 border-t border-black/5 flex flex-col gap-4 mt-auto">
-              <div className="flex items-center gap-2 text-sm font-hei text-left tracking-tight">
-                <Link to="/login" className="hover:text-[#dc2626] transition-colors">로그인</Link>
-                <span className="text-black/20">/</span>
-                <Link to="/signup" className="hover:text-[#dc2626] transition-colors">회원가입</Link>
-              </div>
-              <button className="text-sm font-hei text-left hover:text-[#dc2626] transition-colors">마이페이지</button>
-              <button className="text-sm font-hei text-left hover:text-[#dc2626] transition-colors">고객센터</button>
-            </div>
-          </div>
-        )}
-      </header>
-    );
-  }
-
-  // Home Page Header
   return (
-    <header className={`fixed top-0 left-0 w-full z-50 bg-white/95 backdrop-blur-md border-b border-black/5 transition-all duration-300 ${isScrolled ? 'py-3' : 'py-5 md:py-6'}`}>
+    <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 border-b border-black/5 ${isScrolled ? 'py-3 bg-white/95 backdrop-blur-md' : 'py-5 md:py-6 bg-white'}`}>
       <div className="max-w-[1920px] mx-auto px-4 md:px-10">
         <div className="flex items-center justify-between relative h-12 md:h-14">
-          {/* Left: Mobile Menu & Home */}
+          {/* Left: Mobile Menu & Home/Back */}
           <div className="flex items-center gap-1 md:gap-6 z-10">
             <button className="lg:hidden p-1.5" onClick={toggleMobileMenu}>
               <Menu size={24} />
             </button>
-            <div className="flex items-center gap-1 md:gap-6 text-black/80">
+            <div className="flex items-center gap-1 md:gap-4 text-black/80">
                <Link to="/" className="hover:opacity-60 transition-opacity p-1.5 flex items-center justify-center">
                  <ICONS.home className="text-[22px] md:text-[26px]" />
                </Link>
+               {isDetailPage && (
+                 <button onClick={() => navigate(-1)} className="hover:opacity-60 transition-opacity p-1.5 flex items-center justify-center">
+                   <ICONS.backArrow className="text-[18px] md:text-[20px]" />
+                 </button>
+               )}
             </div>
           </div>
 
           {/* Center: Logo */}
           <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2">
             <Link to="/">
-              <h1 className={`font-serif font-bold italic transition-all duration-300 tracking-tighter ${isScrolled ? 'text-2xl md:text-3xl opacity-90' : 'text-4xl md:text-5xl'}`}>늘:pepi-i</h1>
+              <h1 className={`font-logo font-black italic transition-all duration-300 tracking-tighter ${isScrolled ? 'text-2xl md:text-3xl opacity-90' : 'text-4xl md:text-5xl'}`}>늘:pepi-i</h1>
             </Link>
           </div>
 
-          {/* Right: User Actions */}
+          {/* Right: Icons & Login */}
           <div className="flex items-center gap-4 md:gap-8 z-10">
             <div className="flex items-center gap-4 md:gap-7 text-black/80">
               <button onClick={goToSearch} className="hover:opacity-70 transition-opacity p-1">
@@ -288,10 +186,7 @@ export default function Header() {
             {user ? (
               <div className="hidden sm:flex items-center gap-4 text-sm md:text-[16px] font-bold font-hei text-black/90 tracking-tight">
                 <span className="text-[#dc2626]">{user.name}님</span>
-                <button 
-                  onClick={handleLogout}
-                  className="flex items-center gap-1 text-black/40 hover:text-black transition-colors"
-                >
+                <button onClick={handleLogout} className="flex items-center gap-1 text-black/40 hover:text-black transition-colors">
                   <LogOut size={16} />
                   <span className="text-[13px]">로그아웃</span>
                 </button>
@@ -308,126 +203,24 @@ export default function Header() {
 
         {/* Desktop Navigation */}
         <nav className={`hidden lg:flex justify-center items-center gap-12 transition-all duration-300 ${isScrolled ? 'mt-4 scale-95 origin-center pb-2' : 'mt-8 pb-2'}`}>
-          <Link to="/best50" className="text-[16px] md:text-[17px] font-bold text-black/80 hover:text-[#dc2626] tracking-widest uppercase font-hei transition-colors">베스트 50</Link>
-          {['신상 5%', '아우터', '상의', '하의', '원피스', '세트', '액세서리', 'SALE', '이벤트/기획전'].map((item) => {
-            const isNewIn = item === '신상 5%';
-            const isOuter = item === '아우터';
-            const isTop = item === '상의';
-            const isBottom = item === '하의';
-            const isDress = item === '원피스';
-            const isSets = item === '세트';
-            const isAcc = item === '액세서리';
-            const isSale = item === 'SALE';
-            const isEvents = item === '이벤트/기획전';
-            return isNewIn ? (
-              <Link key={item} to="/new-5" className="text-[16px] md:text-[17px] font-bold text-black/80 hover:text-[#dc2626] tracking-widest uppercase font-hei transition-colors">{item}</Link>
-            ) : isOuter ? (
-              <Link key={item} to="/outer" className="text-[16px] md:text-[17px] font-bold text-black/80 hover:text-[#dc2626] tracking-widest uppercase font-hei transition-colors">{item}</Link>
-            ) : isTop ? (
-              <Link key={item} to="/top" className="text-[16px] md:text-[17px] font-bold text-black/80 hover:text-[#dc2626] tracking-widest uppercase font-hei transition-colors">{item}</Link>
-            ) : isBottom ? (
-              <Link key={item} to="/bottom" className="text-[16px] md:text-[17px] font-bold text-black/80 hover:text-[#dc2626] tracking-widest uppercase font-hei transition-colors">{item}</Link>
-            ) : isDress ? (
-              <Link key={item} to="/dress" className="text-[16px] md:text-[17px] font-bold text-black/80 hover:text-[#dc2626] tracking-widest uppercase font-hei transition-colors">{item}</Link>
-            ) : isSets ? (
-              <Link key={item} to="/sets" className="text-[16px] md:text-[17px] font-bold text-black/80 hover:text-[#dc2626] tracking-widest uppercase font-hei transition-colors">{item}</Link>
-            ) : isAcc ? (
-              <Link key={item} to="/accessory" className="text-[16px] md:text-[17px] font-bold text-black/80 hover:text-[#dc2626] tracking-widest uppercase font-hei transition-colors">{item}</Link>
-            ) : isSale ? (
-              <Link key={item} to="/sale" className="text-[16px] md:text-[17px] font-bold text-black/80 hover:text-[#dc2626] tracking-widest uppercase font-hei transition-colors">{item}</Link>
-            ) : isEvents ? (
-              <Link key={item} to="/events" className="text-[16px] md:text-[17px] font-bold text-black/80 hover:text-[#dc2626] tracking-widest uppercase font-hei transition-colors">{item}</Link>
-            ) : (
-              <a key={item} href="#" className="text-[16px] md:text-[17px] font-bold text-black/80 hover:text-[#dc2626] tracking-widest uppercase font-hei transition-colors">{item}</a>
+          <div className="relative group">
+            <Link to="/best50" className={`text-[16px] md:text-[17px] font-bold tracking-widest uppercase font-hei transition-colors ${location.pathname === '/best50' ? 'text-[#dc2626]' : 'text-black/80 hover:text-[#dc2626]'}`}>베스트 50</Link>
+            {location.pathname === '/best50' && <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-[#dc2626] rounded-full" />}
+          </div>
+          {categories.map((cat) => {
+            const isActive = location.pathname === cat.path;
+            return (
+              <div key={cat.name} className="relative group">
+                <Link to={cat.path} className={`text-[16px] md:text-[17px] font-bold tracking-widest uppercase font-hei transition-colors ${isActive ? 'text-[#dc2626]' : 'text-black/80 hover:text-[#dc2626]'}`}>{cat.name}</Link>
+                {isActive && <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-[#dc2626] rounded-full" />}
+              </div>
             );
           })}
         </nav>
       </div>
 
       {/* Mobile Menu Overlay */}
-      {isMobileMenuOpen && (
-        <div className="fixed inset-0 z-[100] bg-white lg:hidden flex flex-col overflow-hidden animate-fadeIn">
-          {/* White Box Container for Menu Content */}
-          <div className="flex-grow flex flex-col bg-white">
-            <div className="p-6 md:p-8 flex justify-between items-center border-b border-black/5 bg-white sticky top-0 z-10">
-              <h2 className="text-xl md:text-2xl font-serif font-bold italic text-[#1b1d0e]">늘:pepi-i</h2>
-              <button 
-                onClick={toggleMobileMenu} 
-                className="p-2 hover:bg-gray-100 rounded-full transition-colors"
-              >
-                <X size={26} className="text-black/80" />
-              </button>
-            </div>
-
-            <div className="flex-grow overflow-y-auto px-6 py-8 bg-white">
-              <nav className="flex flex-col gap-1">
-                <Link 
-                  to="/best50" 
-                  className="group flex items-center justify-between p-4 rounded-2xl hover:bg-gray-50 transition-all"
-                  onClick={toggleMobileMenu}
-                >
-                  <span className="text-xl font-bold tracking-widest font-hei text-[#dc2626]">BEST 50</span>
-                  <div className="w-1.5 h-1.5 bg-[#dc2626] rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
-                </Link>
-                {['NEW IN 5%', 'OUTER', 'TOP', 'BOTTOM', 'DRESS', 'SET', 'ACC', 'SALE', 'EVENT'].map((item) => {
-                  const isNewIn = item === 'NEW IN 5%';
-                  const isOuter = item === 'OUTER';
-                  const isTop = item === 'TOP';
-                  const isBottom = item === 'BOTTOM';
-                  const isDress = item === 'DRESS';
-                  const isSets = item === 'SET';
-                  const isAcc = item === 'ACC';
-                  const isSale = item === 'SALE';
-                  const isEvents = item === 'EVENT';
-
-                  const path = isNewIn ? '/new-5' : isOuter ? '/outer' : isTop ? '/top' : isBottom ? '/bottom' : isDress ? '/dress' : isSets ? '/sets' : isAcc ? '/accessory' : isSale ? '/sale' : isEvents ? '/events' : '#';
-
-                  return (
-                    <Link 
-                      key={item} 
-                      to={path} 
-                      className="group flex items-center justify-between p-4 rounded-2xl hover:bg-gray-50 transition-all" 
-                      onClick={toggleMobileMenu}
-                    >
-                      <span className="text-lg md:text-xl font-bold tracking-widest font-hei text-black/80 group-hover:text-[#dc2626] transition-colors">{item}</span>
-                      <div className="w-1.5 h-1.5 bg-[#dc2626] rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
-                    </Link>
-                  );
-                })}
-              </nav>
-            </div>
-
-            <div className="p-8 bg-[#f9fafb] border-t border-black/5 mt-auto">
-              <div className="flex flex-col gap-6">
-                <div className="flex items-center gap-2 text-[15px] font-bold font-hei text-black/90 tracking-tight">
-                  {user ? (
-                    <>
-                      <span className="text-[#dc2626]">{user.name}님</span>
-                      <span className="text-black/10">|</span>
-                      <button onClick={() => { handleLogout(); toggleMobileMenu(); }} className="text-black/40">로그아웃</button>
-                    </>
-                  ) : (
-                    <>
-                      <Link to="/login" className="hover:text-[#dc2626] transition-colors" onClick={toggleMobileMenu}>로그인</Link>
-                      <span className="text-black/20 font-normal">/</span>
-                      <Link to="/signup" className="hover:text-[#dc2626] transition-colors" onClick={toggleMobileMenu}>회원가입</Link>
-                    </>
-                  )}
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <button 
-                    onClick={(e) => { handleProtectedNavigation('/mypage', e); toggleMobileMenu(); }}
-                    className="h-12 flex items-center justify-center bg-white border border-black/5 rounded-xl text-[14px] font-bold font-hei text-black/70 shadow-sm"
-                  >마이페이지</button>
-                  <button 
-                    onClick={() => { navigate('/customer-service'); toggleMobileMenu(); }}
-                    className="h-12 flex items-center justify-center bg-white border border-black/5 rounded-xl text-[14px] font-bold font-hei text-black/70 shadow-sm"
-                  >고객센터</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}    </header>
+      {isMobileMenuOpen && <MobileMenuOverlay />}
+    </header>
   );
 }
