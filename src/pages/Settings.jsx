@@ -135,9 +135,10 @@ export default function Settings() {
                 { icon: Smartphone, label: '휴대폰 번호 변경', target: 'phone' },
                 { icon: User, label: '회원 정보 수정', target: 'profile' }
               ].map((item, idx) => (
-                <button 
+                <Link 
                   key={idx} 
-                  onClick={() => navigate('/edit-profile', { state: { scrollTo: item.target } })}
+                  to="/edit-profile"
+                  state={{ scrollTo: item.target }}
                   className="flex items-center justify-between p-6 bg-white border border-black/10 rounded-2xl hover:border-black/20 transition-all group w-full"
                 >
                   <div className="flex items-center gap-4">
@@ -146,8 +147,8 @@ export default function Settings() {
                     </div>
                     <span className="text-[15px] font-bold text-black font-hei">{item.label}</span>
                   </div>
-                  <ChevronRight size={18} className="text-black/20" />
-                </button>
+                  <ChevronRight size={18} className="text-black/20 group-hover:translate-x-1 transition-transform" />
+                </Link>
               ))}
             </div>
           </section>

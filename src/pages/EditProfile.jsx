@@ -55,21 +55,29 @@ export default function EditProfile() {
   }, [user, navigate]);
 
   useEffect(() => {
+    // Check both state and hash for the target section
     const scrollToTarget = location.state?.scrollTo || location.hash.replace('#', '');
+    
     if (scrollToTarget) {
+      // If it's password or phone, ensure any relevant UI state is toggled
       if (scrollToTarget === 'password') setIsChangingPassword(true);
       
-      // Ensure rendering is complete before scrolling
-      requestAnimationFrame(() => {
-        setTimeout(() => {
-          const element = document.getElementById(scrollToTarget);
-          if (element) {
-            const yOffset = -120; // Header offset
-            const y = element.getBoundingClientRect().top + window.scrollY + yOffset;
-            window.scrollTo({ top: y, behavior: 'smooth' });
-          }
-        }, 100);
-      });
+      // Force scroll to top first to ensure a clean start
+      window.scrollTo(0, 0);
+
+      const doScroll = () => {
+        const element = document.getElementById(scrollToTarget);
+        if (element) {
+          const yOffset = -120; // Header height offset
+          const y = element.getBoundingClientRect().top + window.scrollY + yOffset;
+          window.scrollTo({ top: y, behavior: 'smooth' });
+        }
+      };
+
+      // Multiple attempts to handle different mobile rendering speeds
+      setTimeout(doScroll, 100);
+      setTimeout(doScroll, 300);
+      setTimeout(doScroll, 600);
     }
   }, [location.state, location.hash]);
 
