@@ -102,16 +102,16 @@ export default function Header() {
             </div>
 
             {/* Center: Logo */}
-            <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 z-0 w-max max-w-[25%] sm:max-w-[35%] text-center">
+            <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 z-0 w-max max-w-[20%] sm:max-w-[30%] text-center">
               <Link to="/">
-                <h1 className={`font-logo font-black italic transition-all duration-300 tracking-tighter truncate text-black ${isScrolled ? 'text-xl sm:text-2xl md:text-3xl opacity-90' : 'text-xl sm:text-[26px] md:text-4xl lg:text-5xl'}`}>늘:pepi-i</h1>
+                <h1 className={`font-logo font-black italic transition-all duration-300 tracking-tighter truncate text-black ${isScrolled ? 'text-xl sm:text-2xl md:text-3xl opacity-90' : 'text-xl sm:text-[26px] md:text-3xl lg:text-4xl xl:text-5xl'}`}>늘:pepi-i</h1>
               </Link>
             </div>
 
             {/* Right: Icons & Login */}
-            <div className="flex items-center gap-1 md:gap-4 lg:gap-8 z-10 shrink-0">
+            <div className="flex items-center gap-1 md:gap-3 lg:gap-6 xl:gap-8 z-10 shrink-0">
               {/* Desktop Icons */}
-              <div className="hidden lg:flex items-center gap-4 xl:gap-7 text-black/80">
+              <div className="hidden lg:flex items-center gap-3 xl:gap-7 text-black/80">
                 <button onClick={goToSearch} className="hover:opacity-70 transition-opacity p-1.5">
                   <ICONS.search className="text-[20px]" />
                 </button>
@@ -133,15 +133,15 @@ export default function Header() {
               
               <div className="w-px h-5 bg-black/10 hidden lg:block mx-1 xl:mx-3" />
               {user ? (
-                <div className="hidden sm:flex items-center gap-2 xl:gap-4 text-xs lg:text-sm xl:text-[16px] font-bold font-hei text-black/90 tracking-tight">
+                <div className="hidden sm:flex items-center gap-2 xl:gap-4 text-xs lg:text-[13px] xl:text-[16px] font-bold font-hei text-black/90 tracking-tight">
                   <span className="text-[#dc2626] whitespace-nowrap">{user.name}님</span>
                   <button onClick={handleLogout} className="flex items-center gap-1 text-black/40 hover:text-black transition-colors">
                     <LogOut size={14} className="lg:w-4 lg:h-4" />
-                    <span className="text-[11px] lg:text-[13px] whitespace-nowrap">로그아웃</span>
+                    <span className="text-[11px] lg:text-[12px] xl:text-[13px] whitespace-nowrap">로그아웃</span>
                   </button>
                 </div>
               ) : (
-                <div className="hidden sm:flex items-center gap-1 xl:gap-2 text-xs lg:text-sm xl:text-[16px] font-bold font-hei text-black/90 tracking-tight">
+                <div className="hidden sm:flex items-center gap-1 xl:gap-2 text-xs lg:text-[13px] xl:text-[16px] font-bold font-hei text-black/90 tracking-tight">
                   <Link to="/login" className="hover:text-[#dc2626] transition-colors whitespace-nowrap">로그인</Link>
                   <span className="text-black/20 font-normal">/</span>
                   <Link to="/signup" className="hover:text-[#dc2626] transition-colors whitespace-nowrap">회원가입</Link>
@@ -151,16 +151,16 @@ export default function Header() {
           </div>
 
           {/* Desktop Navigation */}
-          <nav className={`hidden lg:flex justify-center items-center gap-4 xl:gap-12 transition-all duration-300 ${isScrolled ? 'mt-4 scale-95 origin-center pb-2' : 'mt-8 pb-2'}`}>
+          <nav className={`hidden lg:flex justify-center items-center gap-6 xl:gap-12 transition-all duration-300 ${isScrolled ? 'mt-4 scale-95 origin-center pb-2' : 'mt-8 pb-2'}`}>
             <div className="relative group shrink-0">
-              <Link to="/best50" className={`text-[14px] xl:text-[17px] font-bold tracking-widest uppercase font-hei transition-colors whitespace-nowrap ${location.pathname === '/best50' ? 'text-[#dc2626]' : 'text-black/80 hover:text-[#dc2626]'}`}>베스트 50</Link>
+              <Link to="/best50" className={`text-[15px] xl:text-[17px] font-bold tracking-widest uppercase font-hei transition-colors whitespace-nowrap ${location.pathname === '/best50' ? 'text-[#dc2626]' : 'text-black/80 hover:text-[#dc2626]'}`}>베스트 50</Link>
               {location.pathname === '/best50' && <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-[#dc2626] rounded-full" />}
             </div>
             {categories.map((cat) => {
               const isActive = location.pathname === cat.path;
               return (
                 <div key={cat.name} className="relative group shrink-0">
-                  <Link to={cat.path} className={`text-[14px] xl:text-[17px] font-bold tracking-widest uppercase font-hei transition-colors whitespace-nowrap ${isActive ? 'text-[#dc2626]' : 'text-black/80 hover:text-[#dc2626]'}`}>{cat.name}</Link>
+                  <Link to={cat.path} className={`text-[15px] xl:text-[17px] font-bold tracking-widest uppercase font-hei transition-colors whitespace-nowrap ${isActive ? 'text-[#dc2626]' : 'text-black/80 hover:text-[#dc2626]'}`}>{cat.name}</Link>
                   {isActive && <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-[#dc2626] rounded-full" />}
                 </div>
               );
