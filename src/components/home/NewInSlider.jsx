@@ -137,14 +137,15 @@ export default function NewInSlider() {
                 {/* Heart Icon - Fixed Home style */}
                 <button 
                   onClick={(e) => handleLike(e, item)}
-                  className="absolute top-2 right-2 md:top-4 md:right-4 z-10 hover:scale-110 transition-transform drop-shadow-md"
+                  className="absolute top-2 right-2 md:top-2 md:right-2 z-10 hover:scale-110 transition-transform drop-shadow-md"
                 >
-                  {isLiked ? (
-                    <ICONS.heartFilled className="text-[#dc2626] text-[20px] md:text-[24px]" />
+                  {isItemLiked(item.id) ? (
+                    <ICONS.heartFilled className="text-[#dc2626] text-[20px] md:text-[22px]" />
                   ) : (
-                    <ICONS.heart className="text-white text-[20px] md:text-[24px] brightness-0 invert" />
+                    <ICONS.heart className="text-white text-[20px] md:text-[22px] brightness-0 invert" />
                   )}
                 </button>
+
               </div>
             );
           })}
