@@ -215,7 +215,7 @@ export default function Sets() {
           </div>
 
           {/* Product Grid */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-6 md:gap-x-8 gap-y-16 min-h-[800px]">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-6 md:gap-x-8 gap-y-16 min-h-[800px]">
             {currentProducts.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}

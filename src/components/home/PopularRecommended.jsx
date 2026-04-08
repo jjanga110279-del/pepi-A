@@ -16,7 +16,7 @@ export default function PopularRecommended() {
         <div className="w-12 h-[2px] bg-[#dc2626] mt-4"></div>
       </div>
       
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-12 mb-16">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-12 mb-16">
         {anotherItems.map((item) => (
           <ProductCard key={item.id} product={item} autoSlide={true} />
         ))}

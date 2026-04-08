@@ -14,7 +14,7 @@ export default function Best50Section() {
         <div className="w-12 h-[2px] bg-[#dc2626] mt-4" />
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-x-4 md:gap-x-6 gap-y-10 md:gap-y-16">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 md:gap-x-6 gap-y-10 md:gap-y-16">
         {products.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}
