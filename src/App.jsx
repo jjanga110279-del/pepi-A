@@ -40,6 +40,7 @@ import Login from './pages/Login';
 import FindPassword from './pages/FindPassword';
 import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
+import NotFound from './pages/NotFound';
 import { UserProvider } from './context/UserContext';
 import { CartProvider } from './context/CartContext';
 
@@ -89,6 +90,7 @@ function App() {
             <Route path="/find-password" element={<FindPassword />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<Checkout />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
       </CartProvider>
