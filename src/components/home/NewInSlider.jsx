@@ -109,7 +109,7 @@ export default function NewInSlider() {
               <div 
                 key={`${item.id}-${index}`} 
                 onClick={() => navigate(`/product/${item.id}`, { state: { product: item } })}
-                className="min-w-[300px] md:min-w-[350px] relative group cursor-pointer overflow-hidden rounded-[48px] bg-white shadow-sm block"
+                className="min-w-[300px] md:min-w-[350px] relative group cursor-pointer overflow-hidden rounded-none bg-white shadow-sm block"
               >
                 <div className="h-[450px] overflow-hidden">
                   <img 
@@ -137,7 +137,7 @@ export default function NewInSlider() {
                 {/* Heart Icon - Fixed Home style */}
                 <button 
                   onClick={(e) => handleLike(e, item)}
-                  className="absolute top-4 right-4 md:top-6 md:right-6 z-10 hover:scale-110 transition-transform drop-shadow-md"
+                  className="absolute top-2 right-2 md:top-4 md:right-4 z-10 hover:scale-110 transition-transform drop-shadow-md"
                 >
                   {isLiked ? (
                     <ICONS.heartFilled className="text-[#dc2626] text-[20px] md:text-[24px]" />

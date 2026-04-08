@@ -64,9 +64,9 @@ export default function ReviewSlider() {
               to={`/product/${review.productId}`}
               state={{ tab: 'review' }}
               key={`${review.id}-${index}`} 
-              className="min-w-[400px] bg-white p-6 rounded-2xl flex gap-4 shadow-sm hover:shadow-md transition-shadow cursor-pointer"
+              className="min-w-[400px] bg-white p-6 rounded-none flex gap-4 shadow-sm hover:shadow-md transition-shadow cursor-pointer"
             >
-              <div className="w-24 h-24 rounded-3xl overflow-hidden shrink-0">
+              <div className="w-24 h-24 rounded-none overflow-hidden shrink-0">
                 <img src={review.image} alt="reviewer" className="w-full h-full object-cover" />
               </div>
               <div className="flex flex-col justify-center">

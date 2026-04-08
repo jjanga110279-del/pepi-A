@@ -5,7 +5,7 @@ import { IMAGES } from '../../constants/images';
 export default function EventBanner() {
   return (
     <section className="max-w-[1216px] mx-auto px-4 md:px-0">
-      <div className="h-[300px] md:h-[400px] rounded-2xl md:rounded-3xl overflow-hidden relative group">
+      <div className="h-[300px] md:h-[400px] rounded-md overflow-hidden relative group">
         <img 
           src={IMAGES.eventBanner} 
           alt="Event Banner" 

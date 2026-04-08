@@ -83,7 +83,7 @@ export default function Events() {
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-6 md:gap-x-8 gap-y-16">
           {eventCards.map((event) => (
             <div key={event.id} className="flex flex-col gap-4 group cursor-pointer">
-              <div className="relative aspect-[3/4] bg-[#fafafa] rounded-[32px] overflow-hidden shadow-sm group-hover:shadow-md transition-all duration-500">
+              <div className="relative aspect-[3/4] bg-[#fafafa] rounded-none overflow-hidden shadow-sm group-hover:shadow-md transition-all duration-500">
                 <img 
                   src={event.image} 
                   alt={event.title} 
@@ -116,16 +116,6 @@ export default function Events() {
           ))}
         </div>
       </div>
-
-      <style jsx>{`
-        @keyframes blink {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0.3; }
-        }
-        .animate-blink {
-          animation: blink 1.5s infinite;
-        }
-      `}</style>
     </Layout>
   );
 }

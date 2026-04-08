@@ -26,7 +26,7 @@ export default function About() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-16 items-start">
             {/* Value 1 */}
             <div className="flex flex-col pt-12">
-              <div className="aspect-[3/4] rounded-[32px] overflow-hidden mb-8">
+              <div className="aspect-[3/4] rounded-none overflow-hidden mb-8">
                 <img src={IMAGES.aboutValue1} alt="Value 1" className="w-full h-full object-cover grayscale mix-blend-multiply" />
               </div>
               <h3 className="text-2xl font-serif mb-4">늘:pepi-i의 공기</h3>
@@ -37,7 +37,7 @@ export default function About() {
 
             {/* Value 2 */}
             <div className="flex flex-col md:translate-y-32">
-              <div className="aspect-[3/4] rounded-full overflow-hidden mb-8">
+              <div className="aspect-[3/4] rounded-none overflow-hidden mb-8">
                 <img src={IMAGES.aboutValue2} alt="Value 2" className="w-full h-full object-cover" />
               </div>
               <h3 className="text-2xl font-serif mb-4">섬세한 손길</h3>
@@ -48,7 +48,7 @@ export default function About() {
 
             {/* Value 3 */}
             <div className="flex flex-col">
-              <div className="aspect-[3/4] rounded-[32px] overflow-hidden mb-8">
+              <div className="aspect-[3/4] rounded-none overflow-hidden mb-8">
                 <img src={IMAGES.aboutValue3} alt="Value 3" className="w-full h-full object-cover" />
               </div>
               <h3 className="text-2xl font-serif mb-4">지속 가능한 본질</h3>
@@ -114,8 +114,7 @@ export default function About() {
         <section className="max-w-[1280px] mx-auto px-8 py-32 border-t border-black/5">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
             <div className="relative">
-              <div className="absolute -top-10 -left-10 w-40 h-40 bg-[#fafaf9] rounded-full opacity-50 -z-10" />
-              <div className="rounded-[32px] overflow-hidden shadow-2xl shadow-black/5">
+              <div className="rounded-none overflow-hidden shadow-2xl shadow-black/5">
                 <img src={IMAGES.aboutLegacy} alt="Seongsu 늘:pepi-i" className="w-full h-[600px] object-cover" />
               </div>
             </div>
@@ -143,7 +142,7 @@ export default function About() {
               </div>
 
               {/* Map Placeholder */}
-              <div className="h-64 rounded-[48px] bg-[#fafaf9] border border-black/5 overflow-hidden relative flex items-center justify-center group cursor-pointer">
+              <div className="h-64 rounded-none bg-[#fafaf9] border border-black/5 overflow-hidden relative flex items-center justify-center group cursor-pointer">
                 <div className="absolute inset-0 opacity-10 bg-repeat group-hover:scale-105 transition-transform duration-700" style={{ backgroundImage: `url('${IMAGES.mapPlaceholder}')` }} />
                 <div className="relative flex flex-col items-center gap-3">
                   <ICONS.googleMap className="text-[19px]" />

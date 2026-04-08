@@ -117,7 +117,7 @@ export default function ProductCard({
       )}
 
       {/* Image Area */}
-      <div className="relative aspect-[3/4] bg-[#fafafa] rounded-[32px] md:rounded-[48px] overflow-hidden">
+      <div className="relative aspect-[3/4] bg-[#fafafa] rounded-none overflow-hidden">
         {autoSlide ? (
           <div className="w-full h-full relative bg-[#fafafa]">
             {slideImages.map((img, idx) => (
@@ -138,7 +138,7 @@ export default function ProductCard({
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
           />
         )}
-        <button onClick={handleLike} className="absolute top-2.5 right-2.5 md:top-6 md:right-6 z-20 hover:scale-110 transition-transform drop-shadow-md">
+        <button onClick={handleLike} className="absolute top-1 right-1 md:top-3 md:right-3 z-20 hover:scale-110 transition-transform drop-shadow-md">
           {isLiked ? <ICONS.heartFilled className="text-[#dc2626] text-[20px] md:text-[24px]" /> : <ICONS.heart className="text-white text-[20px] md:text-[24px] brightness-0 invert" />}
         </button>
       </div>
