@@ -84,63 +84,60 @@ export default function MyReviews() {
               <p className="text-[14px] text-black/40 font-hei">작성하신 리뷰를 확인하고 수정하거나 삭제할 수 있습니다.</p>
             </div>
 
-            <div className="flex flex-col gap-8">
+            <div className="flex flex-col gap-6 md:gap-8">
               {reviews.length > 0 ? (
                 reviews.map((review) => (
-                  <div key={review.id} className="bg-[#FAFAFA] rounded-[32px] p-8 md:p-12 flex flex-col md:flex-row gap-8 relative group">
-                    {/* Product Info */}
-                    <div className="w-full md:w-[200px] shrink-0">
-                      <div className="flex flex-col gap-4">
-                        <div className="aspect-[3/4] rounded-2xl overflow-hidden bg-white border border-black/5">
-                          <img src={review.productImage} alt={review.productName} className="w-full h-full object-cover" />
-                        </div>
-                        <div className="flex flex-col gap-1">
-                          <h4 className="text-[14px] font-bold text-black font-hei leading-tight">{review.productName}</h4>
-                          <span className="text-[12px] text-black/40 font-sans">{review.options}</span>
-                        </div>
+                  <div key={review.id} className="bg-[#FAFAFA] rounded-none p-4 md:p-12 flex flex-row gap-4 md:gap-8 relative group">
+                    {/* Product Info - Left Side */}
+                    <div className="w-20 md:w-[200px] shrink-0">
+                      <div className="aspect-[3/4] rounded-none overflow-hidden bg-white border border-black/5">
+                        <img src={review.productImage} alt={review.productName} className="w-full h-full object-cover" />
                       </div>
                     </div>
 
-                    {/* Review Content */}
-                    <div className="flex-grow flex flex-col gap-6">
-                      <div className="flex justify-between items-start">
-                        <div className="flex flex-col gap-2">
-                          <div className="flex gap-1">
-                            {[...Array(5)].map((_, i) => (
-                              <Star 
-                                key={i} 
-                                size={16} 
-                                className={i < review.rating ? 'fill-[#9C3F00] text-[#9C3F00]' : 'text-black/10'} 
-                              />
-                            ))}
+                    {/* Review Content - Right Side */}
+                    <div className="flex-grow flex flex-col gap-2 md:gap-6 min-w-0">
+                      <div className="flex justify-between items-start gap-2">
+                        <div className="flex flex-col gap-1 md:gap-2">
+                          <h4 className="text-[13px] md:text-[16px] font-bold text-black font-hei leading-tight line-clamp-1">{review.productName}</h4>
+                          <div className="flex items-center gap-2">
+                            <div className="flex gap-0.5">
+                              {[...Array(5)].map((_, i) => (
+                                <Star 
+                                  key={i} 
+                                  size={12} 
+                                  className={i < review.rating ? 'fill-[#9C3F00] text-[#9C3F00]' : 'text-black/10'} 
+                                />
+                              ))}
+                            </div>
+                            <span className="text-[10px] md:text-[12px] text-black/30 font-sans">{review.date}</span>
                           </div>
-                          <span className="text-[12px] text-black/30 font-sans">{review.date}</span>
                         </div>
 
-                        <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <div className="flex gap-1 md:gap-2 shrink-0 md:opacity-0 md:group-hover:opacity-100 transition-opacity">
                           <Link 
                             to={`/edit-review/${review.id}`}
-                            className="w-10 h-10 rounded-full bg-white border border-black/5 flex items-center justify-center text-black/40 hover:text-black hover:border-black/20 transition-all"
+                            className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-white border border-black/5 flex items-center justify-center text-black/40 hover:text-black hover:border-black/20 transition-all"
                           >
-                            <Edit2 size={16} />
+                            <Edit2 size={14} />
                           </Link>
                           <button 
                             onClick={() => handleDelete(review.id)}
-                            className="w-10 h-10 rounded-full bg-white border border-black/5 flex items-center justify-center text-black/40 hover:text-[#dc2626] hover:border-[#dc2626]/20 transition-all"
+                            className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-white border border-black/5 flex items-center justify-center text-black/40 hover:text-[#dc2626] hover:border-[#dc2626]/20 transition-all"
                           >
-                            <Trash2 size={16} />
+                            <Trash2 size={14} />
                           </button>
                         </div>
                       </div>
 
-                      <p className="text-[16px] text-[#564338] leading-relaxed font-hei opacity-80">
+                      <p className="text-[14px] md:text-[16px] text-[#564338] leading-snug md:leading-relaxed font-hei opacity-80 line-clamp-2 md:line-clamp-none">
                         {review.content}
                       </p>
 
                       {review.images.length > 0 && (
-                        <div className="flex gap-4 mt-2">
+                        <div className="flex gap-2 md:gap-4 mt-1 md:mt-2 overflow-x-auto no-scrollbar">
                           {review.images.map((img, idx) => (
-                            <div key={idx} className="w-24 h-24 rounded-xl overflow-hidden bg-white border border-black/5 cursor-pointer hover:opacity-80 transition-opacity">
+                            <div key={idx} className="w-16 h-16 md:w-24 md:h-24 rounded-none overflow-hidden bg-white border border-black/5 cursor-pointer hover:opacity-80 transition-opacity shrink-0">
                               <img src={img} alt="" className="w-full h-full object-cover" />
                             </div>
                           ))}
