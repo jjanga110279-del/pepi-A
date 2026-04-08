@@ -139,7 +139,7 @@ export default function NewInSlider() {
                   onClick={(e) => handleLike(e, item)}
                   className="absolute top-2 right-2 md:top-2 md:right-2 z-10 hover:scale-110 transition-transform drop-shadow-md"
                 >
-                  {isItemLiked(item.id) ? (
+                  {isLiked ? (
                     <ICONS.heartFilled className="text-[#dc2626] text-[20px] md:text-[22px]" />
                   ) : (
                     <ICONS.heart className="text-white text-[20px] md:text-[22px] brightness-0 invert" />
