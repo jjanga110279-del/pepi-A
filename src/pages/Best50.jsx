@@ -24,8 +24,11 @@ export default function Best50() {
           {products.map((product) => (
             <div key={product.id} className="relative group">
               {/* Ranking Number - Elegant Serif Overlay */}
-              <div className="absolute top-0 left-1 md:top-0.5 md:left-1 z-30 pointer-events-none transition-transform group-hover:scale-110 duration-700">
-                <span className="text-3xl md:text-[32px] lg:text-[40px] font-serif font-black text-white drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)] opacity-95 italic tracking-tighter">
+              <div className="absolute top-[-10px] left-[-5px] z-30 pointer-events-none transition-transform group-hover:scale-110 duration-700 p-4">
+                <span 
+                  className="text-3xl md:text-[32px] lg:text-[40px] font-serif font-black text-white opacity-95 italic tracking-tighter inline-block"
+                  style={{ textShadow: '0 4px 15px rgba(0,0,0,0.6)' }}
+                >
                   {product.rank}
                 </span>
               </div>
