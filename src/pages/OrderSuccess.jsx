@@ -31,25 +31,25 @@ export default function OrderSuccess() {
   return (
     <Layout>
       <div className="max-w-[1280px] mx-auto px-4 md:px-10 pt-32 pb-20 overflow-x-hidden">
-        {/* Hero Section - Side by side on mobile */}
-        <div className="flex flex-row items-center gap-4 md:gap-24 mb-12 md:mb-24 bg-gray-50/50 p-4 md:p-0 rounded-[32px] md:rounded-none">
-          <div className="relative w-24 h-24 md:w-[584px] md:aspect-[584/500] shrink-0">
+        {/* Hero Section - side by side layout */}
+        <div className="flex flex-col md:flex-row items-center gap-10 md:gap-16 mb-16 md:mb-24">
+          <div className="relative w-full md:w-[480px] aspect-[4/3] md:aspect-[480/400] shrink-0">
             <img 
               src={orderHeroImg} 
               alt="Order Success" 
-              className="w-full h-full object-cover rounded-2xl md:rounded-[48px] shadow-lg md:shadow-2xl relative z-10"
+              className="w-full h-full object-cover rounded-none shadow-2xl relative z-10"
             />
           </div>
           
-          <div className="flex flex-col items-start gap-1 md:gap-6">
-            <div className="px-2 py-0.5 md:px-4 md:py-1.5 bg-[#FFDAD3] text-[#9F402D] text-[10px] md:text-[14px] font-bold rounded-full uppercase tracking-wider font-sans">
-              Success
+          <div className="flex flex-col items-center md:items-start gap-4 md:gap-6 text-center md:text-left overflow-hidden">
+            <div className="px-5 py-2 bg-[#FFDAD3] text-[#9F402D] text-[12px] md:text-[14px] font-bold rounded-full uppercase tracking-widest font-sans inline-block">
+              Order Success
             </div>
-            <h1 className="text-2xl md:text-[60px] font-bold text-[#1B1D0E] font-serif leading-tight tracking-tight">
+            <h1 className="text-3xl md:text-[52px] lg:text-[60px] font-bold text-[#1B1D0E] font-serif leading-none tracking-tighter whitespace-nowrap">
               주문이 완료되었습니다.
             </h1>
-            <p className="hidden md:block text-[18px] text-[#564338] font-hei leading-relaxed opacity-80">
-              늘:pepi-i를 이용해 주셔서 감사합니다. 정성을 담아 곧 보내드리겠습니다.
+            <p className="text-base md:text-[18px] text-[#564338] font-hei leading-relaxed opacity-70 max-w-[440px] break-keep">
+              늘:pepi-i를 이용해 주셔서 감사합니다.<br className="hidden md:block" /> 정성을 담아 곧 보내드리겠습니다.
             </p>
           </div>
         </div>

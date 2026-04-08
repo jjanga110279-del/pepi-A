@@ -135,7 +135,7 @@ export default function Search() {
             {/* Featured Editorial Section (Matching Figma) */}
             <div className="border-t border-[#F5F5F4] pt-40">
               <div className="flex flex-col md:flex-row items-center gap-12 lg:gap-20">
-                <div className="w-full md:w-[509px] aspect-[4/5] rounded-[48px] overflow-hidden bg-[#F5F5F4] relative group">
+                <div className="w-full md:w-[509px] aspect-[4/5] rounded-md overflow-hidden bg-[#F5F5F4] relative group">
                   <img 
                     src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=800&auto=format&fit=crop" 
                     alt="Luxury editorial fashion photography" 
