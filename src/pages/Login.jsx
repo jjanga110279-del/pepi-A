@@ -62,11 +62,11 @@ export default function Login() {
     <Layout>
       <div className="max-w-[1280px] mx-auto min-h-screen flex flex-col md:flex-row items-stretch pt-20">
         {/* Left Column: Image */}
-        <div className="hidden md:block w-1/2 relative min-h-[800px]">
+        <div className="hidden md:block w-1/2 relative min-h-[600px] lg:min-h-[800px]">
           <div className="absolute inset-0 px-8 py-10">
-            <div className="w-full h-full rounded-[4px] overflow-hidden relative border border-black/5 shadow-sm">
-              <img src={loginEditorial} alt="Fashion Editorial" className="w-full h-full object-cover" />
-              <div className="absolute inset-0 bg-black/5" />
+            <div className="w-full h-full rounded-none overflow-hidden relative border border-black/5 bg-[#FAFAFA] flex items-center justify-center">
+              <img src={loginEditorial} alt="Fashion Editorial" className="w-full h-full object-contain" />
+              <div className="absolute inset-0 bg-black/[0.02] pointer-events-none" />
             </div>
           </div>
         </div>
