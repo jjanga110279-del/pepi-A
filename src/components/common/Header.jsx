@@ -102,9 +102,9 @@ export default function Header() {
             </div>
 
             {/* Center: Logo */}
-            <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 z-0 w-max max-w-[20%] sm:max-w-[30%] text-center">
+            <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 z-0 w-max max-w-[50%] sm:max-w-[40%] md:max-w-[30%] text-center">
               <Link to="/">
-                <h1 className={`font-logo font-black italic transition-all duration-300 tracking-tighter truncate text-black ${isScrolled ? 'text-xl sm:text-2xl md:text-3xl opacity-90' : 'text-xl sm:text-[26px] md:text-3xl lg:text-4xl xl:text-5xl'}`}>늘:pepi-i</h1>
+                <h1 className={`font-logo font-black italic transition-all duration-300 tracking-tighter text-black ${isScrolled ? 'text-xl sm:text-2xl md:text-3xl opacity-90' : 'text-2xl sm:text-[26px] md:text-3xl lg:text-4xl xl:text-5xl'}`}>늘:pepi-i</h1>
               </Link>
             </div>
 
