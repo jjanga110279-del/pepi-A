@@ -138,8 +138,8 @@ export default function ProductCard({
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
           />
         )}
-        <button onClick={handleLike} className="absolute top-1 right-1 md:top-3 md:right-3 z-20 hover:scale-110 transition-transform drop-shadow-md">
-          {isLiked ? <ICONS.heartFilled className="text-[#dc2626] text-[20px] md:text-[24px]" /> : <ICONS.heart className="text-white text-[20px] md:text-[24px] brightness-0 invert" />}
+        <button onClick={handleLike} className="absolute top-1 right-1 md:top-2 md:right-2 z-20 hover:scale-110 transition-transform drop-shadow-md">
+          {isLiked ? <ICONS.heartFilled className="text-[#dc2626] text-[20px] md:text-[22px]" /> : <ICONS.heart className="text-white text-[20px] md:text-[22px] brightness-0 invert" />}
         </button>
       </div>
       
