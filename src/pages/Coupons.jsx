@@ -24,21 +24,21 @@ export default function Coupons() {
   const [downloadedIds, setDownloadedIds] = useState([1]); // 기본적으로 하나는 가지고 있음
 
   const allDownloadableCoupons = [
-    { id: 1, title: '신규 회원 가입 감사 쿠폰', discount: '10,000원', condition: '50,000원 이상 구매 시', expiry: '2024.12.31까지', type: 'DISCOUNT' },
-    { id: 101, title: '4월 회원 정기 10% 할인 쿠폰', discount: '10%', condition: '전 상품 대상 (최대 3만원)', expiry: '2024.04.30까지', type: 'PERCENTAGE' },
-    { id: 102, title: '봄 맞이 아우터 15% 기획전', discount: '15%', condition: '아우터 카테고리 전용', expiry: '2024.04.15까지', type: 'PERCENTAGE' },
-    { id: 103, title: '첫 구매 고객 감사 할인', discount: '5,000원', condition: '30,000원 이상 구매 시', expiry: '2024.05.31까지', type: 'DISCOUNT' },
-    { id: 104, title: '무료 배송 혜택 쿠폰', discount: 'FREE', condition: '20,000원 이상 구매 시', expiry: '2024.06.30까지', type: 'SHIPPING' },
-    { id: 105, title: '생일 축하 20% 특별 할인', discount: '20%', condition: '생일 전후 7일간 사용 가능', expiry: '2024.05.20까지', type: 'PERCENTAGE' },
+    { id: 1, title: '신규 회원 가입 감사 쿠폰', discount: '10,000원', condition: '50,000원 이상 구매 시', expiry: '2026.12.31까지', type: 'DISCOUNT' },
+    { id: 101, title: '4월 회원 정기 10% 할인 쿠폰', discount: '10%', condition: '전 상품 대상 (최대 3만원)', expiry: '2026.04.30까지', type: 'PERCENTAGE' },
+    { id: 102, title: '봄 맞이 아우터 15% 기획전', discount: '15%', condition: '아우터 카테고리 전용', expiry: '2026.04.15까지', type: 'PERCENTAGE' },
+    { id: 103, title: '첫 구매 고객 감사 할인', discount: '5,000원', condition: '30,000원 이상 구매 시', expiry: '2026.05.31까지', type: 'DISCOUNT' },
+    { id: 104, title: '무료 배송 혜택 쿠폰', discount: 'FREE', condition: '20,000원 이상 구매 시', expiry: '2026.06.30까지', type: 'SHIPPING' },
+    { id: 105, title: '생일 축하 20% 특별 할인', discount: '20%', condition: '생일 전후 7일간 사용 가능', expiry: '2026.05.20까지', type: 'PERCENTAGE' },
   ];
 
   const usedCoupons = [
-    { id: 201, title: '3월 회원 정기 할인 쿠폰', discount: '10,000원', date: '2024.03.15 사용완료', type: 'DISCOUNT' },
-    { id: 202, title: '주말 깜짝 타임 세일 쿠폰', discount: '5%', date: '2024.03.02 사용완료', type: 'PERCENTAGE' },
+    { id: 201, title: '3월 회원 정기 할인 쿠폰', discount: '10,000원', date: '2026.03.15 사용완료', type: 'DISCOUNT' },
+    { id: 202, title: '주말 깜짝 타임 세일 쿠폰', discount: '5%', date: '2026.03.02 사용완료', type: 'PERCENTAGE' },
   ];
 
   const expiredCoupons = [
-    { id: 301, title: '겨울 시즌 오프 마지막 할인', discount: '30%', date: '2024.02.28 만료', type: 'PERCENTAGE' },
+    { id: 301, title: '겨울 시즌 오프 마지막 할인', discount: '30%', date: '2026.02.28 만료', type: 'PERCENTAGE' },
   ];
 
   const handleDownload = (id) => {

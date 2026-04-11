@@ -31,8 +31,8 @@ export default function OrderHistory() {
 
   const [currentTab, setCurrentTab] = useState('주문 내역');
   const [dateRange, setDateRange] = useState('3개월');
-  const [startDate, setStartDate] = useState('2024-01-01');
-  const [endDate, setEndDate] = useState('2024-03-31');
+  const [startDate, setStartDate] = useState('2026-01-01');
+  const [endDate, setEndDate] = useState('2026-03-31');
   const [searchQuery, setSearchQuery] = useState('');
 
   const handleSearch = (e) => {
@@ -55,8 +55,8 @@ export default function OrderHistory() {
 
   const returnItems = [
     {
-      id: 'R20240320-001102',
-      date: '2024.03.20',
+      id: 'R20260320-001102',
+      date: '2026.03.20',
       name: '프리미엄 캐시미어 가디건',
       color: 'Beige',
       option: 'Free',
@@ -64,7 +64,7 @@ export default function OrderHistory() {
       price: '189,000원',
       status: '반품완료',
       reason: '사이즈 부적합',
-      refundDate: '2024.03.22',
+      refundDate: '2026.03.22',
       collectionDate: '완료',
       image: 'https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=200&auto=format&fit=crop'
     }

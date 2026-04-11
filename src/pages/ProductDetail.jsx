@@ -147,7 +147,7 @@ export default function ProductDetail() {
       return {
         id: i + 1,
         user: names[i % names.length],
-        date: `2024.03.${Math.max(1, 28 - i)}`,
+        date: `2026.03.${Math.max(1, 28 - i)}`,
         rating: i % 5 === 0 ? 4 : 5,
         content: `${product.name} ${selectedContents[i % selectedContents.length]}`,
         option: `Option ${i + 1} 구매`,

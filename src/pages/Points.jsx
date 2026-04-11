@@ -37,18 +37,18 @@ export default function Points() {
   };
 
   const expiringDetails = [
-    { date: '2024.04.30', amount: '500 P', reason: '23년 4월 적립분' },
-    { date: '2024.05.15', amount: '700 P', reason: '이벤트 당첨 포인트' }
+    { date: '2026.04.30', amount: '500 P', reason: '23년 4월 적립분' },
+    { date: '2026.05.15', amount: '700 P', reason: '이벤트 당첨 포인트' }
   ];
 
   const pointHistory = [
-    { id: 1, type: '적립', title: '구매 확정 포인트 적립', date: '2024.03.25', amount: '+4,250', detail: '주문번호: 20240325-001234' },
-    { id: 2, type: '사용', title: '상품 구매 시 포인트 사용', date: '2024.03.20', amount: '-5,000', detail: '주문번호: 20240320-001102' },
-    { id: 3, type: '적립', title: '리뷰 작성 이벤트 적립', date: '2024.03.15', amount: '+500', detail: '프리미엄 캐시미어 가디건' },
-    { id: 4, type: '적립', title: '신규 회원 가입 축하 포인트', date: '2024.03.01', amount: '+3,000', detail: '가입 환영 혜택' },
-    { id: 5, type: '적립', title: '구매 확정 포인트 적립', date: '2024.02.28', amount: '+1,500', detail: '주문번호: 20240228-000987' },
-    { id: 6, type: '사용', title: '상품 구매 시 포인트 사용', date: '2024.02.15', amount: '-2,000', detail: '주문번호: 20240215-000854' },
-    { id: 7, type: '사용', title: '배송비 결제 시 포인트 사용', date: '2024.02.05', amount: '-3,000', detail: '주문번호: 20240205-000765' }
+    { id: 1, type: '적립', title: '구매 확정 포인트 적립', date: '2026.03.25', amount: '+4,250', detail: '주문번호: 20260325-001234' },
+    { id: 2, type: '사용', title: '상품 구매 시 포인트 사용', date: '2026.03.20', amount: '-5,000', detail: '주문번호: 20260320-001102' },
+    { id: 3, type: '적립', title: '리뷰 작성 이벤트 적립', date: '2026.03.15', amount: '+500', detail: '프리미엄 캐시미어 가디건' },
+    { id: 4, type: '적립', title: '신규 회원 가입 축하 포인트', date: '2026.03.01', amount: '+3,000', detail: '가입 환영 혜택' },
+    { id: 5, type: '적립', title: '구매 확정 포인트 적립', date: '2026.02.28', amount: '+1,500', detail: '주문번호: 20260228-000987' },
+    { id: 6, type: '사용', title: '상품 구매 시 포인트 사용', date: '2026.02.15', amount: '-2,000', detail: '주문번호: 20260215-000854' },
+    { id: 7, type: '사용', title: '배송비 결제 시 포인트 사용', date: '2026.02.05', amount: '-3,000', detail: '주문번호: 20260205-000765' }
   ];
 
   const filteredHistory = pointHistory.filter(item => {

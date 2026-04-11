@@ -37,9 +37,9 @@ export function UserProvider({ children }) {
 
   // 쿠폰 상태 관리
   const [coupons, setCoupons] = useState([
-    { id: 1, name: '신규 가입 10,000원 할인', amount: 10000, minPrice: 50000, expiry: '2024.12.31', used: false },
-    { id: 2, name: '첫 구매 5,000원 할인', amount: 5000, minPrice: 30000, expiry: '2024.06.30', used: false },
-    { id: 3, name: '생일 축하 10% 쿠폰', amount: 8000, minPrice: 0, expiry: '2024.05.15', used: false }
+    { id: 1, name: '신규 가입 10,000원 할인', amount: 10000, minPrice: 50000, expiry: '2026.12.31', used: false },
+    { id: 2, name: '첫 구매 5,000원 할인', amount: 5000, minPrice: 30000, expiry: '2026.06.30', used: false },
+    { id: 3, name: '생일 축하 10% 쿠폰', amount: 8000, minPrice: 0, expiry: '2026.05.15', used: false }
   ]);
 
   // 주소록 상태 관리
@@ -51,8 +51,8 @@ export function UserProvider({ children }) {
   // 주문 내역 상태 관리
   const [orders, setOrders] = useState([
     {
-      id: '20240325-001234',
-      date: '2024.03.25',
+      id: '20260325-001234',
+      date: '2026.03.25',
       items: [
         {
           id: 'p1',
@@ -77,8 +77,8 @@ export function UserProvider({ children }) {
       status: '배송중'
     },
     {
-      id: '20240320-001102',
-      date: '2024.03.20',
+      id: '20260320-001102',
+      date: '2026.03.20',
       items: [
         {
           id: 'p2',
@@ -111,7 +111,7 @@ export function UserProvider({ children }) {
       productName: '핀턱 레이스 블라우스',
       productImage: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=200&auto=format&fit=crop',
       rating: 5,
-      date: '2024.03.15',
+      date: '2026.03.15',
       content: '디자인도 사진이랑 똑같고 배송도 빨랐어요. 소재가 너무 좋아서 다른 색상도 구매하고 싶네요. 사이즈도 정사이즈로 딱 맞아요!',
       options: 'Ivory / S',
       images: ['https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=400&auto=format&fit=crop']
@@ -121,7 +121,7 @@ export function UserProvider({ children }) {
       productName: '클래식 테일러드 울 자켓',
       productImage: 'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?q=80&w=200&auto=format&fit=crop',
       rating: 4,
-      date: '2024.03.10',
+      date: '2026.03.10',
       content: '색감이 너무 예뻐요. 다만 소매가 조금 기네요. 그래도 전반적으로 만족합니다.',
       options: 'Beige / M',
       images: []

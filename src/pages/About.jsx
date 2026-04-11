@@ -103,7 +103,7 @@ export default function About() {
                 </div>
                 <div className="z-10 w-4 h-4 rounded-full bg-black ring-8 ring-white" />
                 <div className="flex-1">
-                  <span className="text-2xl font-serif">2024</span>
+                  <span className="text-2xl font-serif">2026</span>
                 </div>
               </div>
             </div>

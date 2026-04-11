@@ -6,56 +6,56 @@ export default function Events() {
     {
       id: 1,
       title: "시즌 오프 기획전: 감각의 기록",
-      period: "2024.05.01 - 2024.05.31",
+      period: "2026.05.01 - 2026.05.31",
       status: "진행중",
       image: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=800&auto=format&fit=crop"
     },
     {
       id: 2,
       title: "신규 멤버십 웰컴 혜택 가이드",
-      period: "2024.05.10 - 2024.05.24",
+      period: "2026.05.10 - 2026.05.24",
       status: "진행중",
       image: "https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?q=80&w=800&auto=format&fit=crop"
     },
     {
       id: 3,
       title: "서머 액세서리: 빛나는 디테일",
-      period: "2024.05.15 - 2024.06.10",
+      period: "2026.05.15 - 2026.06.10",
       status: "진행중",
       image: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?q=80&w=800&auto=format&fit=crop"
     },
     {
       id: 4,
       title: "데일리 룩북: 감각적인 일상",
-      period: "2024.05.01 - 상시진행",
+      period: "2026.05.01 - 상시진행",
       status: "진행중",
       image: "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?q=80&w=800&auto=format&fit=crop"
     },
     {
       id: 5,
       title: "프리미엄 레더 셀렉션",
-      period: "2024.05.20 - 2024.06.20",
+      period: "2026.05.20 - 2026.06.20",
       status: "진행중",
       image: "https://images.unsplash.com/photo-1521335629791-ce4aec67dd15?q=80&w=800&auto=format&fit=crop"
     },
     {
       id: 6,
       title: "베이직 아이템: 클래식의 힘",
-      period: "2024.05.01 - 2024.05.31",
+      period: "2026.05.01 - 2026.05.31",
       status: "진행중",
       image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?q=80&w=800&auto=format&fit=crop"
     },
     {
       id: 7,
       title: "늘:pepi-i 비하인드: 감도 높은 제안",
-      period: "2024.05.12 - 2024.05.30",
+      period: "2026.05.12 - 2026.05.30",
       status: "진행중",
       image: "https://images.unsplash.com/photo-1445205170230-053b830c6050?q=80&w=800&auto=format&fit=crop"
     },
     {
       id: 8,
       title: "위켄드 니트웨어 특가전",
-      period: "2024.05.18 - 2024.05.25",
+      period: "2026.05.18 - 2026.05.25",
       status: "진행중",
       image: "https://images.unsplash.com/photo-1434389677669-e08b4cac3105?q=80&w=800&auto=format&fit=crop"
     }
