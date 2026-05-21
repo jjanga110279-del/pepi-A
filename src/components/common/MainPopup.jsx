@@ -88,11 +88,10 @@ export default function MainPopup() {
               <div className="flex items-center justify-center pt-1 md:pt-2">
                 <button 
                   onClick={handleClose}
-                  className="group flex flex-col items-center gap-1 transition-transform active:scale-90"
+                  className="transition-transform active:scale-90 hover:opacity-80"
                   aria-label="Close"
                 >
                   <ICONS.recommend className="text-2xl md:text-3xl text-[#dc2626] animate-bounce" />
-                  <span className="text-[10px] text-gray-400 font-medium">닫기</span>
                 </button>
               </div>
             </div>
