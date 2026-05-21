@@ -6,10 +6,12 @@ import EventBanner from '../components/home/EventBanner';
 import NewInSlider from '../components/home/NewInSlider';
 import PopularRecommended from '../components/home/PopularRecommended';
 import ReviewSlider from '../components/home/ReviewSlider';
+import MainPopup from '../components/common/MainPopup';
 
 export default function Home() {
   return (
     <Layout>
+      <MainPopup />
       <HeroSlider />
       <Best50Section />
       <EventBanner />
